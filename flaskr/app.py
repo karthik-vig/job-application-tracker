@@ -1,5 +1,5 @@
 import flask
-from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func
+from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update
 from sqlalchemy.orm import Session, registry
 
 
@@ -48,7 +48,7 @@ class DatabaseHandler:
                                                location = jobInfo['location'],
                                                jobStartDate = jobInfo['jobStartDate'],
                                                jobApplicationClosingDate = jobInfo['jobApplicationClosingDate'],
-                                               staus = jobInfo['status'],
+                                               status = jobInfo['status'],
                                                notes = jobInfo['notes'],
                                                startJobTrackDate = func.current_date(),
                                                modifiedJobTrackDate = func.current_date())
@@ -61,8 +61,21 @@ class DatabaseHandler:
             session.delete(rowToDelete)
             session.commit()
 
-    def updateRow(self, id: int, columnValues: dict):
-        pass
+    def updateRow(self, id: int, modificationValues: dict):
+        with Session(self.engine) as session:
+            session.execute( update(self.JobTrackerTable)
+                            .where(self.JobTrackerTable.id == id)
+                            .values(job = modificationValues['job'],
+                                    company = modificationValues['company'],
+                                    salary = modificationValues['salary'],
+                                    location = modificationValues['location'],
+                                    jobStartDate = modificationValues['jobStartDate'],
+                                    jobApplicationClosingDate = modificationValues['jobApplicationClosingDate'],
+                                    status = modificationValues['status'],
+                                    notes = modificationValues['notes'],
+                                    modifiedJobTrackDate = func.current_date())
+                            )
+            session.commit()
 
     def retreiveRows(self, id: int, searchFilters: dict) -> dict:
         pass
