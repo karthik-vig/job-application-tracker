@@ -1,5 +1,5 @@
 import flask
-from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update
+from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select
 from sqlalchemy.orm import Session, registry
 
 
@@ -21,10 +21,10 @@ class DatabaseHandler:
             job = Column(String(50))
             company = Column(String(100))
             salary = Column(Integer)
-            location = Column(String(100))
+            jobLocation = Column(String(100))
             jobStartDate = Column(Date)
             jobApplicationClosingDate = Column(Date)
-            status = Column(String(20))
+            applicationStatus = Column(String(20))
             notes = Column(String(2000))
             startJobTrackDate = Column(Date)
             modifiedJobTrackDate = Column(Date)
@@ -45,10 +45,10 @@ class DatabaseHandler:
             rowToInsert = self.JobTrackerTable(job = jobInfo['job'],
                                                company = jobInfo['company'],
                                                salary = jobInfo['salary'],
-                                               location = jobInfo['location'],
+                                               jobLocation = jobInfo['jobLocation'],
                                                jobStartDate = jobInfo['jobStartDate'],
                                                jobApplicationClosingDate = jobInfo['jobApplicationClosingDate'],
-                                               status = jobInfo['status'],
+                                               applicationStatus = jobInfo['applicationStatus'],
                                                notes = jobInfo['notes'],
                                                startJobTrackDate = func.current_date(),
                                                modifiedJobTrackDate = func.current_date())
@@ -68,18 +68,37 @@ class DatabaseHandler:
                             .values(job = modificationValues['job'],
                                     company = modificationValues['company'],
                                     salary = modificationValues['salary'],
-                                    location = modificationValues['location'],
+                                    jobLocation = modificationValues['jobLocation'],
                                     jobStartDate = modificationValues['jobStartDate'],
                                     jobApplicationClosingDate = modificationValues['jobApplicationClosingDate'],
-                                    status = modificationValues['status'],
+                                    applicationStatus = modificationValues['applicationStatus'],
                                     notes = modificationValues['notes'],
                                     modifiedJobTrackDate = func.current_date())
                             )
             session.commit()
 
-    def retreiveRows(self, id: int, searchFilters: dict) -> dict:
-        pass
+    def retrieveRows(self, searchFilters: dict) -> list:
+        retrieveStatement = self.buildSelectStatement(searchFilters=searchFilters)
+        with Session(self.engine) as session:
+            rows = session.execute(retrieveStatement)
+        return rows
 
+    def buildSelectStatement(self, searchFilters: dict) -> select:
+        retrieveStatement = select(self.JobTrackerTable)
+#        if searchFilters['searchText']:
+#            retrieveStatement = retrieveStatement.where( func.lower(self.JobTrackerTable.job) == func.lower(searchFilters['job']) )
+        if searchFilters['salary']:
+            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
+                                                        self.JobTrackerTable.salary <= searchFilters['salary']['max']
+                                                        )
+        if searchFilters['jobStartDate']:
+            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
+        if searchFilters['applicationStatus']:
+            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
+        if searchFilters['jobLocation']:
+            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
+        return retrieveStatement                                           
+                            
 
 if __name__ == "__main__":
     pass
