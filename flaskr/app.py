@@ -1,5 +1,5 @@
 import flask
-from sqlalchemy import create_engine, Column, Integer, String, Date, Table
+from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func
 from sqlalchemy.orm import Session, registry
 
 
@@ -17,7 +17,7 @@ class DatabaseHandler:
     def createTable(self):
         class JobTrackerTable(self.Base):
             __tablename__ = "JobTrackerTable"
-            id = Column(Integer, primary_key=True)
+            id = Column(Integer, primary_key=True, autoincrement=True)
             job = Column(String(50))
             company = Column(String(100))
             salary = Column(Integer)
@@ -40,12 +40,26 @@ class DatabaseHandler:
                               autoload_with=self.engine)
         return JobTrackerTable
 
-    def addRow(self, JobInfo: dict):
+    def addRow(self, jobInfo: dict):
         with Session(self.engine) as session:
-            pass
+            rowToInsert = self.JobTrackerTable(job = jobInfo['job'],
+                                               company = jobInfo['company'],
+                                               salary = jobInfo['salary'],
+                                               location = jobInfo['location'],
+                                               jobStartDate = jobInfo['jobStartDate'],
+                                               jobApplicationClosingDate = jobInfo['jobApplicationClosingDate'],
+                                               staus = jobInfo['status'],
+                                               notes = jobInfo['notes'],
+                                               startJobTrackDate = func.current_date(),
+                                               modifiedJobTrackDate = func.current_date())
+            session.add(rowToInsert)
+            session.commit()
 
     def deleteRow(self, id: int):
-        pass
+        with Session(self.engine) as session:
+            rowToDelete = session.get(self.JobTrackerTable, id)
+            session.delete(rowToDelete)
+            session.commit()
 
     def updateRow(self, id: int, columnValues: dict):
         pass
