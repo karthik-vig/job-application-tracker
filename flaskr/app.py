@@ -1,5 +1,5 @@
 import flask
-from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select
+from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select, or_, and_
 from sqlalchemy.orm import Session, registry
 
 
@@ -78,25 +78,27 @@ class DatabaseHandler:
             session.commit()
 
     def retrieveRows(self, searchFilters: dict) -> list:
-        retrieveStatement = self.buildSelectStatement(searchFilters=searchFilters)
         with Session(self.engine) as session:
+            retrieveStatement = self.buildQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(retrieveStatement)
         return rows
 
-    def buildSelectStatement(self, searchFilters: dict) -> select:
-        retrieveStatement = select(self.JobTrackerTable)
-#        if searchFilters['searchText']:
-#            retrieveStatement = retrieveStatement.where( func.lower(self.JobTrackerTable.job) == func.lower(searchFilters['job']) )
+    def buildQueryStatement(self, searchFilters: dict, session):
+        retrieveStatement = session.query.filter_by( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
+                                                     self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
+                                                   )
+        if searchFilters['searchText']:
+            retrieveStatement = retrieveStatement.filter_by( func.lower(self.JobTrackerTable.job) == func.lower(searchFilters['job']) )
         if searchFilters['salary']:
-            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
+            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
                                                         self.JobTrackerTable.salary <= searchFilters['salary']['max']
                                                         )
         if searchFilters['jobStartDate']:
-            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
+            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
         if searchFilters['applicationStatus']:
-            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
+            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
         if searchFilters['jobLocation']:
-            retrieveStatement = retrieveStatement.where(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
+            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
         return retrieveStatement                                           
                             
 
