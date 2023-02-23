@@ -9,10 +9,12 @@ class DatabaseHandler:
         self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
-        if self.engine.dialect.has_table(self.engine, "JobTrackerTable"):
-            self.JobTrackerTable = self.getTable()
-        else:
-            self.JobTrackerTable = self.createTable()
+        with self.engine.connect() as databaseConnection:
+            if self.engine.dialect.has_table(databaseConnection, "JobTrackerTable"):
+                self.JobTrackerTable = self.getTable()
+            else:
+                self.JobTrackerTable = self.createTable()
+            databaseConnection.commit()
 
     def createTable(self):
         class JobTrackerTable(self.Base):
@@ -30,7 +32,7 @@ class DatabaseHandler:
             modifiedJobTrackDate = Column(Date)
             def __repr__(self):
                 return f"Table recording all job tracking information"
-        self.mapper_registry.metadata.create_all()
+        self.mapper_registry.metadata.create_all(self.engine)
         return JobTrackerTable
 
     def getTable(self):
