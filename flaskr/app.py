@@ -79,27 +79,39 @@ class DatabaseHandler:
 
     def retrieveRows(self, searchFilters: dict) -> list:
         with Session(self.engine) as session:
-            retrieveStatement = self.buildQueryStatement(searchFilters=searchFilters, session=session)
-            rows = session.execute(retrieveStatement)
+            queryStatement = self.buildQueryStatement(searchFilters=searchFilters, session=session)
+            rows = session.execute(queryStatement)
         return rows
 
     def buildQueryStatement(self, searchFilters: dict, session):
-        retrieveStatement = session.query.filter_by( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
+        queryStatement = session.query.filter_by( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
                                                    )
-        if searchFilters['searchText']:
-            retrieveStatement = retrieveStatement.filter_by( func.lower(self.JobTrackerTable.job) == func.lower(searchFilters['job']) )
         if searchFilters['salary']:
-            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
+            queryStatement = queryStatement.filter_by(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
                                                         self.JobTrackerTable.salary <= searchFilters['salary']['max']
                                                         )
         if searchFilters['jobStartDate']:
-            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
+            queryStatement = queryStatement.filter_by(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
         if searchFilters['applicationStatus']:
-            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
+            queryStatement = queryStatement.filter_by(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
         if searchFilters['jobLocation']:
-            retrieveStatement = retrieveStatement.filter_by(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
-        return retrieveStatement                                           
+            queryStatement = queryStatement.filter_by(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
+        return queryStatement
+
+    def getSearchFilterLimits(self) -> dict:
+        searchFilterLimits = {"salaryMin": None,
+                              "salaryMax": None,
+                              "allJobLocations": []
+                              }
+        minSalarySelectStatement = select(func.min(self.JobTrackerTable.salary)).scalar_subquery()
+        maxSalarySelectStatement = select(func.max(self.JobTrackerTable.salary)).scalar_subquery()
+        allJobLocationsSelectStatement = select(self.JobTrackerTable.jobLocation).distinct()
+        with Session(self.engine) as session:
+            searchFilterLimits['salaryMin'] = session.execute(minSalarySelectStatement)
+            searchFilterLimits['salaryMax'] = session.execute(maxSalarySelectStatement)
+            searchFilterLimits['allJobLocations'] = session.execute(allJobLocationsSelectStatement)
+        return searchFilterLimits                                           
                             
 
 if __name__ == "__main__":
