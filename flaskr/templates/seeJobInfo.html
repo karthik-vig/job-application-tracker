@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <form>
+                <fieldset>
+                    <label>Job:</label>
+                    <input type="text" name="job" value="{{jobInfo['job']]}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Company: </label>
+                    <input type="text" name="company" value="{{jobInfo['company']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Salary:</label>
+                    <input type="number" name="salary" value="{{jobInfo['salary']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Location:</label>
+                    <input type="text" name="jobLocation" value="{{jobInfo['jobLocation']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Job Start Date:</label>
+                    <input type="date" name="jobStartDate" value="{{jobInfo['jobStartDate']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Job Application Closing Date:</label>
+                    <input type="date" name="jobApplicationClosingDate" value="{{jobInfo['jobApplicationClosingDate']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Status:</label>
+                    <input type="text" value="jobInfo['status']" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Notes:</label>
+                    <input type="text" name="notes" maxlength="10000"  value="{{jobInfo['notes']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Added Date:</label>
+                    <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly>
+                </fieldset>
+                <fieldset>
+                    <label>Last Modified Date:</label>
+                    <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly>
+                </fieldset>
+                <input type="image" name="modifiedJobInfoSubmit" value="True">
+            </form>
+        </div>
+    </body>
+</html>
