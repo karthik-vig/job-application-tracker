@@ -31,6 +31,16 @@ class TestDatabaseHandler(unittest.TestCase):
         self.assertEqual(jobInfo, retrievedRows[-1])
 
     def testUpdateFunctionality(self):
+        allApplicationStatus = ['Applied', 'Accepted', 'I Rejected', 'They Rejected']
+        jobInfo = { 'job' : 'auditor2',
+            'company': 'kpmg',
+            'salary': 30000,
+            'jobLocation': 'glasgow',
+            'jobStartDate': datetime.date(2023,9,1),
+            'jobApplicationClosingDate': datetime.date(2023,4,10),
+            'applicationStatus': allApplicationStatus[0],
+            'notes': 'the job  pays really well; try really hard to get it'
+            }
         searchFilters = { 'searchText' : '',
                     'salary': None,
                     'jobStartDate': None,
@@ -52,6 +62,16 @@ class TestDatabaseHandler(unittest.TestCase):
         self.assertEqual(modificationValues, updatedRow)
 
     def testDeleteFunctionality(self):
+        allApplicationStatus = ['Applied', 'Accepted', 'I Rejected', 'They Rejected']
+        jobInfo = { 'job' : 'auditor2',
+            'company': 'kpmg',
+            'salary': 30000,
+            'jobLocation': 'glasgow',
+            'jobStartDate': datetime.date(2023,9,1),
+            'jobApplicationClosingDate': datetime.date(2023,4,10),
+            'applicationStatus': allApplicationStatus[0],
+            'notes': 'the job  pays really well; try really hard to get it'
+            }
         searchFilters = { 'searchText' : '',
                     'salary': None,
                     'jobStartDate': None,
@@ -59,6 +79,8 @@ class TestDatabaseHandler(unittest.TestCase):
                     'jobLocation': None
                 }
         databaseHandlerObj = app.DatabaseHandler()
+        databaseHandlerObj.addRow(jobInfo = jobInfo)
+        databaseHandlerObj.addRow(jobInfo = jobInfo)
         retrievedRows = databaseHandlerObj.retrieveRows(searchFilters = searchFilters)
         idBeforeDelte = retrievedRows[-1]['id']
         databaseHandlerObj.deleteRow(id = idBeforeDelte)
