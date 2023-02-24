@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <h3> Filters: </h3>
+            <form action="" method="">
+                <input type="text" placeholder="Search" name="searchText">
+                <fieldset>
+                    <label>Job Start Date After:</label>
+                    <input type="date" placeholder="DD/MM/YYYY" name="jobStartDate">
+                </fieldset>
+                <fieldset>
+                    <label>Salary:</label>
+                    <input type="number" placeholder="Min" name="salaryMin">
+                    <input type="number" placeholder="Max" name="salaryMax">
+                </fieldset>
+                <fieldset>
+                    <label>Status:</label>
+                    <select name="Status">
+                        <option value="Applied">Applied</option>
+                        <option value="I Rejected">I Rejected</option>
+                        <option value="They Rejected">They Rejected</option>
+                        <option value="Successful">Successful</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label>Job Location:</label>
+                    <select name="jobLocation">
+                        {% for jobLocation in jobLocations %}
+                            <option value="{{jobLocation}}">{{jobLocation}}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <input type = "submit" name="submitSearchFilter" value="True">
+            </form>
+            <section>
+                <a href="">
+                    <img src="">
+                </a>
+            </section>
+        </div>
+        <div>
+            {% for jobInfo in jobInfoList %}
+                <section>
+                    <p>Job: {{jobInfo["job"]}}</p>
+                    <p>Company: {{jobInfo["company"]}}</p>
+                    <p>Salary: {{jobInfo["salary"]}}</p>
+                    <a href="">
+                        <img src="">
+                    </a>
+                    <a href="">
+                        <img src="">
+                    </a>
+                    <form action="" method="">
+                        <input type="image" src="" name="submitAddNewJob" value="True">
+                    </form>
+                </section>
+            {% endfor%}
+        </div>
+    </body>
+</html>
