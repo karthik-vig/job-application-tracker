@@ -27,7 +27,7 @@ class DatabaseHandler:
             jobStartDate = Column(Date)
             jobApplicationClosingDate = Column(Date)
             applicationStatus = Column(String(20))
-            notes = Column(String(2000))
+            notes = Column(String(10000))
             startJobTrackDate = Column(Date)
             modifiedJobTrackDate = Column(Date)
             def __repr__(self):
@@ -59,8 +59,10 @@ class DatabaseHandler:
 
     def deleteRow(self, id: int):
         with Session(self.engine) as session:
-            rowToDelete = session.get(self.JobTrackerTable, id)
-            session.delete(rowToDelete)
+            queryRowToDelete = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == id)
+            rowToDelete = session.execute(queryRowToDelete).first()
+            #session.delete(rowToDelete)
+            session.delete(rowToDelete[0])
             session.commit()
 
     def updateRow(self, id: int, modificationValues: dict):
@@ -83,23 +85,44 @@ class DatabaseHandler:
         with Session(self.engine) as session:
             queryStatement = self.buildQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(queryStatement)
-        return rows
+            rowList = self.convertRowsToPrimitive(rows)
+        return rowList
 
     def buildQueryStatement(self, searchFilters: dict, session):
-        queryStatement = session.query.filter_by( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
+        queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
-                                                   )
+                                                   )                                           
         if searchFilters['salary']:
-            queryStatement = queryStatement.filter_by(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
+            queryStatement = queryStatement.filter(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
                                                         self.JobTrackerTable.salary <= searchFilters['salary']['max']
                                                         )
+            
         if searchFilters['jobStartDate']:
-            queryStatement = queryStatement.filter_by(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
+            queryStatement = queryStatement.filter(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
         if searchFilters['applicationStatus']:
-            queryStatement = queryStatement.filter_by(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
+            queryStatement = queryStatement.filter(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
         if searchFilters['jobLocation']:
-            queryStatement = queryStatement.filter_by(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
+            queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
         return queryStatement
+
+    def convertRowsToPrimitive(self, rows):
+        rowList = []
+        for row in rows:
+            row = row[0]
+            rowList.append( {
+                'id': row.id,
+                'job': row.job,
+                'company': row.company,
+                'salary': row.salary,
+                'jobLocation': row.jobLocation,
+                'jobStartDate': row.jobStartDate,
+                'jobApplicationClosingDate': row.jobApplicationClosingDate,
+                'applicationStatus': row.applicationStatus,
+                'notes': row.notes,
+                'startJobTrackDate': row.startJobTrackDate,
+                'modifiedJobTrackDate': row.modifiedJobTrackDate
+            } )
+        return rowList
 
     def getSearchFilterLimits(self) -> dict:
         searchFilterLimits = {"salaryMin": None,
