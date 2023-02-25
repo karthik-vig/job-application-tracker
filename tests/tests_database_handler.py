@@ -2,7 +2,7 @@ import unittest
 import datetime
 import sys
 sys.path.append('./flaskr/')
-import app
+from database import DatabaseHandler
 
 class TestDatabaseHandler(unittest.TestCase):
     def testAddRetrieveFunctionality(self):
@@ -22,7 +22,7 @@ class TestDatabaseHandler(unittest.TestCase):
                           'applicationStatus': None,
                           'jobLocation': None
                         }
-        databaseHandlerObj = app.DatabaseHandler()
+        databaseHandlerObj = DatabaseHandler()
         databaseHandlerObj.addRow(jobInfo = jobInfo)
         retrievedRows = databaseHandlerObj.retrieveRows(searchFilters = searchFilters)
         jobInfo['startJobTrackDate'] = datetime.date.today()
@@ -47,7 +47,7 @@ class TestDatabaseHandler(unittest.TestCase):
                     'applicationStatus': None,
                     'jobLocation': None
                 }
-        databaseHandlerObj = app.DatabaseHandler()
+        databaseHandlerObj = DatabaseHandler()
         retrievedRows = databaseHandlerObj.retrieveRows(searchFilters = searchFilters)
         id = retrievedRows[-1]['id']
         modificationValues = retrievedRows[-1]
@@ -78,7 +78,7 @@ class TestDatabaseHandler(unittest.TestCase):
                     'applicationStatus': None,
                     'jobLocation': None
                 }
-        databaseHandlerObj = app.DatabaseHandler()
+        databaseHandlerObj = DatabaseHandler()
         databaseHandlerObj.addRow(jobInfo = jobInfo)
         databaseHandlerObj.addRow(jobInfo = jobInfo)
         retrievedRows = databaseHandlerObj.retrieveRows(searchFilters = searchFilters)
