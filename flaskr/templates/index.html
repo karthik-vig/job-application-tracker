@@ -6,11 +6,12 @@
     <body>
         <div>
             <h3> Filters: </h3>
-            <form action="" method="">
+            <form action="/" method="post">
                 <input type="text" placeholder="Search" name="searchText">
+                <input type = "submit" name="submitSearchFilter" value="Search">
                 <fieldset>
                     <label>Job Start Date After:</label>
-                    <input type="date" placeholder="DD/MM/YYYY" name="jobStartDate">
+                    <input type="date" name="jobStartDate">
                 </fieldset>
                 <fieldset>
                     <label>Salary:</label>
@@ -19,7 +20,7 @@
                 </fieldset>
                 <fieldset>
                     <label>Status:</label>
-                    <select name="Status">
+                    <select name="applicationStatus">
                         <option value="Applied">Applied</option>
                         <option value="I Rejected">I Rejected</option>
                         <option value="They Rejected">They Rejected</option>
@@ -28,13 +29,13 @@
                 </fieldset>
                 <fieldset>
                     <label>Job Location:</label>
-                    <select name="jobLocation">
+                    <input type="text" list="jobLocation" name="jobLocation">
+                    <datalist id="jobLocation">
                         {% for jobLocation in jobLocations %}
                             <option value="{{jobLocation}}">{{jobLocation}}</option>
                         {% endfor %}
-                    </select>
+                    </datalist>
                 </fieldset>
-                <input type = "submit" name="submitSearchFilter" value="True">
             </form>
             <section>
                 <a href="">
@@ -43,22 +44,24 @@
             </section>
         </div>
         <div>
-            {% for jobInfo in jobInfoList %}
-                <section>
-                    <p>Job: {{jobInfo["job"]}}</p>
-                    <p>Company: {{jobInfo["company"]}}</p>
-                    <p>Salary: {{jobInfo["salary"]}}</p>
-                    <a href="">
-                        <img src="">
-                    </a>
-                    <a href="">
-                        <img src="">
-                    </a>
-                    <form action="" method="">
-                        <input type="image" src="" name="submitAddNewJob" value="True">
-                    </form>
-                </section>
-            {% endfor%}
+            {% if jobInfoList %}
+                {% for jobInfo in jobInfoList %}
+                    <section>
+                        <p>Job: {{jobInfo["job"]}}</p>
+                        <p>Company: {{jobInfo["company"]}}</p>
+                        <p>Salary: {{jobInfo["salary"]}}</p>
+                        <a href="">
+                            <img src="">
+                        </a>
+                        <a href="">
+                            <img src="">
+                        </a>
+                        <form action="" method="">
+                            <input type="image" src="" name="submitAddNewJob">
+                        </form>
+                    </section>
+                {% endfor%}
+            {% endif %}
         </div>
     </body>
 </html>
