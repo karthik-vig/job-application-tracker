@@ -78,6 +78,7 @@ def seeJobInfo():
 @app.route('/redirectIndex', methods=['POST'])
 @app.route('/redirectAddJobInfo', methods=['POST'])
 @app.route('/redirectModifyJobInfo', methods=['POST'])
+@app.route('/redirectDeleteEntry/', methods=['GET'])
 @app.route('/redirect', methods=['POST'])
 def redirect():
     requestUrl = str(request.url_rule)
@@ -91,6 +92,10 @@ def redirect():
     elif requestUrl == '/redirectModifyJobInfo':
         modifiedJobInfo = getModifiedJobInfo()
         print(modifiedJobInfo)
+    elif requestUrl == '/redirectDeleteEntry/':
+        id = request.args.get('id')
+        print(id)
+
     return render_template('redirect.html', urlToGet=urlToGet)
 
 
