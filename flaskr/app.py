@@ -57,6 +57,24 @@ def modifyJobInfo():
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
+@app.route('/seeJobInfo', method=['GET'])
+def seeJobInfo():
+    id = request.args.get('id')
+    print(id)
+    jobInfo = { 'job': 'auditor', 
+                'company': 'kpmg', 
+                'salary': 50000,
+                'jobLocation': 'glasgow',
+                'jobStartDate': '2023-05-01',
+                'jobApplicationClosingDate': '2023-04-01',
+                'applicationStatus' : 'Success',
+                'notes': 'nice job',
+                'startJobTrackDate': '2023-02-24',
+                'modifiedJobTrackDate': '2023-02-25'
+                }
+    return render_template('seeJobInfo.html', jobInfo=jobInfo)
+
+
 @app.route('/redirectIndex', methods=['POST'])
 @app.route('/redirectAddJobInfo', methods=['POST'])
 @app.route('/redirectModifyJobInfo', methods=['POST'])

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>View Job Information</title>
     </head>
     <body>
         <div>
-            <form>
+            <form action="/redirect" method="post">
                 <fieldset>
                     <label>Job:</label>
                     <input type="text" name="job" value="{{jobInfo['job']]}}" readonly>
@@ -32,7 +32,7 @@
                 </fieldset>
                 <fieldset>
                     <label>Status:</label>
-                    <input type="text" value="jobInfo['status']" readonly>
+                    <input type="text" value="jobInfo['applicationStatus']" readonly>
                 </fieldset>
                 <fieldset>
                     <label>Notes:</label>
@@ -46,6 +46,7 @@
                     <label>Last Modified Date:</label>
                     <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly>
                 </fieldset>
+                <input type="Image" src="" name="goBack" value="temp go back">
             </form>
         </div>
     </body>
