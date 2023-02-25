@@ -57,7 +57,7 @@ def modifyJobInfo():
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
-@app.route('/seeJobInfo', method=['GET'])
+@app.route('/seeJobInfo/', methods=['GET'])
 def seeJobInfo():
     id = request.args.get('id')
     print(id)
