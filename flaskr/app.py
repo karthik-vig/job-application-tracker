@@ -3,10 +3,13 @@ from database import DatabaseHandler
                             
 app = Flask(__name__)
 databaseHandlerObj = DatabaseHandler()
+jobInfoList = None
+jobLocations = None
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
+    '''
     jobInofList = [ {   'id': 1,
                         'job': 'auditor', 
                         'company': 'kpmg', 
@@ -28,8 +31,10 @@ def index():
                          'notes': 'nicer job'
                         } 
                 ]
-    return render_template('index.html', jobInfoList=jobInofList,
-                             jobLocations=['glasgow', 'edingburgh'])
+    '''
+    global jobInfoList, jobLocations
+    return render_template('index.html', jobInfoList=jobInfoList,
+                             jobLocations=jobLocations)
 
 
 @app.route('/addJobInfo', methods=['GET'])
@@ -87,6 +92,9 @@ def redirect():
     if requestUrl == '/redirectIndex':
         searchFilters = getSearchFilters()
         print(searchFilters)
+        global jobInfoList
+        jobInfoList = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
+        print(jobInfoList)
     elif requestUrl == '/redirectAddJobInfo':
         jobInfo = getAddJobInfo()
         print(jobInfo)
@@ -141,4 +149,6 @@ def getModifiedJobInfo():
 
 if __name__ == "__main__":
     app.config['debug'] = True
+    jobLocations = databaseHandlerObj.getSearchFilterLimits()['allJobLocations']
+    #print(jobLocations)
     app.run()

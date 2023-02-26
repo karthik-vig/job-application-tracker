@@ -45,7 +45,7 @@ class DatabaseHandler:
     def addRow(self, jobInfo: dict):
         with Session(self.engine) as session:
             jobInfo['jobStartDate'] = self.strToDatetime(jobInfo['jobStartDate'])
-            jobInfo['jobApplicationClosingDat'] = self.strToDatetime(jobInfo['jobApplicationClosingDat'])
+            jobInfo['jobApplicationClosingDate'] = self.strToDatetime(jobInfo['jobApplicationClosingDate'])
             rowToInsert = self.JobTrackerTable(job = jobInfo['job'],
                                                company = jobInfo['company'],
                                                salary = jobInfo['salary'],
@@ -91,27 +91,30 @@ class DatabaseHandler:
         with Session(self.engine) as session:
             queryStatement = self.buildQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(queryStatement)
-            rowList = self.convertRowsToPrimitive(rows)
+            rowList = self.convertRetrieveRowsToPrimitive(rows)
         return rowList
 
     def buildQueryStatement(self, searchFilters: dict, session):
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
                                                    )                                           
-        if searchFilters['salary']:
+        if searchFilters['salary'] and \
+            searchFilters['salary']['min'] != '' \
+            and searchFilters['salary']['max'] != '':
+            searchFilters['salary']['min'] = int( searchFilters['salary']['min'] )
+            searchFilters['salary']['max'] = int( searchFilters['salary']['max'] )
             queryStatement = queryStatement.filter(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
                                                         self.JobTrackerTable.salary <= searchFilters['salary']['max']
                                                         )
-            
         if searchFilters['jobStartDate']:
-            queryStatement = queryStatement.filter(self.JobTrackerTable.jobStartDate >= searchFilters['jobStartDate'])
+            queryStatement = queryStatement.filter(self.JobTrackerTable.jobStartDate >= self.strToDatetime(searchFilters['jobStartDate']) )
         if searchFilters['applicationStatus']:
             queryStatement = queryStatement.filter(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
         if searchFilters['jobLocation']:
             queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
         return queryStatement
 
-    def convertRowsToPrimitive(self, rows):
+    def convertRetrieveRowsToPrimitive(self, rows):
         rowList = []
         for row in rows:
             row = row[0]
@@ -131,15 +134,28 @@ class DatabaseHandler:
         return rowList
 
     def getSearchFilterLimits(self) -> dict:
-        searchFilterLimits = {"salaryMin": None,
-                              "salaryMax": None,
+        searchFilterLimits = {"salary": {'min': None,
+                                          'max': None
+                                          }, 
                               "allJobLocations": []
                               }
-        minSalarySelectStatement = select(func.min(self.JobTrackerTable.salary)).scalar_subquery()
-        maxSalarySelectStatement = select(func.max(self.JobTrackerTable.salary)).scalar_subquery()
+        '''
+        minSalarySelectStatement = select(func.min(self.JobTrackerTable.salary))
+        maxSalarySelectStatement = select(func.max(self.JobTrackerTable.salary))
         allJobLocationsSelectStatement = select(self.JobTrackerTable.jobLocation).distinct()
+        '''
         with Session(self.engine) as session:
-            searchFilterLimits['salaryMin'] = session.execute(minSalarySelectStatement)
-            searchFilterLimits['salaryMax'] = session.execute(maxSalarySelectStatement)
+            #minSalarySelectStatement = session.query(func.min(self.JobTrackerTable.salary)).scalar_subquery()
+            #maxSalarySelectStatement = session.query(func.max(self.JobTrackerTable.salary)).scalar_subquery()
+            allJobLocationsSelectStatement = session.query(self.JobTrackerTable.jobLocation).distinct()
+            searchFilterLimits['salary']['min'] = session.query(func.min(self.JobTrackerTable.salary)).scalar()
+            searchFilterLimits['salary']['max'] = session.query(func.max(self.JobTrackerTable.salary)).scalar()
             searchFilterLimits['allJobLocations'] = session.execute(allJobLocationsSelectStatement)
-        return searchFilterLimits     
+            searchFilterLimits['allJobLocations'] = self.convertJobLocationToPrimitive(searchFilterLimits['allJobLocations'])
+        return searchFilterLimits
+
+    def convertJobLocationToPrimitive(self, allJobLocations):
+        jobLocationsList = []
+        for row in allJobLocations:
+            jobLocationsList.append(row.jobLocation)
+        return jobLocationsList
