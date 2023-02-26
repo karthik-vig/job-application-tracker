@@ -95,6 +95,10 @@ class DatabaseHandler:
         return rowList
 
     def buildQueryStatement(self, searchFilters: dict, session):
+        if searchFilters['id']:
+            searchFilters['id'] = int( searchFilters['id'] )
+            queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == searchFilters['id'])
+            return queryStatement
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
                                                    )                                           

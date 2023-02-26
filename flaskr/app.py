@@ -78,6 +78,7 @@ def seeJobInfo():
                 'startJobTrackDate': '2023-02-24',
                 'modifiedJobTrackDate': '2023-02-25'
                 }
+    jobInfo = databaseHandlerObj.retrieveRows()
     return render_template('seeJobInfo.html', jobInfo=jobInfo)
 
 
@@ -110,7 +111,8 @@ def redirect():
 
 
 def getSearchFilters():
-    searchFilters = {'searchText': request.form['searchText'],
+    searchFilters = { 'id': '',
+                    'searchText': request.form['searchText'],
                     'salary': { 'min': request.form['salaryMin'],
                                 'max': request.form['salaryMax']
                                 },
