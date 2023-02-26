@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from database import DatabaseHandler                                      
                             
 app = Flask(__name__)
+databaseHandlerObj = DatabaseHandler()
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
@@ -89,6 +90,7 @@ def redirect():
     elif requestUrl == '/redirectAddJobInfo':
         jobInfo = getAddJobInfo()
         print(jobInfo)
+        databaseHandlerObj.addRow(jobInfo=jobInfo)
     elif requestUrl == '/redirectModifyJobInfo':
         modifiedJobInfo = getModifiedJobInfo()
         print(modifiedJobInfo)
@@ -135,3 +137,8 @@ def getModifiedJobInfo():
                         'notes': request.form['job'],
                     }
     return modifiedJobInfo
+
+
+if __name__ == "__main__":
+    app.config['debug'] = True
+    app.run()

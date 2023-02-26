@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select, or_, and_
 from sqlalchemy.orm import Session, registry
+import datetime
 
 
 
@@ -43,6 +44,8 @@ class DatabaseHandler:
 
     def addRow(self, jobInfo: dict):
         with Session(self.engine) as session:
+            jobInfo['jobStartDate'] = self.strToDatetime(jobInfo['jobStartDate'])
+            jobInfo['jobApplicationClosingDat'] = self.strToDatetime(jobInfo['jobApplicationClosingDat'])
             rowToInsert = self.JobTrackerTable(job = jobInfo['job'],
                                                company = jobInfo['company'],
                                                salary = jobInfo['salary'],
@@ -55,6 +58,10 @@ class DatabaseHandler:
                                                modifiedJobTrackDate = func.current_date())
             session.add(rowToInsert)
             session.commit()
+
+    def strToDatetime(self, strDate: str):
+        dateYYYYMMDD = list( map( int, strDate.split('-') ) )
+        return datetime.date(dateYYYYMMDD[0], dateYYYYMMDD[1], dateYYYYMMDD[2])
 
     def deleteRow(self, id: int):
         with Session(self.engine) as session:
