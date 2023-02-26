@@ -95,7 +95,7 @@ class DatabaseHandler:
         return rowList
 
     def buildQueryStatement(self, searchFilters: dict, session):
-        if searchFilters['id']:
+        if searchFilters['id'] != '':
             searchFilters['id'] = int( searchFilters['id'] )
             queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == searchFilters['id'])
             return queryStatement
