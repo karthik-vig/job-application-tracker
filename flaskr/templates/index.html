@@ -6,6 +6,11 @@
         <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     </head>
     <body>
+        <section>
+            <a href="/addJobInfo"> temp add
+                <img src="">
+            </a>
+        </section>
         <div>
             <form action="/redirectIndex" method="post">
                 <input type="text" placeholder="Search" name="searchText">
@@ -40,17 +45,7 @@
                     </datalist>
                 </fieldset>
             </form>
-            <section>
-                <a href="">
-                    <img src="">
-                </a>
-            </section>
         </div>
-        <section>
-            <a href="/addJobInfo"> temp add
-                <img src="">
-            </a>
-        </section>
         <div>
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
