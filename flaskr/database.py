@@ -79,8 +79,8 @@ class DatabaseHandler:
                                     company = modificationValues['company'],
                                     salary = modificationValues['salary'],
                                     jobLocation = modificationValues['jobLocation'],
-                                    jobStartDate = modificationValues['jobStartDate'],
-                                    jobApplicationClosingDate = modificationValues['jobApplicationClosingDate'],
+                                    jobStartDate = self.strToDatetime(modificationValues['jobStartDate']),
+                                    jobApplicationClosingDate = self.strToDatetime(modificationValues['jobApplicationClosingDate']),
                                     applicationStatus = modificationValues['applicationStatus'],
                                     notes = modificationValues['notes'],
                                     modifiedJobTrackDate = func.current_date())

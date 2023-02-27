@@ -6,6 +6,7 @@
     <body>
         <div>
             <form action="/redirectModifyJobInfo" method="post">
+                <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
                 <fieldset>
                     <label>Job:</label>
                     <input type="text" name="job" value="{{ jobInfo['job'] }}">
@@ -33,10 +34,10 @@
                 <fieldset>
                     <label>Status:</label>
                     <select name="applicationStatus" >
-                        <option value="Applied" selected="{{ jobInfo['statusApplied'] }}">Applied</option>
-                        <option value="I Rejected" selected="{{ jobInfo['statusIReject'] }}">I Rejected</option>
-                        <option value="They Rejected" selected="{{ jobInfo['statusTheyReject'] }}">They Rejected</option>
-                        <option value="Successful" selected="{{ jobInfo['statusSuccess'] }}">Successful</option>
+                        <option value="Applied" {{ jobInfo['statusApplied'] }}>Applied</option>
+                        <option value="I Rejected" {{ jobInfo['statusIReject'] }}>I Rejected</option>
+                        <option value="They Rejected" {{ jobInfo['statusTheyReject'] }}>They Rejected</option>
+                        <option value="Successful" {{ jobInfo['statusSuccess'] }}>Successful</option>
                     </select>
                 </fieldset>
                 <fieldset>

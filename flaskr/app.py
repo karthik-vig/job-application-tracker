@@ -46,6 +46,8 @@ def addJobInfo():
 def modifyJobInfo():
     id = request.args.get('id')
     print(id)
+    searchFilters = {'id': id}
+    '''
     jobInfo = { 'job': 'auditor', 
                 'company': 'kpmg', 
                 'salary': 50000,
@@ -60,6 +62,22 @@ def modifyJobInfo():
                 'startJobTrackDate': '2023-02-24',
                 'modifiedJobTrackDate': '2023-02-25'
                 }
+    '''
+    jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
+    if str(type(jobInfo)) == "<class 'list'>":
+        jobInfo = jobInfo[0]
+    jobInfo['statusApplied'] = ''
+    jobInfo['statusIReject'] = ''
+    jobInfo['statusTheyReject'] = ''
+    jobInfo['statusSuccess'] = ''
+    if jobInfo['applicationStatus'] == 'Applied':
+        jobInfo['statusApplied'] = 'selected'
+    elif jobInfo['applicationStatus'] == 'I Rejected':
+        jobInfo['statusIReject'] = 'selected'
+    elif jobInfo['applicationStatus'] == 'They Rejected':
+        jobInfo['statusTheyReject'] = 'selected'
+    elif jobInfo['applicationStatus'] == 'Succesful':
+        jobInfo['statusSuccess'] = 'selected'
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
@@ -108,6 +126,8 @@ def redirect():
     elif requestUrl == '/redirectModifyJobInfo':
         modifiedJobInfo = getModifiedJobInfo()
         print(modifiedJobInfo)
+        id = modifiedJobInfo['id']
+        databaseHandlerObj.updateRow(id=id, modificationValues=modifiedJobInfo)
     elif requestUrl == '/redirectDeleteEntry/':
         id = request.args.get('id')
         print(id)
@@ -142,7 +162,8 @@ def getAddJobInfo():
 
 
 def getModifiedJobInfo():
-    modifiedJobInfo = { 'job': request.form['job'], 
+    modifiedJobInfo = { 'id': request.form['id'],
+                        'job': request.form['job'], 
                         'company': request.form['company'], 
                         'salary': request.form['salary'],
                         'jobLocation': request.form['jobLocation'],
