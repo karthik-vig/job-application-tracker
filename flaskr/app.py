@@ -131,6 +131,7 @@ def redirect():
     elif requestUrl == '/redirectDeleteEntry/':
         id = request.args.get('id')
         print(id)
+        databaseHandlerObj.deleteRow(id=id)
 
     return render_template('redirect.html', urlToGet=urlToGet)
 

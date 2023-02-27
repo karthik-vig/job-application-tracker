@@ -6,6 +6,7 @@ import datetime
 
 class DatabaseHandler:
     def __init__(self):
+        self.possibleApplicationStatus = ['Applied', 'I Rejected', 'They Rejected', 'Successful']
         self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
@@ -43,6 +44,8 @@ class DatabaseHandler:
         return JobTrackerTable
 
     def addRow(self, jobInfo: dict):
+        if jobInfo['applicationStatus'] not in self.possibleApplicationStatus:
+            jobInfo['applicationStatus'] = ''
         with Session(self.engine) as session:
             jobInfo['jobStartDate'] = self.strToDatetime(jobInfo['jobStartDate'])
             jobInfo['jobApplicationClosingDate'] = self.strToDatetime(jobInfo['jobApplicationClosingDate'])
@@ -103,19 +106,17 @@ class DatabaseHandler:
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
                                                    )                                           
-        if searchFilters['salary'] and \
-            searchFilters['salary']['min'] != '' \
-            and searchFilters['salary']['max'] != '':
+        if searchFilters['salary']['min'] != '':
             searchFilters['salary']['min'] = int( searchFilters['salary']['min'] )
+            queryStatement = queryStatement.filter(self.JobTrackerTable.salary >= searchFilters['salary']['min'])
+        if searchFilters['salary']['max'] != '':
             searchFilters['salary']['max'] = int( searchFilters['salary']['max'] )
-            queryStatement = queryStatement.filter(self.JobTrackerTable.salary >= searchFilters['salary']['min'],
-                                                        self.JobTrackerTable.salary <= searchFilters['salary']['max']
-                                                        )
-        if searchFilters['jobStartDate']:
+            queryStatement = queryStatement.filter(self.JobTrackerTable.salary <= searchFilters['salary']['max'])
+        if searchFilters['jobStartDate'] != '':
             queryStatement = queryStatement.filter(self.JobTrackerTable.jobStartDate >= self.strToDatetime(searchFilters['jobStartDate']) )
-        if searchFilters['applicationStatus']:
+        if searchFilters['applicationStatus'] in self.possibleApplicationStatus:
             queryStatement = queryStatement.filter(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
-        if searchFilters['jobLocation']:
+        if searchFilters['jobLocation'] != '':
             queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
         return queryStatement
 
