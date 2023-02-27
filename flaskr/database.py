@@ -97,6 +97,7 @@ class DatabaseHandler:
     def buildQueryStatement(self, searchFilters: dict, session):
         if searchFilters['id'] != '':
             searchFilters['id'] = int( searchFilters['id'] )
+            print(searchFilters['id'])
             queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == searchFilters['id'])
             return queryStatement
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
@@ -128,12 +129,12 @@ class DatabaseHandler:
                 'company': row.company,
                 'salary': row.salary,
                 'jobLocation': row.jobLocation,
-                'jobStartDate': row.jobStartDate,
-                'jobApplicationClosingDate': row.jobApplicationClosingDate,
+                'jobStartDate': str(row.jobStartDate),
+                'jobApplicationClosingDate': str(row.jobApplicationClosingDate),
                 'applicationStatus': row.applicationStatus,
                 'notes': row.notes,
-                'startJobTrackDate': row.startJobTrackDate,
-                'modifiedJobTrackDate': row.modifiedJobTrackDate
+                'startJobTrackDate': str(row.startJobTrackDate),
+                'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
             } )
         return rowList
 

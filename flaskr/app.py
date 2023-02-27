@@ -67,6 +67,8 @@ def modifyJobInfo():
 def seeJobInfo():
     id = request.args.get('id')
     print(id)
+    searchFilters = {'id': id}
+    '''
     jobInfo = { 'job': 'auditor', 
                 'company': 'kpmg', 
                 'salary': 50000,
@@ -78,7 +80,10 @@ def seeJobInfo():
                 'startJobTrackDate': '2023-02-24',
                 'modifiedJobTrackDate': '2023-02-25'
                 }
-    jobInfo = databaseHandlerObj.retrieveRows()
+    '''
+    jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
+    if str(type(jobInfo)) == "<class 'list'>":
+        jobInfo = jobInfo[0]
     return render_template('seeJobInfo.html', jobInfo=jobInfo)
 
 
