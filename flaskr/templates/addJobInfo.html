@@ -10,31 +10,31 @@
             <form action="redirectAddJobInfo" method="post">
                 <fieldset>
                     <label>Job:</label>
-                    <input type="text" name="job">
+                    <input type="text" name="job" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Company: </label>
-                    <input type="text" name="company">
+                    <input type="text" name="company" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Salary:</label>
-                    <input type="number" name="salary">
+                    <input type="number" name="salary" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Location:</label>
-                    <input type="text" name="jobLocation">
+                    <input type="text" name="jobLocation" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Job Start Date:</label>
-                    <input type="date" name="jobStartDate">
+                    <input type="date" name="jobStartDate" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Job Application Closing Date:</label>
-                    <input type="date" name="jobApplicationClosingDate">
+                    <input type="date" name="jobApplicationClosingDate" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Status:</label>
-                    <select name="applicationStatus">
+                    <select name="applicationStatus" class="commonBorder">
                         <option value="Applied">Applied</option>
                         <option value="I Rejected">I Rejected</option>
                         <option value="They Rejected">They Rejected</option>
@@ -43,10 +43,10 @@
                 </fieldset>
                 <fieldset>
                     <label>Notes:</label>
-                    <input type="text" name="notes" maxlength="10000">
+                    <input type="text" name="notes" maxlength="10000" class="commonBorder">
                 </fieldset>
-                <input type="image"  src="" name="newJobInfoSubmit" value="temp add">
-                <input type="image" src="" name="cancelSubmit" value="temp cancel" formaction="/redirect" >
+                <input type="image"  src="{{url_for('static', filename='add.svg')}}" name="newJobInfoSubmit" class="buttonDim">
+                <input type="image" src="{{url_for('static', filename='goBack.svg')}}" name="cancelSubmit" value="temp cancel" formaction="/redirect" class="buttonDim">
             </form>
         </div>
     </body>
