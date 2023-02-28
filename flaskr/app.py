@@ -42,7 +42,7 @@ def addJobInfo():
     return render_template('addJobInfo.html')
 
 
-@app.route('/modifyJobInfo/', methods=['GET'])
+@app.route('/modifyJobInfo', methods=['GET'])
 def modifyJobInfo():
     id = request.args.get('id')
     print(id)
@@ -81,7 +81,7 @@ def modifyJobInfo():
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
-@app.route('/seeJobInfo/', methods=['GET'])
+@app.route('/seeJobInfo', methods=['GET'])
 def seeJobInfo():
     id = request.args.get('id')
     print(id)
@@ -108,7 +108,7 @@ def seeJobInfo():
 @app.route('/redirectIndex', methods=['POST'])
 @app.route('/redirectAddJobInfo', methods=['POST'])
 @app.route('/redirectModifyJobInfo', methods=['POST'])
-@app.route('/redirectDeleteEntry/', methods=['GET'])
+@app.route('/redirectDeleteEntry', methods=['GET'])
 @app.route('/redirect', methods=['POST'])
 def redirect():
     requestUrl = str(request.url_rule)
@@ -128,7 +128,7 @@ def redirect():
         print(modifiedJobInfo)
         id = modifiedJobInfo['id']
         databaseHandlerObj.updateRow(id=id, modificationValues=modifiedJobInfo)
-    elif requestUrl == '/redirectDeleteEntry/':
+    elif requestUrl == '/redirectDeleteEntry':
         id = request.args.get('id')
         print(id)
         databaseHandlerObj.deleteRow(id=id)
