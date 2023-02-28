@@ -1,0 +1,20 @@
+.commonBorder {
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.buttonDim {
+    height: 5vh;
+    width: 5vb;
+
+}
+
+.searchBox {
+    height: 5vh;
+    width: 20vb;
+}
+
+.jobEntryPanel {
+    height: 10vh;
+    width: 40vb;
+}

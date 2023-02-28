@@ -6,28 +6,35 @@
         <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     </head>
     <body>
+        <!--
         <section>
-            <a href="/addJobInfo"> temp add
-                <img src="">
+            <a href="/addJobInfo" class="buttonDim">
+                <img src="{{url_for('static', filename='add.svg')}}">
             </a>
         </section>
+        -->
         <div>
+            <section>
+                <form method="get">
+                    <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim  commonBorder">
+                </form>
+            </section>
             <form action="/redirectIndex" method="post">
-                <input type="text" placeholder="Search" name="searchText">
-                <input type = "submit" name="submitSearchFilter" value="Search">
+                <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder">
+                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='search.svg')}}" class="buttonDim  commonBorder">
                 <h3> Filters: </h3>
                 <fieldset>
                     <label>Job Start Date After:</label>
-                    <input type="date" name="jobStartDate">
+                    <input type="date" name="jobStartDate" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Salary:</label>
-                    <input type="number" placeholder="Min" name="salaryMin">
-                    <input type="number" placeholder="Max" name="salaryMax">
+                    <input type="number" placeholder="Min" name="salaryMin" class="commonBorder">
+                    <input type="number" placeholder="Max" name="salaryMax" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Status:</label>
-                    <select name="applicationStatus">
+                    <select name="applicationStatus" class="commonBorder">
                         <option value="None">Choose...</option>
                         <option value="Applied">Applied</option>
                         <option value="I Rejected">I Rejected</option>
@@ -37,7 +44,7 @@
                 </fieldset>
                 <fieldset>
                     <label>Job Location:</label>
-                    <input type="text" list="jobLocation" name="jobLocation">
+                    <input type="text" list="jobLocation" name="jobLocation" class="commonBorder">
                     <datalist id="jobLocation">
                         {% for jobLocation in jobLocations %}
                             <option value="{{jobLocation}}">{{jobLocation}}</option>
@@ -49,10 +56,11 @@
         <div>
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
-                    <section>
+                    <section class="commonBorder jobEntryPanel">
                         <p>Job: {{jobInfo["job"]}}</p>
                         <p>Company: {{jobInfo["company"]}}</p>
                         <p>Salary: {{jobInfo["salary"]}}</p>
+                        <!--
                         <a href="/modifyJobInfo?id={{jobInfo['id']}}"> temp modify
                             <img src="">
                         </a>
@@ -62,6 +70,13 @@
                         <a href="/redirectDeleteEntry?id={{jobInfo['id']}}"> temp delete entry
                             <img src="">
                         </a>
+                        -->
+                        <form method="get">
+                            <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
+                            <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="commonBorder buttonDim">
+                            <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="commonBorder buttonDim">
+                            <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="commonBorder buttonDim">
+                        </form>
                     </section>
                 {% endfor%}
             {% endif %}
