@@ -11,31 +11,31 @@
                 <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
                 <fieldset>
                     <label>Job:</label>
-                    <input type="text" name="job" value="{{ jobInfo['job'] }}">
+                    <input type="text" name="job" value="{{ jobInfo['job'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Company: </label>
-                    <input type="text" name="company" value="{{ jobInfo['company'] }}">
+                    <input type="text" name="company" value="{{ jobInfo['company'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Salary:</label>
-                    <input type="number" name="salary" value="{{ jobInfo['salary'] }}">
+                    <input type="number" name="salary" value="{{ jobInfo['salary'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Location:</label>
-                    <input type="text" name="jobLocation" value="{{ jobInfo['jobLocation'] }}">
+                    <input type="text" name="jobLocation" value="{{ jobInfo['jobLocation'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Job Start Date:</label>
-                    <input type="date" name="jobStartDate" value="{{ jobInfo['jobStartDate'] }}">
+                    <input type="date" name="jobStartDate" value="{{ jobInfo['jobStartDate'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Job Application Closing Date:</label>
-                    <input type="date" name="jobApplicationClosingDate" value="{{ jobInfo['jobApplicationClosingDate'] }}">
+                    <input type="date" name="jobApplicationClosingDate" value="{{ jobInfo['jobApplicationClosingDate'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Status:</label>
-                    <select name="applicationStatus" >
+                    <select name="applicationStatus" class="commonBorder">
                         <option value="Applied" {{ jobInfo['statusApplied'] }}>Applied</option>
                         <option value="I Rejected" {{ jobInfo['statusIReject'] }}>I Rejected</option>
                         <option value="They Rejected" {{ jobInfo['statusTheyReject'] }}>They Rejected</option>
@@ -44,18 +44,18 @@
                 </fieldset>
                 <fieldset>
                     <label>Notes:</label>
-                    <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}">
+                    <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}" class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Added Date:</label>
-                    <input type="date" value="{{ jobInfo['startJobTrackDate'] }}" readonly>
+                    <input type="date" value="{{ jobInfo['startJobTrackDate'] }}" readonly class="commonBorder">
                 </fieldset>
                 <fieldset>
                     <label>Last Modified Date:</label>
-                    <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly>
+                    <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly class="commonBorder">
                 </fieldset>
-                <input type="image" src="" name="modifiedJobInfoSubmit" value="temp modify submit">
-                <input type="image" src="" name="cancelSubmit" value="temp cancel" formaction="/redirect" >
+                <input type="image" src="{{url_for('static', filename='modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim">
+                <input type="image" src="{{url_for('static', filename='goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim">
             </form>
         </div>
     </body>
