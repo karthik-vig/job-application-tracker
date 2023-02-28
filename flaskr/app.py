@@ -3,7 +3,7 @@ from database import DatabaseHandler
                             
 app = Flask(__name__)
 databaseHandlerObj = DatabaseHandler()
-jobInfoList = None
+searchFilters = None
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
@@ -31,7 +31,11 @@ def index():
                         } 
                 ]
     '''
-    global jobInfoList
+    global searchFilters
+    jobInfoList = None
+    if searchFilters:
+        jobInfoList = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
+        print(jobInfoList)
     jobLocations = databaseHandlerObj.getSearchFilterLimits()['allJobLocations']
     return render_template('index.html', jobInfoList=jobInfoList,
                              jobLocations=jobLocations)
@@ -113,12 +117,10 @@ def seeJobInfo():
 def redirect():
     requestUrl = str(request.url_rule)
     urlToGet = '/index'
-    global jobInfoList
+    global searchFilters
     if requestUrl == '/redirectIndex':
         searchFilters = getSearchFilters()
         print(searchFilters)
-        jobInfoList = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
-        print(jobInfoList)
     elif requestUrl == '/redirectAddJobInfo':
         jobInfo = getAddJobInfo()
         print(jobInfo)
