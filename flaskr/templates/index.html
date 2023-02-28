@@ -16,12 +16,12 @@
         <div>
             <section>
                 <form method="get">
-                    <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim  commonBorder">
+                    <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim">
                 </form>
             </section>
             <form action="/redirectIndex" method="post">
                 <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder">
-                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='search.svg')}}" class="buttonDim  commonBorder">
+                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='search.svg')}}" class="buttonDim">
                 <h3> Filters: </h3>
                 <fieldset>
                     <label>Job Start Date After:</label>
@@ -73,9 +73,9 @@
                         -->
                         <form method="get">
                             <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
-                            <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="commonBorder buttonDim">
-                            <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="commonBorder buttonDim">
-                            <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="commonBorder buttonDim">
+                            <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim">
+                            <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="buttonDim">
+                            <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim">
                         </form>
                     </section>
                 {% endfor%}
