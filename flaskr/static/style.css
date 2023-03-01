@@ -8,11 +8,15 @@ body {
     width: 100vw;
 }
 
-.jobEntryPanelItem{
+.jobEntryPanelItemContainer{
+   /* display: grid;
+    grid-template-columns: [col1] 85vw [endCol];
+    grid-template-rows: [row1] 65vh [endRow]; */
     grid-column-start: col1;
     grid-column-end: endCol;
     grid-row-start: row2;
     grid-row-end: endRow;
+    overflow-y: scroll;
 }
 
 .searchFilterInputItem{
@@ -24,8 +28,9 @@ body {
 
 .bodyContainer{
     display: grid;
-    grid-template-columns: [col1] 100vw [endCol];
-    grid-template-rows: [row1] 20vh [row2] 80vh [endRow];
+    grid-template-columns: [col1] 95vw [endCol];
+    grid-template-rows: [row1] 20vh [row2] 65vh [endRow];
+    justify-content: center;
 }
 
 .commonBorder {
@@ -40,9 +45,13 @@ body {
 }
 
 .jobEntryPanel {
-
+    display: block;
     height: 10vh;
     width: 50vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left: 20vw;
+    margin-right: 20vw;
 }
 
 .addButton{
@@ -113,4 +122,6 @@ body {
     display: grid;
     grid-template-columns: [col1] 5vw [col2] 80vw [endCol];
     grid-template-rows: [row1] 10vh [row2] 10vh [endRow];
+    place-content: center;
+    justify-content: center;
 }

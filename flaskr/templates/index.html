@@ -13,7 +13,7 @@
             </a>
         </section>
         -->
-        <div class="searchFilterInputContainer searchFilterInputItem">
+        <div class="commonBorder searchFilterInputContainer searchFilterInputItem">
             <section class="addButton">
                 <form method="get">
                     <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim">
@@ -52,10 +52,10 @@
                 </fieldset>
             </form>
         </div>
-        <div class="jobEntryPanelItem">
+        <ul class="commonBorder jobEntryPanelItemContainer">
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
-                    <section class="commonBorder jobEntryPanel">
+                    <li class="commonBorder jobEntryPanel">
                         <p>Job: {{jobInfo["job"]}}</p>
                         <p>Company: {{jobInfo["company"]}}</p>
                         <p>Salary: {{jobInfo["salary"]}}</p>
@@ -77,9 +77,10 @@
                             <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="buttonDim">
                             <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim">
                         </form>
-                    </section>
+                    </li>
+                    <br/>
                 {% endfor%}
             {% endif %}
-        </div>
+            </ul>
     </body>
 </html>
