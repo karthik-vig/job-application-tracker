@@ -72,6 +72,8 @@ body {
 }
 
 .searchBox{
+    height: 5vh;
+    width: 60vw;
     grid-column-start: col1;
     grid-column-end: col4;
     grid-row-start: row1;
