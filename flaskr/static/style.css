@@ -1,3 +1,13 @@
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
 .commonBorder {
     border-style: solid;
     border-radius: 5px;
@@ -5,16 +15,82 @@
 
 .buttonDim {
     height: 5vh;
-    width: 5vb;
+    width: 5vw;
 
-}
-
-.searchBox {
-    height: 5vh;
-    width: 20vb;
 }
 
 .jobEntryPanel {
+
     height: 10vh;
-    width: 40vb;
+    width: 50vw;
+}
+
+.addButton{
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.filterForm{
+    display: grid;
+    grid-template-columns: [col1] 20vw [col2] 20vw [col3] 20vw [col4] 20vw [endCol];
+    grid-template-rows: [row1] 10vh [row2] 10vh [endRow];
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+.searchBox{
+    grid-column-start: col1;
+    grid-column-end: col4;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.searchButton{
+    display: subgrid;
+    grid-column-start: col4;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.jobStartDateInput{
+    display: subgrid;
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.salaryInput{
+    display: subgrid;
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.applicationStatusInput{
+    display: subgrid;
+    grid-column-start: col3;
+    grid-column-end: col4;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.jobLocationInput{
+    display: subgrid;
+    grid-column-start: col4;
+    grid-column-end: endCol;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.searchFilterInputContainer{
+    display: grid;
+    grid-template-columns: [col1] 5vw [col2] 80vw [endCol];
+    grid-template-rows: [row1] 10vh [row2] 10vh [endRow];
 }

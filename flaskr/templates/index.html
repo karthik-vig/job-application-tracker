@@ -13,26 +13,25 @@
             </a>
         </section>
         -->
-        <div>
-            <section>
+        <div class="searchFilterInputContainer">
+            <section class="addButton">
                 <form method="get">
                     <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim">
                 </form>
             </section>
-            <form action="/redirectIndex" method="post">
+            <form action="/redirectIndex" method="post" class="filterForm">
                 <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder">
-                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='search.svg')}}" class="buttonDim">
-                <h3> Filters: </h3>
-                <fieldset>
+                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='search.svg')}}" class="buttonDim searchButton">
+                <fieldset class="jobStartDateInput">
                     <label>Job Start Date After:</label>
                     <input type="date" name="jobStartDate" class="commonBorder">
                 </fieldset>
-                <fieldset>
+                <fieldset class="salaryInput">
                     <label>Salary:</label>
                     <input type="number" placeholder="Min" name="salaryMin" class="commonBorder">
                     <input type="number" placeholder="Max" name="salaryMax" class="commonBorder">
                 </fieldset>
-                <fieldset>
+                <fieldset class="applicationStatusInput">
                     <label>Status:</label>
                     <select name="applicationStatus" class="commonBorder">
                         <option value="None">Choose...</option>
@@ -42,7 +41,7 @@
                         <option value="Successful">Successful</option>
                     </select>
                 </fieldset>
-                <fieldset>
+                <fieldset class="jobLocationInput">
                     <label>Job Location:</label>
                     <input type="text" list="jobLocation" name="jobLocation" class="commonBorder">
                     <datalist id="jobLocation">
@@ -60,6 +59,7 @@
                         <p>Job: {{jobInfo["job"]}}</p>
                         <p>Company: {{jobInfo["company"]}}</p>
                         <p>Salary: {{jobInfo["salary"]}}</p>
+                        <p>Status: {{jobInfo["applicationStatus"]}}</p>
                         <!--
                         <a href="/modifyJobInfo?id={{jobInfo['id']}}"> temp modify
                             <img src="">
