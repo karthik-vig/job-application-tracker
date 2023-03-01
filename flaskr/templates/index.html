@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     </head>
-    <body>
+    <body class="bodyContainer">
         <!--
         <section>
             <a href="/addJobInfo" class="buttonDim">
@@ -13,7 +13,7 @@
             </a>
         </section>
         -->
-        <div class="searchFilterInputContainer">
+        <div class="searchFilterInputContainer searchFilterInputItem">
             <section class="addButton">
                 <form method="get">
                     <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim">
@@ -52,7 +52,7 @@
                 </fieldset>
             </form>
         </div>
-        <div>
+        <div class="jobEntryPanelItem">
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
                     <section class="commonBorder jobEntryPanel">
