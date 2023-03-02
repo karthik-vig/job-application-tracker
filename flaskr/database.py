@@ -21,16 +21,16 @@ class DatabaseHandler:
         class JobTrackerTable(self.Base):
             __tablename__ = "JobTrackerTable"
             id = Column(Integer, primary_key=True, autoincrement=True)
-            job = Column(String(50))
-            company = Column(String(100))
-            salary = Column(Integer)
-            jobLocation = Column(String(100))
-            jobStartDate = Column(Date)
-            jobApplicationClosingDate = Column(Date)
-            applicationStatus = Column(String(20))
-            notes = Column(String(10000))
-            startJobTrackDate = Column(Date)
-            modifiedJobTrackDate = Column(Date)
+            job = Column(String(50), nullable=True)
+            company = Column(String(100), nullable=True)
+            salary = Column(Integer, nullable=True)
+            jobLocation = Column(String(100), nullable=True)
+            jobStartDate = Column(Date, nullable=True)
+            jobApplicationClosingDate = Column(Date, nullable=True)
+            applicationStatus = Column(String(20), nullable=True)
+            notes = Column(String(10000), nullable=True)
+            startJobTrackDate = Column(Date, nullable=False)
+            modifiedJobTrackDate = Column(Date, nullable=False)
             def __repr__(self):
                 return f"Table recording all job tracking information"
         self.mapper_registry.metadata.create_all(self.engine)
