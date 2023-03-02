@@ -141,7 +141,7 @@ class DatabaseHandler:
         rowList = []
         for row in rows:
             row = row[0]
-            rowList.append( {
+            jobInfo = {
                 'id': row.id,
                 'job': row.job,
                 'company': row.company,
@@ -153,8 +153,18 @@ class DatabaseHandler:
                 'notes': row.notes,
                 'startJobTrackDate': str(row.startJobTrackDate),
                 'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
-            } )
+            }
+            jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
+            rowList.append(jobInfo)
         return rowList
+
+    def convertJobInfoNullToEmptyStr(self, jobInfo: dict):
+        exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
+        jobInfokeys = jobInfo.keys()
+        for key in jobInfokeys:
+            if key not in exemptFields:
+                jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
+        return jobInfo
 
     def getSearchFilterLimits(self) -> dict:
         searchFilterLimits = {"salary": {'min': None,
@@ -180,5 +190,6 @@ class DatabaseHandler:
     def convertJobLocationToPrimitive(self, allJobLocations):
         jobLocationsList = []
         for row in allJobLocations:
-            jobLocationsList.append(row.jobLocation)
+            if row.jobLocation != None:
+                jobLocationsList.append(row.jobLocation)
         return jobLocationsList

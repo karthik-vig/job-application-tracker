@@ -46,7 +46,9 @@
                     <input type="text" list="jobLocation" name="jobLocation" class="commonBorder">
                     <datalist id="jobLocation">
                         {% for jobLocation in jobLocations %}
-                            <option value="{{jobLocation}}"></option>
+                            {% if JobLocation != '' %}
+                                <option value="{{jobLocation}}"></option>
+                            {% endif %}
                         {% endfor %}
                     </datalist>
                 </fieldset>

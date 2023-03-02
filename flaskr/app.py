@@ -70,18 +70,6 @@ def modifyJobInfo():
     jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
     if str(type(jobInfo)) == "<class 'list'>":
         jobInfo = jobInfo[0]
-    jobInfo['statusApplied'] = ''
-    jobInfo['statusIReject'] = ''
-    jobInfo['statusTheyReject'] = ''
-    jobInfo['statusSuccess'] = ''
-    if jobInfo['applicationStatus'] == 'Applied':
-        jobInfo['statusApplied'] = 'selected'
-    elif jobInfo['applicationStatus'] == 'I Rejected':
-        jobInfo['statusIReject'] = 'selected'
-    elif jobInfo['applicationStatus'] == 'They Rejected':
-        jobInfo['statusTheyReject'] = 'selected'
-    elif jobInfo['applicationStatus'] == 'Succesful':
-        jobInfo['statusSuccess'] = 'selected'
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
