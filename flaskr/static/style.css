@@ -83,24 +83,36 @@ body {
 .jobEntryPanelSee{
     display: block;
     grid-column-start: col2;
-    grid-column-end: col3;
+    grid-column-end: endCol;
     grid-row-start: row1;
     grid-row-end: endRow;
 }
 
 .jobEntryPanelDelete{
     display: block;
-    grid-column-start: col3;
+    grid-column-start: col1;
     grid-column-end: endCol;
     grid-row-start: row1;
     grid-row-end: endRow;
 }
 
-.jobEntryPanelButtonsContainer{
+.jobEntryPanelButtonsContainerPart1{
     display: grid;
-    grid-template-columns: [col1] 4vw [col2] 4vw [col3] 4vw [endCol];
+    grid-template-columns: [col1] 4vw [col2] 4vw [endCol];
     grid-template-rows: [row1] 10vh [endRow];
     grid-column-start: col3;
+    grid-column-end: col4;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+    justify-items: center;
+    align-items: center;
+}
+
+.jobEntryPanelButtonsContainerPart2{
+    display: grid;
+    grid-template-columns: [col1] 4vw [endCol];
+    grid-template-rows: [row1] 10vh [endRow];
+    grid-column-start: col4;
     grid-column-end: endCol;
     grid-row-start: row1;
     grid-row-end: endRow;
@@ -110,7 +122,7 @@ body {
 
 .jobEntryPanel {
     display: grid;
-    grid-template-columns: [col1] 20vw [col2] 20vw [col3] 12vw [endCol];
+    grid-template-columns: [col1] 20vw [col2] 20vw [col3] 8vw [col4] 4vw [endCol];
     grid-template-rows: [row1] 5vh [row2] 5vh [endRow];
     height: 10vh;
     width: 52vw;

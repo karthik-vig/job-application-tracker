@@ -71,10 +71,13 @@
                             <img src="">
                         </a>
                         -->
-                        <form method="get" class="jobEntryPanelButtonsContainer">
+                        <form method="get" class="jobEntryPanelButtonsContainerPart1">
                             <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
                             <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim jobEntryPanelModify">
                             <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="buttonDim jobEntryPanelSee">
+                        </form>
+                        <form method="get" class="jobEntryPanelButtonsContainerPart2" onsubmit="return confirm('Delete the Entry?')">
+                            <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
                             <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim jobEntryPanelDelete">
                         </form>
                     </li>
