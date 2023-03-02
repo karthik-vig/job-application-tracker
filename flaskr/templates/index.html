@@ -56,10 +56,10 @@
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
                     <li class="commonBorder jobEntryPanel">
-                        <p>Job: {{jobInfo["job"]}}</p>
-                        <p>Company: {{jobInfo["company"]}}</p>
-                        <p>Salary: {{jobInfo["salary"]}}</p>
-                        <p>Status: {{jobInfo["applicationStatus"]}}</p>
+                        <p class="JobEntryPanelJobName">Job: {{jobInfo["job"]}}</p>
+                        <p class="JobEntryPanelCompany">Company: {{jobInfo["company"]}}</p>
+                        <p class="JobEntryPanelSalary">Salary: {{jobInfo["salary"]}}</p>
+                        <p class="JobEntryPanelApplicationStatus">Status: {{jobInfo["applicationStatus"]}}</p>
                         <!--
                         <a href="/modifyJobInfo?id={{jobInfo['id']}}"> temp modify
                             <img src="">
@@ -71,11 +71,11 @@
                             <img src="">
                         </a>
                         -->
-                        <form method="get">
+                        <form method="get" class="jobEntryPanelButtonsContainer">
                             <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
-                            <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim">
-                            <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="buttonDim">
-                            <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim">
+                            <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim jobEntryPanelModify">
+                            <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="buttonDim jobEntryPanelSee">
+                            <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim jobEntryPanelDelete">
                         </form>
                     </li>
                     <br/>

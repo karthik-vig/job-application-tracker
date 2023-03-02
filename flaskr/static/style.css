@@ -35,23 +35,90 @@ body {
 
 .commonBorder {
     border-style: solid;
-    border-radius: 5px;
+    border-radius: 0.7vh;
 }
 
 .buttonDim {
-    height: 5vh;
-    width: 5vw;
+    height: 4vh;
+    width: 4vw;
 
 }
 
-.jobEntryPanel {
+.JobEntryPanelJobName{
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.JobEntryPanelCompany{
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.JobEntryPanelApplicationStatus{
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.JobEntryPanelSalary{
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.jobEntryPanelModify{
     display: block;
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+.jobEntryPanelSee{
+    display: block;
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+.jobEntryPanelDelete{
+    display: block;
+    grid-column-start: col3;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+.jobEntryPanelButtonsContainer{
+    display: grid;
+    grid-template-columns: [col1] 4vw [col2] 4vw [col3] 4vw [endCol];
+    grid-template-rows: [row1] 10vh [endRow];
+    grid-column-start: col3;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+    justify-items: center;
+    align-items: center;
+}
+
+.jobEntryPanel {
+    display: grid;
+    grid-template-columns: [col1] 20vw [col2] 20vw [col3] 12vw [endCol];
+    grid-template-rows: [row1] 5vh [row2] 5vh [endRow];
     height: 10vh;
-    width: 50vw;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
+    width: 52vw;
+    margin-top: 1vh;
     margin-left: 20vw;
     margin-right: 20vw;
+    align-items: center;
+    justify-items: center;
 }
 
 .addButton{
@@ -124,6 +191,4 @@ body {
     display: grid;
     grid-template-columns: [col1] 5vw [col2] 80vw [endCol];
     grid-template-rows: [row1] 10vh [row2] 10vh [endRow];
-    place-content: center;
-    justify-content: center;
 }
