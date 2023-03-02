@@ -21,8 +21,8 @@ class DatabaseHandler:
         class JobTrackerTable(self.Base):
             __tablename__ = "JobTrackerTable"
             id = Column(Integer, primary_key=True, autoincrement=True)
-            job = Column(String(50), nullable=True)
-            company = Column(String(100), nullable=True)
+            job = Column(String(50), nullable=False)
+            company = Column(String(100), nullable=False)
             salary = Column(Integer, nullable=True)
             jobLocation = Column(String(100), nullable=True)
             jobStartDate = Column(Date, nullable=True)
@@ -71,8 +71,13 @@ class DatabaseHandler:
             return None
 
     def convertJobInfoEmptyStrToNull(self, jobInfo: dict):
-        for key in jobInfo.keys():
+        jobInfoKeys = jobInfo.keys()
+        for key in jobInfoKeys:
             jobInfo[key] = None if jobInfo[key] == '' else jobInfo[key]
+        if 'job' in jobInfoKeys and jobInfo['job'] == None:
+            jobInfo['job'] = ''
+        if 'company' in jobInfoKeys and jobInfo['company'] == None:
+            jobInfo['company'] = ''
         return jobInfo
 
     def deleteRow(self, id: int):
@@ -84,6 +89,9 @@ class DatabaseHandler:
             session.commit()
 
     def updateRow(self, id: int, modificationValues: dict):
+        if modificationValues['applicationStatus'] not in self.possibleApplicationStatus:
+            modificationValues['applicationStatus'] = ''
+        modificationValues = self.convertJobInfoEmptyStrToNull(jobInfo=modificationValues)
         with Session(self.engine) as session:
             session.execute( update(self.JobTrackerTable)
                             .where(self.JobTrackerTable.id == id)
