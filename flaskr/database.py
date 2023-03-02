@@ -46,6 +46,7 @@ class DatabaseHandler:
     def addRow(self, jobInfo: dict):
         if jobInfo['applicationStatus'] not in self.possibleApplicationStatus:
             jobInfo['applicationStatus'] = ''
+        jobInfo = self.convertJobInfoEmptyStrToNull(jobInfo=jobInfo)
         with Session(self.engine) as session:
             jobInfo['jobStartDate'] = self.strToDatetime(jobInfo['jobStartDate'])
             jobInfo['jobApplicationClosingDate'] = self.strToDatetime(jobInfo['jobApplicationClosingDate'])
@@ -63,8 +64,16 @@ class DatabaseHandler:
             session.commit()
 
     def strToDatetime(self, strDate: str):
-        dateYYYYMMDD = list( map( int, strDate.split('-') ) )
-        return datetime.date(dateYYYYMMDD[0], dateYYYYMMDD[1], dateYYYYMMDD[2])
+        if strDate:
+            dateYYYYMMDD = list( map( int, strDate.split('-') ) )
+            return datetime.date(dateYYYYMMDD[0], dateYYYYMMDD[1], dateYYYYMMDD[2])
+        else:
+            return None
+
+    def convertJobInfoEmptyStrToNull(self, jobInfo: dict):
+        for key in jobInfo.keys():
+            jobInfo[key] = None if jobInfo[key] == '' else jobInfo[key]
+        return jobInfo
 
     def deleteRow(self, id: int):
         with Session(self.engine) as session:
