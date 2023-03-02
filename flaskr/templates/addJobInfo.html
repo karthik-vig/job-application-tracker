@@ -2,8 +2,9 @@
 <html>
     <head>
         <title>Add a New Job Entry</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/indexStyle.css')}}">
     </head>
     <body>
         <div>
@@ -46,8 +47,8 @@
                     <label>Notes:</label>
                     <input type="text" name="notes" maxlength="10000" class="commonBorder">
                 </fieldset>
-                <input type="image"  src="{{url_for('static', filename='add.svg')}}" name="newJobInfoSubmit" class="buttonDim">
-                <input type="image" src="{{url_for('static', filename='goBack.svg')}}" name="cancelSubmit" value="temp cancel" formaction="/redirect" class="buttonDim">
+                <input type="image"  src="{{url_for('static', filename='icons/add.svg')}}" name="newJobInfoSubmit" class="buttonDim">
+                <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" value="temp cancel" formaction="/redirect" class="buttonDim">
             </form>
         </div>
     </body>

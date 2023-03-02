@@ -2,8 +2,9 @@
 <html>
     <head>
         <title>View Job Information</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/seeJobInfoStyle.css')}}">
     </head>
     <body>
         <div>
@@ -48,7 +49,7 @@
                     <label>Last Modified Date:</label>
                     <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder">
                 </fieldset>
-                <input type="Image" src="{{url_for('static', filename='goBack.svg')}}" name="goBack" class="buttonDim">
+                <input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim">
             </form>
         </div>
     </body>

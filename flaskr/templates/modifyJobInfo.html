@@ -2,8 +2,9 @@
 <html>
     <head>
         <title>Modify Job Infomation</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/modifyJobInfoStyle.css')}}">
     </head>
     <body>
         <form action="/redirectModifyJobInfo" method="post">
@@ -74,8 +75,8 @@
                 <label>Last Modified Date:</label>
                 <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly class="commonBorder">
             </fieldset>
-            <input type="image" src="{{url_for('static', filename='modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim">
-            <input type="image" src="{{url_for('static', filename='goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim">
+            <input type="image" src="{{url_for('static', filename='icons/modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim">
+            <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim">
         </form>
     </body>
 </html>

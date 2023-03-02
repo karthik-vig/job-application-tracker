@@ -2,8 +2,9 @@
 <html>
     <head>
         <title>Job Tracker</title>
-        <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/indexStyle.css')}}">
     </head>
     <body class="bodyContainer">
         <!--
@@ -16,12 +17,12 @@
         <div class="commonBorder searchFilterInputContainer searchFilterInputItem">
             <section class="addButton">
                 <form method="get">
-                    <input type="image" src="{{url_for('static', filename='add.svg')}}" formaction="/addJobInfo" class="buttonDim">
+                    <input type="image" src="{{url_for('static', filename='icons/add.svg')}}" formaction="/addJobInfo" class="buttonDim">
                 </form>
             </section>
             <form action="/redirectIndex" method="post" class="filterForm">
                 <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder">
-                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='search.svg')}}" class="buttonDim searchButton">
+                <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='icons/search.svg')}}" class="buttonDim searchButton">
                 <fieldset class="jobStartDateInput">
                     <label>Job Start Date After:</label>
                     <input type="date" name="jobStartDate" class="commonBorder">
@@ -75,12 +76,12 @@
                         -->
                         <form method="get" class="jobEntryPanelButtonsContainerPart1">
                             <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
-                            <input type="image" src="{{url_for('static', filename='modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim jobEntryPanelModify">
-                            <input type="image" src="{{url_for('static', filename='see.svg')}}" formaction="/seeJobInfo" class="buttonDim jobEntryPanelSee">
+                            <input type="image" src="{{url_for('static', filename='icons/modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim jobEntryPanelModify">
+                            <input type="image" src="{{url_for('static', filename='icons/see.svg')}}" formaction="/seeJobInfo" class="buttonDim jobEntryPanelSee">
                         </form>
                         <form method="get" class="jobEntryPanelButtonsContainerPart2" onsubmit="return confirm('Delete the Entry?')">
                             <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
-                            <input type="image" src="{{url_for('static', filename='delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim jobEntryPanelDelete">
+                            <input type="image" src="{{url_for('static', filename='icons/delete.svg')}}" formaction="/redirectDeleteEntry" class="buttonDim jobEntryPanelDelete">
                         </form>
                     </li>
                     <br/>
