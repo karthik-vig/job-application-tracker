@@ -6,78 +6,76 @@
         <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     </head>
     <body>
-        <div>
-            <form action="/redirectModifyJobInfo" method="post">
-                <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
-                <fieldset>
-                    <label>Job:</label>
-                    <input type="text" name="job" value="{{ jobInfo['job'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Company: </label>
-                    <input type="text" name="company" value="{{ jobInfo['company'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Salary:</label>
-                    <input type="number" name="salary" value="{{ jobInfo['salary'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Location:</label>
-                    <input type="text" name="jobLocation" value="{{ jobInfo['jobLocation'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Job Start Date:</label>
-                    <input type="date" name="jobStartDate" value="{{ jobInfo['jobStartDate'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Job Application Closing Date:</label>
-                    <input type="date" name="jobApplicationClosingDate" value="{{ jobInfo['jobApplicationClosingDate'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Status:</label>
-                    <select name="applicationStatus" class="commonBorder">
-                        {% if jobInfo['applicationStatus'] == '' %}
-                            <option value="None" selected>Choose...</option>
-                        {% else %}
-                            <option value="None" >Choose...</option>
-                        {% endif %}
-                        {% if jobInfo['applicationStatus'] == 'Applied' %}
-                            <option value="Applied" selected>Applied</option>
-                        {% else %}
-                            <option value="Applied">Applied</option>
-                        {% endif %}
-                        {% if jobInfo['applicationStatus'] == 'I Rejected' %}
-                            <option value="I Rejected" selected>I Rejected</option>
-                        {% else %}
-                            <option value="I Rejected" >I Rejected</option>
-                        {% endif %}
-                        {% if jobInfo['applicationStatus'] == 'They Rejected' %}
-                            <option value="They Rejected" selected>They Rejected</option>
-                        {% else %}
-                            <option value="They Rejected" >They Rejected</option>
-                        {% endif %}
-                        {% if jobInfo['applicationStatus'] == 'Successful' %}
-                            <option value="Successful" selected>Successful</option>
-                        {% else %}
-                            <option value="Successful" >Successful</option>
-                        {% endif %}
-                    </select>
-                </fieldset>
-                <fieldset>
-                    <label>Notes:</label>
-                    <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}" class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Added Date:</label>
-                    <input type="date" value="{{ jobInfo['startJobTrackDate'] }}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Last Modified Date:</label>
-                    <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly class="commonBorder">
-                </fieldset>
-                <input type="image" src="{{url_for('static', filename='modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim">
-                <input type="image" src="{{url_for('static', filename='goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim">
-            </form>
-        </div>
+        <form action="/redirectModifyJobInfo" method="post">
+            <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
+            <fieldset>
+                <label>Job:</label>
+                <input type="text" name="job" value="{{ jobInfo['job'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Company: </label>
+                <input type="text" name="company" value="{{ jobInfo['company'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Salary:</label>
+                <input type="number" name="salary" value="{{ jobInfo['salary'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Location:</label>
+                <input type="text" name="jobLocation" value="{{ jobInfo['jobLocation'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Job Start Date:</label>
+                <input type="date" name="jobStartDate" value="{{ jobInfo['jobStartDate'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Job Application Closing Date:</label>
+                <input type="date" name="jobApplicationClosingDate" value="{{ jobInfo['jobApplicationClosingDate'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Status:</label>
+                <select name="applicationStatus" class="commonBorder">
+                    {% if jobInfo['applicationStatus'] == '' %}
+                        <option value="None" selected>Choose...</option>
+                    {% else %}
+                        <option value="None" >Choose...</option>
+                    {% endif %}
+                    {% if jobInfo['applicationStatus'] == 'Applied' %}
+                        <option value="Applied" selected>Applied</option>
+                    {% else %}
+                        <option value="Applied">Applied</option>
+                    {% endif %}
+                    {% if jobInfo['applicationStatus'] == 'I Rejected' %}
+                        <option value="I Rejected" selected>I Rejected</option>
+                    {% else %}
+                        <option value="I Rejected" >I Rejected</option>
+                    {% endif %}
+                    {% if jobInfo['applicationStatus'] == 'They Rejected' %}
+                        <option value="They Rejected" selected>They Rejected</option>
+                    {% else %}
+                        <option value="They Rejected" >They Rejected</option>
+                    {% endif %}
+                    {% if jobInfo['applicationStatus'] == 'Successful' %}
+                        <option value="Successful" selected>Successful</option>
+                    {% else %}
+                        <option value="Successful" >Successful</option>
+                    {% endif %}
+                </select>
+            </fieldset>
+            <fieldset>
+                <label>Notes:</label>
+                <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}" class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Added Date:</label>
+                <input type="date" value="{{ jobInfo['startJobTrackDate'] }}" readonly class="commonBorder">
+            </fieldset>
+            <fieldset>
+                <label>Last Modified Date:</label>
+                <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly class="commonBorder">
+            </fieldset>
+            <input type="image" src="{{url_for('static', filename='modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim">
+            <input type="image" src="{{url_for('static', filename='goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim">
+        </form>
     </body>
 </html>
