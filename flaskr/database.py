@@ -101,12 +101,12 @@ class DatabaseHandler:
 
     def retrieveRows(self, searchFilters: dict) -> list:
         with Session(self.engine) as session:
-            queryStatement = self.buildQueryStatement(searchFilters=searchFilters, session=session)
+            queryStatement = self.buildSearchQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(queryStatement)
             rowList = self.convertRetrieveRowsToPrimitive(rows)
         return rowList
 
-    def buildQueryStatement(self, searchFilters: dict, session):
+    def buildSearchQueryStatement(self, searchFilters: dict, session):
         if searchFilters['id'] != '':
             searchFilters['id'] = int( searchFilters['id'] )
             print(searchFilters['id'])
