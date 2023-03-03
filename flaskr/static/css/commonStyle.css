@@ -18,3 +18,17 @@ body {
     width: 4vw;
 
 }
+
+.pageItem{
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+.pageContainer{
+    display: grid;
+    grid-template-columns: [col1] 100vw [endCol];
+    grid-template-rows: [row1] 100vh [endRow];
+    justify-items: center;
+}
