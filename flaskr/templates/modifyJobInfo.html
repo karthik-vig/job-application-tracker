@@ -7,35 +7,35 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/modifyJobInfoStyle.css')}}">
     </head>
     <body>
-        <form action="/redirectModifyJobInfo" method="post">
+        <form action="/redirectModifyJobInfo" method="post" class="formContainer">
             <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
-            <fieldset>
-                <label>Job:</label>
-                <input type="text" name="job" value="{{ jobInfo['job'] }}" class="commonBorder">
+            <fieldset class="jobInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Job:</label>
+                <input type="text" name="job" value="{{ jobInfo['job'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Company: </label>
-                <input type="text" name="company" value="{{ jobInfo['company'] }}" class="commonBorder">
+            <fieldset  class="companyInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Company: </label>
+                <input type="text" name="company" value="{{ jobInfo['company'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Salary:</label>
-                <input type="number" name="salary" value="{{ jobInfo['salary'] }}" class="commonBorder">
+            <fieldset  class="salaryInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Salary:</label>
+                <input type="number" name="salary" value="{{ jobInfo['salary'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Location:</label>
-                <input type="text" name="jobLocation" value="{{ jobInfo['jobLocation'] }}" class="commonBorder">
+            <fieldset  class="jobLocationInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Location:</label>
+                <input type="text" name="jobLocation" value="{{ jobInfo['jobLocation'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Job Start Date:</label>
-                <input type="date" name="jobStartDate" value="{{ jobInfo['jobStartDate'] }}" class="commonBorder">
+            <fieldset  class="jobStartDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Job Start Date:</label>
+                <input type="date" name="jobStartDate" value="{{ jobInfo['jobStartDate'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Job Application Closing Date:</label>
-                <input type="date" name="jobApplicationClosingDate" value="{{ jobInfo['jobApplicationClosingDate'] }}" class="commonBorder">
+            <fieldset  class="jobApplicationClosingDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Job Application Closing Date:</label>
+                <input type="date" name="jobApplicationClosingDate" value="{{ jobInfo['jobApplicationClosingDate'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Status:</label>
-                <select name="applicationStatus" class="commonBorder">
+            <fieldset  class="applicationStatusInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Status:</label>
+                <select name="applicationStatus" class="commonBorder fieldsetInputItem">
                     {% if jobInfo['applicationStatus'] == '' %}
                         <option value="None" selected>Choose...</option>
                     {% else %}
@@ -63,20 +63,20 @@
                     {% endif %}
                 </select>
             </fieldset>
-            <fieldset>
-                <label>Notes:</label>
-                <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}" class="commonBorder">
+            <fieldset  class="notesInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Notes:</label>
+                <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}" class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Added Date:</label>
-                <input type="date" value="{{ jobInfo['startJobTrackDate'] }}" readonly class="commonBorder">
+            <fieldset  class="startJobTrackDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Added Date:</label>
+                <input type="date" value="{{ jobInfo['startJobTrackDate'] }}" readonly class="commonBorder fieldsetInputItem">
             </fieldset>
-            <fieldset>
-                <label>Last Modified Date:</label>
-                <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly class="commonBorder">
+            <fieldset  class="modifiedJobTrackDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Last Modified Date:</label>
+                <input type="date" value="{{ jobInfo['modifiedJobTrackDate'] }}" readonly class="commonBorder fieldsetInputItem">
             </fieldset>
-            <input type="image" src="{{url_for('static', filename='icons/modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim">
-            <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim">
+            <input type="image" src="{{url_for('static', filename='icons/modify.svg')}}" name="modifiedJobInfoSubmit" class="buttonDim modifiedJobInfoSubmitInputItem">
+            <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim cancelSubmitInputItem">
         </form>
     </body>
 </html>
