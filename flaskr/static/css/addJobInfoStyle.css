@@ -79,6 +79,9 @@
     grid-template-columns: [col1] 25vw [col2] 25vw [endCol];
     grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [endRow];
     row-gap: 2vh;
+    height: 62vh;
+    width: 51vw;
+    padding: 1vh;
 }
 
 /* For the fieldset container */
