@@ -23,18 +23,18 @@
             <form action="/redirectIndex" method="post" class="filterForm">
                 <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder">
                 <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='icons/search.svg')}}" class="buttonDim searchButton">
-                <fieldset class="jobStartDateInput">
-                    <label>Job Start Date After:</label>
-                    <input type="date" name="jobStartDate" class="commonBorder">
+                <fieldset class="jobStartDateInput fieldsetContainer">
+                    <label class="searchFilterFieldsetLabelItem">Job Start Date After:</label>
+                    <input type="date" name="jobStartDate" class="commonBorder inputBoxDim searchFilterFieldsetInputItem">
                 </fieldset>
-                <fieldset class="salaryInput">
-                    <label>Salary:</label>
-                    <input type="number" placeholder="Min" name="salaryMin" class="commonBorder">
-                    <input type="number" placeholder="Max" name="salaryMax" class="commonBorder">
+                <fieldset class="salaryInput fieldsetContainer">
+                    <label class="searchFilterFieldsetLabelItem">Salary:</label>
+                    <input type="number" placeholder="Min" name="salaryMin" class="commonBorder minSalaryFieldsetInputItem">
+                    <input type="number" placeholder="Max" name="salaryMax" class="commonBorder maxSalaryFieldsetInputItem">
                 </fieldset>
-                <fieldset class="applicationStatusInput">
-                    <label>Status:</label>
-                    <select name="applicationStatus" class="commonBorder">
+                <fieldset class="applicationStatusInput fieldsetContainer">
+                    <label class="searchFilterFieldsetLabelItem">Status:</label>
+                    <select name="applicationStatus" class="commonBorder inputBoxDim searchFilterFieldsetInputItem">
                         <option value="None">Choose...</option>
                         <option value="Applied">Applied</option>
                         <option value="I Rejected">I Rejected</option>
@@ -42,9 +42,9 @@
                         <option value="Successful">Successful</option>
                     </select>
                 </fieldset>
-                <fieldset class="jobLocationInput">
-                    <label>Job Location:</label>
-                    <input type="text" list="jobLocation" name="jobLocation" class="commonBorder">
+                <fieldset class="jobLocationInput fieldsetContainer">
+                    <label class="searchFilterFieldsetLabelItem">Job Location:</label>
+                    <input type="text" list="jobLocation" name="jobLocation" class="commonBorder inputBoxDim searchFilterFieldsetInputItem">
                     <datalist id="jobLocation">
                         {% for jobLocation in jobLocations %}
                             {% if JobLocation != '' %}

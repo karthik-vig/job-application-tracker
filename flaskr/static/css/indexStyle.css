@@ -7,6 +7,8 @@
     grid-row-start: row2;
     grid-row-end: endRow;
     overflow-y: scroll;
+    height: 70vh;
+    width: 85vw;
 }
 
 .searchFilterInputItem{
@@ -20,7 +22,7 @@
     display: grid;
     grid-template-columns: [col1] 95vw [endCol];
     grid-template-rows: [row1] 20vh [row2] 65vh [endRow];
-    justify-content: center;
+    justify-items: center;
 }
 
 .JobEntryPanelJobName{
@@ -106,8 +108,8 @@
     height: 10vh;
     width: 52vw;
     margin-top: 1vh;
-    margin-left: 20vw;
-    margin-right: 20vw;
+    margin-left: 15vw;
+    margin-right: 15vw;
     align-items: center;
     justify-items: center;
 }
@@ -127,6 +129,8 @@
     grid-column-end: endCol;
     grid-row-start: row1;
     grid-row-end: endRow;
+    justify-items: center;
+    align-items: center;
 }
 
 .searchBox{
@@ -144,6 +148,7 @@
     grid-column-end: endCol;
     grid-row-start: row1;
     grid-row-end: row2;
+    justify-self: left;
 }
 
 .jobStartDateInput{
@@ -182,4 +187,51 @@
     display: grid;
     grid-template-columns: [col1] 5vw [col2] 80vw [endCol];
     grid-template-rows: [row1] 10vh [row2] 10vh [endRow];
+    justify-items: center;
+    align-items: center;
+}
+
+/* for each filter item in form for search filter */
+
+.inputBoxDim {
+    height: 3vh;
+    width: 15vw;
+}
+
+.searchFilterFieldsetInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+}
+
+.searchFilterFieldsetLabelItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.minSalaryFieldsetInputItem {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+    height: 3vh;
+    width: 7vw;
+}
+
+.maxSalaryFieldsetInputItem {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+    height: 3vh;
+    width: 7vw;
+}
+
+.fieldsetContainer {
+    display: grid;
+    grid-template-columns: [col1] 10vw [col2] 10vw [endCol];
+    grid-template-rows: [row1] 3vh [row2] 7vh [endRow];
 }
