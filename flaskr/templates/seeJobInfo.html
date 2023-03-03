@@ -7,50 +7,48 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/seeJobInfoStyle.css')}}">
     </head>
     <body>
-        <div>
-            <form action="/redirect" method="post">
-                <fieldset>
-                    <label>Job:</label>
-                    <input type="text" name="job" value="{{jobInfo['job']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Company: </label>
-                    <input type="text" name="company" value="{{jobInfo['company']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Salary:</label>
-                    <input type="number" name="salary" value="{{jobInfo['salary']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Location:</label>
-                    <input type="text" name="jobLocation" value="{{jobInfo['jobLocation']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Job Start Date:</label>
-                    <input type="date" name="jobStartDate" value="{{jobInfo['jobStartDate']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Job Application Closing Date:</label>
-                    <input type="date" name="jobApplicationClosingDate" value="{{jobInfo['jobApplicationClosingDate']}}" readonly  class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Status:</label>
-                    <input type="text" value="{{jobInfo['applicationStatus']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Notes:</label>
-                    <input type="text" name="notes" maxlength="10000"  value="{{jobInfo['notes']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Added Date:</label>
-                    <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder">
-                </fieldset>
-                <fieldset>
-                    <label>Last Modified Date:</label>
-                    <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder">
-                </fieldset>
-                <input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim">
-            </form>
-        </div>
+        <form action="/redirect" method="post" class="formContainer">
+            <fieldset class="jobInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Job:</label>
+                <input type="text" name="job" value="{{jobInfo['job']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="companyInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Company: </label>
+                <input type="text" name="company" value="{{jobInfo['company']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="salaryInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Salary:</label>
+                <input type="number" name="salary" value="{{jobInfo['salary']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="jobLocationInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Location:</label>
+                <input type="text" name="jobLocation" value="{{jobInfo['jobLocation']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="jobStartDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Job Start Date:</label>
+                <input type="date" name="jobStartDate" value="{{jobInfo['jobStartDate']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="jobApplicationClosingDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Job Application Closing Date:</label>
+                <input type="date" name="jobApplicationClosingDate" value="{{jobInfo['jobApplicationClosingDate']}}" readonly  class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="applicationStatusInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Status:</label>
+                <input type="text" value="{{jobInfo['applicationStatus']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="notesInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Notes:</label>
+                <input type="text" name="notes" maxlength="10000"  value="{{jobInfo['notes']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="startJobTrackDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Added Date:</label>
+                <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <fieldset class="modifiedJobTrackDateInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Last Modified Date:</label>
+                <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem">
+            </fieldset>
+            <input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim cancelSubmitInputItem">
+        </form>
     </body>
 </html>
