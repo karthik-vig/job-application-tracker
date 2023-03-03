@@ -83,6 +83,7 @@
     display: grid;
     grid-template-columns: [col1] 50vw [endCol];
     grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [row10] 5vh [row11] 5vh [endRow];
+    row-gap: 2vh;
 }
 
 /* For the fieldset container */
@@ -99,6 +100,7 @@
     grid-column-end: col2;
     grid-row-start: row1;
     grid-row-end: endRow;
+    align-self: center;
 }
 
 .fieldsetContainer {
