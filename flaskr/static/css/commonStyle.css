@@ -62,3 +62,40 @@ svg {
     background-color: rgba(255, 255, 255, .15);  
     backdrop-filter: blur(20px);
 }
+
+/* the scrollbar design settings */
+
+::-webkit-scrollbar{
+    width: 13px;
+}
+
+::webkit-scrollbar-track {
+    background-color: rgb(255, 255, 255, 0);
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #535861;
+    border-radius: 1vh;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #3c3f46;
+}
+
+/* text design settings for input and labels */
+
+input {
+    padding-left: 1vh;
+    font-size: 1.7vh;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+select {
+    padding-left: 1vh;
+}
+
+label {
+    font-weight: bold;
+    font-size: 2vh;
+    font-family: 'Times New Roman', Times, serif;
+}
