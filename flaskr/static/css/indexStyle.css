@@ -150,6 +150,7 @@
     grid-row-start: row1;
     grid-row-end: row2;
     justify-self: left;
+    margin-left: 1vw;
 }
 
 .jobStartDateInput{
