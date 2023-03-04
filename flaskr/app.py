@@ -162,7 +162,7 @@ def getModifiedJobInfo():
                         'jobStartDate': request.form['jobStartDate'],
                         'jobApplicationClosingDate': request.form['jobApplicationClosingDate'],
                         'applicationStatus': request.form['applicationStatus'],
-                        'notes': request.form['job'],
+                        'notes': request.form['notes'],
                     }
     return modifiedJobInfo
 

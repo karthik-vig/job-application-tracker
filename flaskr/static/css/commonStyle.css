@@ -1,10 +1,11 @@
 html {
     height: 100vh;
     width: 100vw;
+    color: #ffffff;
 }
 
 body {
-    height: 100vh;
+    height: 98vh;
     width: 100vw;
 }
 
@@ -31,6 +32,7 @@ body {
     grid-template-columns: [col1] 100vw [endCol];
     grid-template-rows: [row1] 100vh [endRow];
     justify-items: center;
+    align-items: center;
 }
 
 .bodyBGImage {
