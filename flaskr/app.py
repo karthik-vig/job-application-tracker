@@ -1,9 +1,17 @@
 from flask import Flask, render_template, request
+from flaskwebgui import FlaskUI
+import waitress
 from database import DatabaseHandler                                      
                             
 app = Flask(__name__)
 databaseHandlerObj = DatabaseHandler()
 searchFilters = None
+
+def startFlask(**kwargs):
+    app = kwargs['app']
+    host = kwargs['host']
+    port = kwargs['port']
+    waitress.serve(app, host=host, port=port)
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
@@ -169,5 +177,16 @@ def getModifiedJobInfo():
 
 if __name__ == "__main__":
     app.config['debug'] = True
-    #print(jobLocations)
     app.run()
+    '''
+    guiApp = FlaskUI(server=startFlask,
+                    server_kwargs={
+                    'app': app,
+                    'port': 5000,
+                    'host': '0.0.0.0'
+                    },
+                    width=1200,
+                    height=800
+                    )
+    guiApp.run() 
+    '''
