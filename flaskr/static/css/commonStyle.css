@@ -99,3 +99,8 @@ label {
     font-size: 2vh;
     font-family: 'Times New Roman', Times, serif;
 }
+
+p { overflow: hidden;
+    font-size: 1.7vh;
+    font-family: 'Times New Roman', Times, serif;
+}

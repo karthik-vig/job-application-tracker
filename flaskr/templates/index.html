@@ -59,10 +59,10 @@
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
                     <li class="commonBorder jobEntryPanel jobEntryPanelBGColor">
-                        <p class="JobEntryPanelJobName">Job: {{jobInfo["job"]}}</p>
-                        <p class="JobEntryPanelCompany">Company: {{jobInfo["company"]}}</p>
-                        <p class="JobEntryPanelSalary">Salary: {{jobInfo["salary"]}}</p>
-                        <p class="JobEntryPanelApplicationStatus">Status: {{jobInfo["applicationStatus"]}}</p>
+                        <p class="JobEntryPanelJobName"> <label> Job: </label> {{jobInfo["job"]}}</p>
+                        <p class="JobEntryPanelCompany"> <label> Company: </label> {{jobInfo["company"]}}</p>
+                        <p class="JobEntryPanelSalary"> <label> Salary: </label> {{jobInfo["salary"]}}</p>
+                        <p class="JobEntryPanelApplicationStatus"> <label> Status: </label> {{jobInfo["applicationStatus"]}}</p>
                         <!--
                         <a href="/modifyJobInfo?id={{jobInfo['id']}}"> temp modify
                             <img src="">
