@@ -21,20 +21,20 @@
                 </form>
             </section>
             <form action="/redirectIndex" method="post" class="filterForm">
-                <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder">
+                <input type="text" placeholder="Search" name="searchText" class="searchBox commonBorder inputBGColor">
                 <input type = "image" name="submitSearchFilter" src="{{url_for('static', filename='icons/search.svg')}}" class="buttonDim searchButton">
                 <fieldset class="jobStartDateInput fieldsetContainer">
                     <label class="searchFilterFieldsetLabelItem">Job Start Date After:</label>
-                    <input type="date" name="jobStartDate" class="commonBorder inputBoxDim searchFilterFieldsetInputItem">
+                    <input type="date" name="jobStartDate" class="commonBorder inputBoxDim searchFilterFieldsetInputItem inputBGColor">
                 </fieldset>
                 <fieldset class="salaryInput fieldsetContainer">
                     <label class="searchFilterFieldsetLabelItem">Salary:</label>
-                    <input type="number" placeholder="Min" name="salaryMin" class="commonBorder minSalaryFieldsetInputItem">
-                    <input type="number" placeholder="Max" name="salaryMax" class="commonBorder maxSalaryFieldsetInputItem">
+                    <input type="number" placeholder="Min" name="salaryMin" class="commonBorder minSalaryFieldsetInputItem inputBGColor">
+                    <input type="number" placeholder="Max" name="salaryMax" class="commonBorder maxSalaryFieldsetInputItem inputBGColor">
                 </fieldset>
                 <fieldset class="applicationStatusInput fieldsetContainer">
                     <label class="searchFilterFieldsetLabelItem">Status:</label>
-                    <select name="applicationStatus" class="commonBorder inputBoxDim searchFilterFieldsetInputItem">
+                    <select name="applicationStatus" class="commonBorder inputBoxDim searchFilterFieldsetInputItem inputBGColor">
                         <option value="None">Choose...</option>
                         <option value="Applied">Applied</option>
                         <option value="I Rejected">I Rejected</option>
@@ -44,7 +44,7 @@
                 </fieldset>
                 <fieldset class="jobLocationInput fieldsetContainer">
                     <label class="searchFilterFieldsetLabelItem">Job Location:</label>
-                    <input type="text" list="jobLocation" name="jobLocation" class="commonBorder inputBoxDim searchFilterFieldsetInputItem">
+                    <input type="text" list="jobLocation" name="jobLocation" class="commonBorder inputBoxDim searchFilterFieldsetInputItem inputBGColor">
                     <datalist id="jobLocation">
                         {% for jobLocation in jobLocations %}
                             {% if JobLocation != '' %}
@@ -58,7 +58,7 @@
         <ul class="commonBorder jobEntryPanelItemContainer frostGlass">
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
-                    <li class="commonBorder jobEntryPanel">
+                    <li class="commonBorder jobEntryPanel jobEntryPanelBGColor">
                         <p class="JobEntryPanelJobName">Job: {{jobInfo["job"]}}</p>
                         <p class="JobEntryPanelCompany">Company: {{jobInfo["company"]}}</p>
                         <p class="JobEntryPanelSalary">Salary: {{jobInfo["salary"]}}</p>

@@ -1,7 +1,7 @@
 html {
     height: 100vh;
     width: 100vw;
-    color: #ffffff;
+    color: #d8d8d8;
 }
 
 body {
@@ -9,16 +9,23 @@ body {
     width: 100vw;
 }
 
+svg {
+    filter: invert(100%);
+}
+
 .commonBorder {
     border-style: solid;
+    border-width: 0.1vh;
     border-radius: 0.7vh;
 }
 
 .buttonDim {
     height: 4vh;
-    width: 4vw;
+    width: 2vw;
 
 }
+
+/* add, modify and see JobInfo html page content alignment */
 
 .pageItem{
     grid-column-start: col1;
@@ -35,11 +42,22 @@ body {
     align-items: center;
 }
 
+/* set the bg color for various elements */ 
+
+.inputBGColor {
+    background-color: #40444b;
+}
+
+.jobEntryPanelBGColor{
+    background-color: #2f3136;
+}
+
 .bodyBGImage {
-    background-image: url('/static/icons/destiny-wallpaper.jpg')
+    background-image: url('/static/icons/destiny-wallpaper.jpg');
+    background-size: cover;
 }
 
 .frostGlass {
     background-color: rgba(255, 255, 255, .15);  
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
 }

@@ -10,43 +10,43 @@
         <form action="/redirect" method="post" class="commonBorder formContainer pageItem frostGlass">
             <fieldset class="jobInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job:</label>
-                <input type="text" name="job" value="{{jobInfo['job']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="text" name="job" value="{{jobInfo['job']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="companyInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Company: </label>
-                <input type="text" name="company" value="{{jobInfo['company']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="text" name="company" value="{{jobInfo['company']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="salaryInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Salary:</label>
-                <input type="number" name="salary" value="{{jobInfo['salary']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="number" name="salary" value="{{jobInfo['salary']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="jobLocationInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Location:</label>
-                <input type="text" name="jobLocation" value="{{jobInfo['jobLocation']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="text" name="jobLocation" value="{{jobInfo['jobLocation']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="jobStartDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job Start Date:</label>
-                <input type="date" name="jobStartDate" value="{{jobInfo['jobStartDate']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="date" name="jobStartDate" value="{{jobInfo['jobStartDate']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="jobApplicationClosingDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job Application Closing Date:</label>
-                <input type="date" name="jobApplicationClosingDate" value="{{jobInfo['jobApplicationClosingDate']}}" readonly  class="commonBorder fieldsetInputItem">
+                <input type="date" name="jobApplicationClosingDate" value="{{jobInfo['jobApplicationClosingDate']}}" readonly  class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="applicationStatusInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Status:</label>
-                <input type="text" value="{{jobInfo['applicationStatus']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="text" value="{{jobInfo['applicationStatus']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="notesInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Notes:</label>
-                <input type="text" name="notes" maxlength="10000"  value="{{jobInfo['notes']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="text" name="notes" maxlength="10000"  value="{{jobInfo['notes']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="startJobTrackDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Added Date:</label>
-                <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="modifiedJobTrackDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Last Modified Date:</label>
-                <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem">
+                <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim cancelSubmitInputItem">
         </form>

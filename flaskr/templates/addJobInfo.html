@@ -10,31 +10,31 @@
         <form action="redirectAddJobInfo" method="post" class="commonBorder formContainer pageItem frostGlass">
             <fieldset class="jobInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job:</label>
-                <input type="text" name="job" class="commonBorder fieldsetInputItem">
+                <input type="text" name="job" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="companyInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Company: </label>
-                <input type="text" name="company" class="commonBorder fieldsetInputItem">
+                <input type="text" name="company" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="salaryInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Salary:</label>
-                <input type="number" name="salary" class="commonBorder fieldsetInputItem">
+                <input type="number" name="salary" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="jobLocationInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Location:</label>
-                <input type="text" name="jobLocation" class="commonBorder fieldsetInputItem">
+                <input type="text" name="jobLocation" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="jobStartDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job Start Date:</label>
-                <input type="date" name="jobStartDate" class="commonBorder fieldsetInputItem">
+                <input type="date" name="jobStartDate" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="jobApplicationClosingDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job Application Closing Date:</label>
-                <input type="date" name="jobApplicationClosingDate" class="commonBorder fieldsetInputItem">
+                <input type="date" name="jobApplicationClosingDate" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <fieldset class="applicationStatusInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Status:</label>
-                <select name="applicationStatus" class="commonBorder fieldsetInputItem">
+                <select name="applicationStatus" class="commonBorder fieldsetInputItem inputBGColor">
                     <option value="None">Choose...</option>
                     <option value="Applied">Applied</option>
                     <option value="I Rejected">I Rejected</option>
@@ -44,7 +44,7 @@
             </fieldset>
             <fieldset class="notesInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Notes:</label>
-                <input type="text" name="notes" maxlength="10000" class="commonBorder fieldsetInputItem">
+                <input type="text" name="notes" maxlength="10000" class="commonBorder fieldsetInputItem inputBGColor">
             </fieldset>
             <input type="image"  src="{{url_for('static', filename='icons/add.svg')}}" name="newJobInfoSubmit" class="buttonDim newJobInfoSubmitInputItem">
             <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" value="temp cancel" formaction="/redirect" class="buttonDim cancelSubmitInputItem">
