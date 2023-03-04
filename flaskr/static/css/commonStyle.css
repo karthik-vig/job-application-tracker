@@ -32,3 +32,12 @@ body {
     grid-template-rows: [row1] 100vh [endRow];
     justify-items: center;
 }
+
+.bodyBGImage {
+    background-image: url('/static/icons/destiny-wallpaper.jpg')
+}
+
+.frostGlass {
+    background-color: rgba(255, 255, 255, .15);  
+    backdrop-filter: blur(10px);
+}

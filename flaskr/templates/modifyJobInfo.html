@@ -6,8 +6,8 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/modifyJobInfoStyle.css')}}">
     </head>
-    <body class="pageContainer">
-        <form action="/redirectModifyJobInfo" method="post" class="commonBorder formContainer pageItem">
+    <body class="pageContainer bodyBGImage">
+        <form action="/redirectModifyJobInfo" method="post" class="commonBorder formContainer pageItem frostGlass">
             <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
             <fieldset class="jobInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job:</label>

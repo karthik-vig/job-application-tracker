@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/indexStyle.css')}}">
     </head>
-    <body class="bodyContainer">
+    <body class="bodyContainer bodyBGImage">
         <!--
         <section>
             <a href="/addJobInfo" class="buttonDim">
@@ -14,7 +14,7 @@
             </a>
         </section>
         -->
-        <div class="commonBorder searchFilterInputContainer searchFilterInputItem">
+        <div class="commonBorder searchFilterInputContainer searchFilterInputItem frostGlass">
             <section class="addButton">
                 <form method="get">
                     <input type="image" src="{{url_for('static', filename='icons/add.svg')}}" formaction="/addJobInfo" class="buttonDim">
@@ -55,7 +55,7 @@
                 </fieldset>
             </form>
         </div>
-        <ul class="commonBorder jobEntryPanelItemContainer">
+        <ul class="commonBorder jobEntryPanelItemContainer frostGlass">
             {% if jobInfoList %}
                 {% for jobInfo in jobInfoList %}
                     <li class="commonBorder jobEntryPanel">
