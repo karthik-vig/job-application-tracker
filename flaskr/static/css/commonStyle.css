@@ -54,7 +54,7 @@ svg {
 }
 
 .bodyBGImage {
-    background-image: url('/static/icons/destiny-wallpaper.jpg');
+    background-image: url('/static/icons/bodyBG.svg');
     background-size: cover;
 }
 
