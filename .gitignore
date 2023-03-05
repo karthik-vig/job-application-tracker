@@ -1,4 +1,5 @@
 venv/
+packaged app/
 
 *.pyc
 __pycache__/
