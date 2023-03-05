@@ -134,7 +134,7 @@ class DatabaseHandler:
         if searchFilters['applicationStatus'] in self.possibleApplicationStatus:
             queryStatement = queryStatement.filter(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
         if searchFilters['jobLocation'] != '':
-            queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation == searchFilters['jobLocation'])
+            queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation.like(f"%{searchFilters['jobLocation']}%"))
         return queryStatement
 
     def convertRetrieveRowsToPrimitive(self, rows):
