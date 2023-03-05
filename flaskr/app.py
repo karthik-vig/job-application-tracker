@@ -16,34 +16,10 @@ def startFlask(**kwargs):
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
-    '''
-    jobInofList = [ {   'id': 1,
-                        'job': 'auditor', 
-                        'company': 'kpmg', 
-                        'salary': 50000,
-                        'jobLocation': 'glasgow',
-                        'jobStartDate': '2023-05-01',
-                        'jobApplicationClosingDate': '2023-04-01',
-                         'applicationStatus': 'Applied',
-                         'notes': 'nice job'
-                        }, 
-                        {'id': 2,
-                        'job': 'auditor2',
-                         'company': 'pwc',
-                          'salary': 45000,
-                          'jobLocation': 'london',
-                        'jobStartDate': '2023-05-01',
-                        'jobApplicationClosingDate': '2023-04-01',
-                         'applicationStatus': 'Applied',
-                         'notes': 'nicer job'
-                        } 
-                ]
-    '''
     global searchFilters
     jobInfoList = None
     if searchFilters:
         jobInfoList = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
-        print(jobInfoList)
     jobLocations = databaseHandlerObj.getSearchFilterLimits()['allJobLocations']
     return render_template('index.html', jobInfoList=jobInfoList,
                              jobLocations=jobLocations)
@@ -57,24 +33,7 @@ def addJobInfo():
 @app.route('/modifyJobInfo', methods=['GET'])
 def modifyJobInfo():
     id = request.args.get('id')
-    print(id)
     searchFilters = {'id': id}
-    '''
-    jobInfo = { 'job': 'auditor', 
-                'company': 'kpmg', 
-                'salary': 50000,
-                'jobLocation': 'glasgow',
-                'jobStartDate': '2023-05-01',
-                'jobApplicationClosingDate': '2023-04-01',
-                'statusApplied': '',
-                'statusIReject': '',
-                'statusTheyReject': 'selected',
-                'statusSuccess': '',
-                'notes': 'nice job',
-                'startJobTrackDate': '2023-02-24',
-                'modifiedJobTrackDate': '2023-02-25'
-                }
-    '''
     jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
     if str(type(jobInfo)) == "<class 'list'>":
         jobInfo = jobInfo[0]
@@ -84,21 +43,7 @@ def modifyJobInfo():
 @app.route('/seeJobInfo', methods=['GET'])
 def seeJobInfo():
     id = request.args.get('id')
-    print(id)
     searchFilters = {'id': id}
-    '''
-    jobInfo = { 'job': 'auditor', 
-                'company': 'kpmg', 
-                'salary': 50000,
-                'jobLocation': 'glasgow',
-                'jobStartDate': '2023-05-01',
-                'jobApplicationClosingDate': '2023-04-01',
-                'applicationStatus' : 'Success',
-                'notes': 'nice job',
-                'startJobTrackDate': '2023-02-24',
-                'modifiedJobTrackDate': '2023-02-25'
-                }
-    '''
     jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
     if str(type(jobInfo)) == "<class 'list'>":
         jobInfo = jobInfo[0]
@@ -116,21 +61,16 @@ def redirect():
     global searchFilters
     if requestUrl == '/redirectIndex':
         searchFilters = getSearchFilters()
-        print(searchFilters)
     elif requestUrl == '/redirectAddJobInfo':
         jobInfo = getAddJobInfo()
-        print(jobInfo)
         databaseHandlerObj.addRow(jobInfo=jobInfo)
     elif requestUrl == '/redirectModifyJobInfo':
         modifiedJobInfo = getModifiedJobInfo()
-        print(modifiedJobInfo)
         id = modifiedJobInfo['id']
         databaseHandlerObj.updateRow(id=id, modificationValues=modifiedJobInfo)
     elif requestUrl == '/redirectDeleteEntry':
         id = request.args.get('id')
-        print(id)
         databaseHandlerObj.deleteRow(id=id)
-        jobInfoList = None
 
     return render_template('redirect.html', urlToGet=urlToGet)
 
@@ -176,9 +116,6 @@ def getModifiedJobInfo():
 
 
 if __name__ == "__main__":
-    app.config['debug'] = True
-    app.run()
-    '''
     guiApp = FlaskUI(server=startFlask,
                     server_kwargs={
                     'app': app,
@@ -188,5 +125,4 @@ if __name__ == "__main__":
                     width=1200,
                     height=800
                     )
-    guiApp.run() 
-    '''
+    guiApp.run()
