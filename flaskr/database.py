@@ -7,7 +7,7 @@ import datetime
 class DatabaseHandler:
     def __init__(self):
         self.possibleApplicationStatus = ['Applied', 'I Rejected', 'They Rejected', 'Successful']
-        self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
+        self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=False, future=True)
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
         with self.engine.connect() as databaseConnection:
@@ -117,7 +117,6 @@ class DatabaseHandler:
     def buildSearchQueryStatement(self, searchFilters: dict, session):
         if searchFilters['id'] != '':
             searchFilters['id'] = int( searchFilters['id'] )
-            print(searchFilters['id'])
             queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == searchFilters['id'])
             return queryStatement
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
