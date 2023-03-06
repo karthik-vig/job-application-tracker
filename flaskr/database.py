@@ -4,8 +4,65 @@ import datetime
 
 
 
+class DataFormatting:
+    def strToDatetime(self, strDate: str):
+        if strDate:
+            dateYYYYMMDD = list( map( int, strDate.split('-') ) )
+            return datetime.date(dateYYYYMMDD[0], dateYYYYMMDD[1], dateYYYYMMDD[2])
+        else:
+            return None
+    
+    def convertJobInfoEmptyStrToNull(self, jobInfo: dict):
+        jobInfoKeys = jobInfo.keys()
+        for key in jobInfoKeys:
+            jobInfo[key] = None if jobInfo[key] == '' else jobInfo[key]
+        if 'job' in jobInfoKeys and jobInfo['job'] == None:
+            jobInfo['job'] = ''
+        if 'company' in jobInfoKeys and jobInfo['company'] == None:
+            jobInfo['company'] = ''
+        return jobInfo
+
+    def convertJobInfoNullToEmptyStr(self, jobInfo: dict):
+        exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
+        jobInfokeys = jobInfo.keys()
+        for key in jobInfokeys:
+            if key not in exemptFields:
+                jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
+        return jobInfo
+
+    def convertRetrieveRowsToPrimitive(self, rows):
+        rowList = []
+        for row in rows:
+            row = row[0]
+            jobInfo = {
+                'id': row.id,
+                'job': row.job,
+                'company': row.company,
+                'salary': row.salary,
+                'jobLocation': row.jobLocation,
+                'jobStartDate': str(row.jobStartDate),
+                'jobApplicationClosingDate': str(row.jobApplicationClosingDate),
+                'applicationStatus': row.applicationStatus,
+                'notes': row.notes,
+                'startJobTrackDate': str(row.startJobTrackDate),
+                'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
+            }
+            jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
+            rowList.append(jobInfo)
+        return rowList
+
+    def convertJobLocationToPrimitive(self, allJobLocations):
+        jobLocationsList = []
+        for row in allJobLocations:
+            if row.jobLocation != None:
+                jobLocationsList.append(row.jobLocation)
+        return jobLocationsList
+
+
+
 class DatabaseHandler:
     def __init__(self):
+        self.dataFormattingObj = DataFormatting()
         self.possibleApplicationStatus = ['Applied', 'I Rejected', 'They Rejected', 'Successful']
         self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
         self.mapper_registry = registry()
@@ -46,10 +103,10 @@ class DatabaseHandler:
     def addRow(self, jobInfo: dict):
         if jobInfo['applicationStatus'] not in self.possibleApplicationStatus:
             jobInfo['applicationStatus'] = ''
-        jobInfo = self.convertJobInfoEmptyStrToNull(jobInfo=jobInfo)
+        jobInfo = self.dataFormattingObj.convertJobInfoEmptyStrToNull(jobInfo=jobInfo)
         with Session(self.engine) as session:
-            jobInfo['jobStartDate'] = self.strToDatetime(jobInfo['jobStartDate'])
-            jobInfo['jobApplicationClosingDate'] = self.strToDatetime(jobInfo['jobApplicationClosingDate'])
+            jobInfo['jobStartDate'] = self.dataFormattingObj.strToDatetime(jobInfo['jobStartDate'])
+            jobInfo['jobApplicationClosingDate'] = self.dataFormattingObj.strToDatetime(jobInfo['jobApplicationClosingDate'])
             rowToInsert = self.JobTrackerTable(job = jobInfo['job'],
                                                company = jobInfo['company'],
                                                salary = jobInfo['salary'],
@@ -63,23 +120,6 @@ class DatabaseHandler:
             session.add(rowToInsert)
             session.commit()
 
-    def strToDatetime(self, strDate: str):
-        if strDate:
-            dateYYYYMMDD = list( map( int, strDate.split('-') ) )
-            return datetime.date(dateYYYYMMDD[0], dateYYYYMMDD[1], dateYYYYMMDD[2])
-        else:
-            return None
-
-    def convertJobInfoEmptyStrToNull(self, jobInfo: dict):
-        jobInfoKeys = jobInfo.keys()
-        for key in jobInfoKeys:
-            jobInfo[key] = None if jobInfo[key] == '' else jobInfo[key]
-        if 'job' in jobInfoKeys and jobInfo['job'] == None:
-            jobInfo['job'] = ''
-        if 'company' in jobInfoKeys and jobInfo['company'] == None:
-            jobInfo['company'] = ''
-        return jobInfo
-
     def deleteRow(self, id: int):
         with Session(self.engine) as session:
             queryRowToDelete = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == int(id) )
@@ -90,7 +130,7 @@ class DatabaseHandler:
     def updateRow(self, id: int, modificationValues: dict):
         if modificationValues['applicationStatus'] not in self.possibleApplicationStatus:
             modificationValues['applicationStatus'] = ''
-        modificationValues = self.convertJobInfoEmptyStrToNull(jobInfo=modificationValues)
+        modificationValues = self.dataFormattingObj.convertJobInfoEmptyStrToNull(jobInfo=modificationValues)
         with Session(self.engine) as session:
             session.execute( update(self.JobTrackerTable)
                             .where(self.JobTrackerTable.id == id)
@@ -98,8 +138,8 @@ class DatabaseHandler:
                                     company = modificationValues['company'],
                                     salary = modificationValues['salary'],
                                     jobLocation = modificationValues['jobLocation'],
-                                    jobStartDate = self.strToDatetime(modificationValues['jobStartDate']),
-                                    jobApplicationClosingDate = self.strToDatetime(modificationValues['jobApplicationClosingDate']),
+                                    jobStartDate = self.dataFormattingObj.strToDatetime(modificationValues['jobStartDate']),
+                                    jobApplicationClosingDate = self.dataFormattingObj.strToDatetime(modificationValues['jobApplicationClosingDate']),
                                     applicationStatus = modificationValues['applicationStatus'],
                                     notes = modificationValues['notes'],
                                     modifiedJobTrackDate = func.current_date())
@@ -110,7 +150,7 @@ class DatabaseHandler:
         with Session(self.engine) as session:
             queryStatement = self.buildSearchQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(queryStatement)
-            rowList = self.convertRetrieveRowsToPrimitive(rows)
+            rowList = self.dataFormattingObj.convertRetrieveRowsToPrimitive(rows)
         return rowList
 
     def buildSearchQueryStatement(self, searchFilters: dict, session):
@@ -128,41 +168,12 @@ class DatabaseHandler:
             searchFilters['salary']['max'] = int( searchFilters['salary']['max'] )
             queryStatement = queryStatement.filter(self.JobTrackerTable.salary <= searchFilters['salary']['max'])
         if searchFilters['jobStartDate'] != '':
-            queryStatement = queryStatement.filter(self.JobTrackerTable.jobStartDate >= self.strToDatetime(searchFilters['jobStartDate']) )
+            queryStatement = queryStatement.filter(self.JobTrackerTable.jobStartDate >= self.dataFormattingObj.strToDatetime(searchFilters['jobStartDate']) )
         if searchFilters['applicationStatus'] in self.possibleApplicationStatus:
             queryStatement = queryStatement.filter(self.JobTrackerTable.applicationStatus == searchFilters['applicationStatus'])
         if searchFilters['jobLocation'] != '':
             queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation.like(f"%{searchFilters['jobLocation']}%"))
         return queryStatement
-
-    def convertRetrieveRowsToPrimitive(self, rows):
-        rowList = []
-        for row in rows:
-            row = row[0]
-            jobInfo = {
-                'id': row.id,
-                'job': row.job,
-                'company': row.company,
-                'salary': row.salary,
-                'jobLocation': row.jobLocation,
-                'jobStartDate': str(row.jobStartDate),
-                'jobApplicationClosingDate': str(row.jobApplicationClosingDate),
-                'applicationStatus': row.applicationStatus,
-                'notes': row.notes,
-                'startJobTrackDate': str(row.startJobTrackDate),
-                'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
-            }
-            jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
-            rowList.append(jobInfo)
-        return rowList
-
-    def convertJobInfoNullToEmptyStr(self, jobInfo: dict):
-        exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
-        jobInfokeys = jobInfo.keys()
-        for key in jobInfokeys:
-            if key not in exemptFields:
-                jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
-        return jobInfo
 
     def getSearchFilterLimits(self) -> dict:
         searchFilterLimits = {"salary": {'min': None,
@@ -175,12 +186,5 @@ class DatabaseHandler:
             searchFilterLimits['salary']['min'] = session.query(func.min(self.JobTrackerTable.salary)).scalar()
             searchFilterLimits['salary']['max'] = session.query(func.max(self.JobTrackerTable.salary)).scalar()
             searchFilterLimits['allJobLocations'] = session.execute(allJobLocationsSelectStatement)
-            searchFilterLimits['allJobLocations'] = self.convertJobLocationToPrimitive(searchFilterLimits['allJobLocations'])
+            searchFilterLimits['allJobLocations'] = self.dataFormattingObj.convertJobLocationToPrimitive(searchFilterLimits['allJobLocations'])
         return searchFilterLimits
-
-    def convertJobLocationToPrimitive(self, allJobLocations):
-        jobLocationsList = []
-        for row in allJobLocations:
-            if row.jobLocation != None:
-                jobLocationsList.append(row.jobLocation)
-        return jobLocationsList
