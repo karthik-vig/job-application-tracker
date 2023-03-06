@@ -122,9 +122,7 @@ class DatabaseHandler:
 
     def deleteRow(self, id: int):
         with Session(self.engine) as session:
-            queryRowToDelete = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == int(id) )
-            rowToDelete = session.execute(queryRowToDelete).first()
-            session.delete(rowToDelete[0])
+            session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == int(id)).delete()
             session.commit()
 
     def updateRow(self, id: int, modificationValues: dict):
