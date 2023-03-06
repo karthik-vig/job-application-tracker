@@ -64,7 +64,7 @@ class DatabaseHandler:
     def __init__(self):
         self.dataFormattingObj = DataFormatting()
         self.possibleApplicationStatus = ['Applied', 'I Rejected', 'They Rejected', 'Successful']
-        self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
+        self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=False, future=True)
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
         with self.engine.connect() as databaseConnection:

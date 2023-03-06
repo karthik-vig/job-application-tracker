@@ -116,9 +116,6 @@ def getModifiedJobInfo():
 
 
 if __name__ == "__main__":
-    app.config['debug'] = True
-    app.run()
-    '''
     guiApp = FlaskUI(server=startFlask,
                     server_kwargs={
                     'app': app,
@@ -128,5 +125,4 @@ if __name__ == "__main__":
                     width=1200,
                     height=800
                     )
-    guiApp.run() 
-    '''
+    guiApp.run()
