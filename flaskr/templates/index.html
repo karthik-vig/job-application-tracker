@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title style="color: rgb(255, 255, 255, 0)">Job Tracker</title>
+        <title>Job Tracker</title>
         <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/indexStyle.css')}}">
     </head>
     <body class="bodyContainer bodyBGImage">
-        <!--
-        <section>
-            <a href="/addJobInfo" class="buttonDim">
-                <img src="{{url_for('static', filename='add.svg')}}">
-            </a>
-        </section>
-        -->
         <div class="commonBorder searchFilterInputContainer searchFilterInputItem frostGlass">
             <section class="addButton">
                 <form method="get">
@@ -63,17 +56,6 @@
                         <p class="JobEntryPanelCompany"> <label> Company: </label> {{jobInfo["company"]}}</p>
                         <p class="JobEntryPanelSalary"> <label> Salary: </label> {{jobInfo["salary"]}}</p>
                         <p class="JobEntryPanelApplicationStatus"> <label> Status: </label> {{jobInfo["applicationStatus"]}}</p>
-                        <!--
-                        <a href="/modifyJobInfo?id={{jobInfo['id']}}"> temp modify
-                            <img src="">
-                        </a>
-                        <a href="/seeJobInfo?id={{jobInfo['id']}}"> temp see job info
-                            <img src="">
-                        </a>
-                        <a href="/redirectDeleteEntry?id={{jobInfo['id']}}"> temp delete entry
-                            <img src="">
-                        </a>
-                        -->
                         <form method="get" class="jobEntryPanelButtonsContainerPart1">
                             <input type="hidden" name="id" value="{{jobInfo['id']}}" > 
                             <input type="image" src="{{url_for('static', filename='icons/modify.svg')}}" formaction="/modifyJobInfo" class="buttonDim jobEntryPanelModify">

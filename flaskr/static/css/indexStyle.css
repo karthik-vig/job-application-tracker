@@ -1,7 +1,4 @@
 .jobEntryPanelItemContainer{
-   /* display: grid;
-    grid-template-columns: [col1] 85vw [endCol];
-    grid-template-rows: [row1] 65vh [endRow]; */
     grid-column-start: col1;
     grid-column-end: endCol;
     grid-row-start: row2;
@@ -20,8 +17,8 @@
 
 .bodyContainer{
     display: grid;
-    grid-template-columns: [col1] 95vw [endCol];
-    grid-template-rows: [row1] 20vh [row2] 65vh [endRow];
+    grid-template-columns: [col1] 100vw [endCol];
+    grid-template-rows: [row1] 20vh [row2] 76vh [endRow];
     row-gap: 4vh;
     justify-items: center;
 }
