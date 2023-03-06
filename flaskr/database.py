@@ -84,7 +84,6 @@ class DatabaseHandler:
         with Session(self.engine) as session:
             queryRowToDelete = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == int(id) )
             rowToDelete = session.execute(queryRowToDelete).first()
-            #session.delete(rowToDelete)
             session.delete(rowToDelete[0])
             session.commit()
 
@@ -117,7 +116,6 @@ class DatabaseHandler:
     def buildSearchQueryStatement(self, searchFilters: dict, session):
         if searchFilters['id'] != '':
             searchFilters['id'] = int( searchFilters['id'] )
-            print(searchFilters['id'])
             queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == searchFilters['id'])
             return queryStatement
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
@@ -172,14 +170,7 @@ class DatabaseHandler:
                                           }, 
                               "allJobLocations": []
                               }
-        '''
-        minSalarySelectStatement = select(func.min(self.JobTrackerTable.salary))
-        maxSalarySelectStatement = select(func.max(self.JobTrackerTable.salary))
-        allJobLocationsSelectStatement = select(self.JobTrackerTable.jobLocation).distinct()
-        '''
         with Session(self.engine) as session:
-            #minSalarySelectStatement = session.query(func.min(self.JobTrackerTable.salary)).scalar_subquery()
-            #maxSalarySelectStatement = session.query(func.max(self.JobTrackerTable.salary)).scalar_subquery()
             allJobLocationsSelectStatement = session.query(self.JobTrackerTable.jobLocation).distinct()
             searchFilterLimits['salary']['min'] = session.query(func.min(self.JobTrackerTable.salary)).scalar()
             searchFilterLimits['salary']['max'] = session.query(func.max(self.JobTrackerTable.salary)).scalar()
