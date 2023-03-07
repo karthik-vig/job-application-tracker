@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/modifyJobInfoStyle.css')}}">
     </head>
     <body class="pageContainer bodyBGImage">
-        <form action="/redirectModifyJobInfo" method="post" class="commonBorder formContainer pageItem frostGlass">
+        <form action="/redirectModifyJobInfo" method="post" enctype="multipart/form-data" class="commonBorder formContainer pageItem frostGlass">
             <input type="hidden" name="id" value="{{ jobInfo['id'] }}" >
             <fieldset class="jobInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Job:</label>
@@ -67,6 +67,45 @@
             <fieldset  class="notesInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Notes:</label>
                 <input type="text" name="notes" maxlength="10000"  value="{{ jobInfo['notes'] }}" class="commonBorder fieldsetInputItem inputBGColor">
+            </fieldset>
+            <fieldset class="resumeFileInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Resume File:</label>
+                <section class="fieldsetInputItem">
+                    <input type="file" name="resumeFile" id="resumeFile">
+                    <button onclick="document.getElementById('resumeFile').value = ''; return false;">Reset</button> 
+                    {% if jobInfo['resumeFile']['name'] != '' %}
+                        <p>{{ jobInfo['resumeFile']['name'] }}</p>
+                        <a href="/resumeFile/{{jobInfo['id']}}">Open File</a>
+                    {% else %}
+                        <p>No File.</p>
+                    {% endif %}
+                </section>
+            </fieldset>
+            <fieldset class="coverLetterFileInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Cover Letter File:</label>
+                <section class="fieldsetInputItem">
+                    <input type="file" name="coverLetterFile" id="coverLetterFile">
+                    <button onclick="document.getElementById('coverLetterFile').value = ''; return false;">Reset</button> 
+                    {% if jobInfo['coverLetterFile']['name'] != '' %}
+                        <p>{{ jobInfo['coverLetterFile']['name'] }}</p>
+                        <a href="/coverLetterFile/{{jobInfo['id']}}">Open File</a>
+                    {% else %}
+                        <p>No File.</p>
+                    {% endif %}
+                </section>
+            </fieldset>
+            <fieldset class="extraFileInputItem fieldsetContainer">
+                <label class="fieldsetLabelItem">Extra File:</label>
+                <section class="fieldsetInputItem">
+                    <input type="file" name="extraFile" id="extraFile">
+                    <button onclick="document.getElementById('extraFile').value = ''; return false;">Reset</button>
+                    {% if jobInfo['extraFile']['name'] != '' %}
+                        <p>{{ jobInfo['extraFile']['name'] }}</p>
+                        <a href="/extraFile/{{jobInfo['id']}}">Open File</a>
+                    {% else %}
+                        <p>No File.</p>
+                    {% endif %}
+                </section>
             </fieldset>
             <fieldset  class="startJobTrackDateInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Added Date:</label>

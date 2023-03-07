@@ -162,14 +162,15 @@ class DatabaseHandler:
             session.add(fileTrackerRowToInsert)
             session.commit()
 
-    def deleteRow(self, id: int):
+    def deleteRow(self, id: str):
         id = int(id)
         with Session(self.engine) as session:
             session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == id).delete()
             session.query(self.FileTrackerTable).filter(self.FileTrackerTable.id == id).delete()
             session.commit()
 
-    def updateRow(self, id: int, modificationValues: dict):
+    def updateRow(self, id: str, modificationValues: dict):
+        id = int(id)
         if modificationValues['applicationStatus'] not in self.possibleApplicationStatus:
             modificationValues['applicationStatus'] = ''
         modificationValues = self.dataFormattingObj.convertJobInfoEmptyStrToNull(jobInfo=modificationValues)
@@ -186,6 +187,30 @@ class DatabaseHandler:
                                     notes = modificationValues['notes'],
                                     modifiedJobTrackDate = func.current_date())
                             )
+            if modificationValues['resumeFile']['name'] != None \
+                                and modificationValues['resumeFile']['data'] != None:
+                session.execute( update(self.FileTrackerTable)
+                                .where(self.FileTrackerTable.id == id)
+                                .values(resumeFilename = modificationValues['resumeFile']['name'],
+                                        resumeFileData = modificationValues['resumeFile']['data']
+                                        )
+                                )
+            if modificationValues['coverLetterFile']['name'] != None \
+                                and modificationValues['coverLetterFile']['data'] != None:
+                session.execute( update(self.FileTrackerTable)
+                                .where(self.FileTrackerTable.id == id)
+                                .values(coverLetterFilename = modificationValues['coverLetterFile']['name'],
+                                        coverLetterFileData = modificationValues['coverLetterFile']['data']
+                                        )
+                                )
+            if modificationValues['extraFile']['name'] != None \
+                                and modificationValues['extraFile']['data'] != None:
+                session.execute( update(self.FileTrackerTable)
+                                .where(self.FileTrackerTable.id == id)
+                                .values(extraFilename = modificationValues['extraFile']['name'],
+                                        extraFileData = modificationValues['extraFile']['data']
+                                        )
+                                ) 
             session.commit()
 
     def getRowsOnID(self, id: str, tableName: str) -> list:

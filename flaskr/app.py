@@ -34,10 +34,15 @@ def addJobInfo():
 @app.route('/modifyJobInfo', methods=['GET'])
 def modifyJobInfo():
     id = request.args.get('id')
-    searchFilters = {'id': id}
-    jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
-    if str(type(jobInfo)) == "<class 'list'>":
-        jobInfo = jobInfo[0]
+    jobTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='JobTrackerTable')
+    fileTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='FileTrackerTable')
+    if str(type(jobTrackerInfo)) == "<class 'list'>":
+        jobTrackerInfo = jobTrackerInfo[0]
+    if str(type(fileTrackerInfo)) == "<class 'list'>":
+        fileTrackerInfo = fileTrackerInfo[0]
+    jobInfo = {}
+    jobInfo.update(jobTrackerInfo)
+    jobInfo.update(fileTrackerInfo)
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
@@ -137,11 +142,14 @@ def getAddJobInfo():
                 'applicationStatus': request.form['applicationStatus'],
                 'notes': request.form['notes'],
                 'resumeFile': {'name': request.files['resumeFile'].filename,
-                               'data': request.files['resumeFile'].read()},
+                               'data': request.files['resumeFile'].read()
+                               },
                 'coverLetterFile': {'name': request.files['coverLetterFile'].filename,
-                                    'data': request.files['coverLetterFile'].read()},
+                                    'data': request.files['coverLetterFile'].read()
+                                    },
                 'extraFile': {'name': request.files['extraFile'].filename,
-                              'data': request.files['extraFile'].read()}
+                              'data': request.files['extraFile'].read()
+                              }
                 }
     return jobInfo
 
@@ -156,6 +164,15 @@ def getModifiedJobInfo():
                         'jobApplicationClosingDate': request.form['jobApplicationClosingDate'],
                         'applicationStatus': request.form['applicationStatus'],
                         'notes': request.form['notes'],
+                        'resumeFile': {'name': request.files['resumeFile'].filename,
+                                        'data': request.files['resumeFile'].read()
+                                        },
+                        'coverLetterFile': {'name': request.files['coverLetterFile'].filename,
+                                            'data': request.files['coverLetterFile'].read()
+                                            },
+                        'extraFile': {'name': request.files['extraFile'].filename,
+                                      'data': request.files['extraFile'].read()
+                                      }
                     }
     return modifiedJobInfo
 
