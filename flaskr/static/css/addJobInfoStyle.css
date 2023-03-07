@@ -56,10 +56,31 @@
     grid-row-end: row9;
 }
 
+.resumeFileInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row9;
+    grid-row-end: row10;
+}
+
+.coverLetterFileInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row10;
+    grid-row-end: row11;
+}
+
+.extraFileInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row11;
+    grid-row-end: row12;
+}
+
 .newJobInfoSubmitInputItem {
     grid-column-start: col1;
     grid-column-end: col2;
-    grid-row-start: row9;
+    grid-row-start: row12;
     grid-row-end: endRow;
     justify-self: center;
     align-self: center;
@@ -68,7 +89,7 @@
 .cancelSubmitInputItem {
     grid-column-start: col2;
     grid-column-end: endCol;
-    grid-row-start: row9;
+    grid-row-start: row12;
     grid-row-end: endRow;
     justify-self: center;
     align-self: center;
@@ -77,9 +98,9 @@
 .formContainer{
     display: grid;
     grid-template-columns: [col1] 25vw [col2] 25vw [endCol];
-    grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [endRow];
+    grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [row10] 5vh [row11] 5vh [row12] 5vh [endRow];
     row-gap: 2vh;
-    height: 62vh;
+    height: 82vh;
     width: 51vw;
     padding: 1vh;
 }

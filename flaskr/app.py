@@ -96,7 +96,13 @@ def getAddJobInfo():
                 'jobStartDate': request.form['jobStartDate'],
                 'jobApplicationClosingDate': request.form['jobApplicationClosingDate'],
                 'applicationStatus': request.form['applicationStatus'],
-                'notes': request.form['notes']
+                'notes': request.form['notes'],
+                'resumeFile': {'name': request.files['resumeFile'].filename,
+                               'data': request.files['resumeFile'].read()},
+                'coverLetterFile': {'name': request.files['coverLetterFile'].filename,
+                                    'data': request.files['coverLetterFile'].read()},
+                'extraFile': {'name': request.files['extraFile'].filename,
+                              'data': request.files['extraFile'].read()}
                 }
     return jobInfo
 
