@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select, or_, and_
-from sqlalchemy.orm import Session, registry
+from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select, or_, and_, ForeignKey, LargeBinary
+from sqlalchemy.orm import Session, registry, relationship
 import datetime
 
 
@@ -67,14 +67,15 @@ class DatabaseHandler:
         self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
-        with self.engine.connect() as databaseConnection:
-            if self.engine.dialect.has_table(databaseConnection, "JobTrackerTable"):
-                self.JobTrackerTable = self.getTable()
-            else:
-                self.JobTrackerTable = self.createTable()
-            databaseConnection.commit()
+        self.JobTrackerTable, self.FileTrackerTable = self.createTables()
+        #self.FileTrackerTable = self.createFileTrackerTable()
+        self.mapper_registry.metadata.create_all(self.engine)
 
-    def createTable(self):
+    #remove later
+    def gettest(self):
+        return self.JobTrackerTable, self.FileTrackerTable
+
+    def createTables(self):
         class JobTrackerTable(self.Base):
             __tablename__ = "JobTrackerTable"
             id = Column(Integer, primary_key=True, autoincrement=True)
@@ -88,17 +89,23 @@ class DatabaseHandler:
             notes = Column(String(10000), nullable=True)
             startJobTrackDate = Column(Date, nullable=False)
             modifiedJobTrackDate = Column(Date, nullable=False)
+            fileTracker = relationship("FileTrackerTable", back_populates="jobTracker")
             def __repr__(self):
                 return f"Table recording all job tracking information"
-        self.mapper_registry.metadata.create_all(self.engine)
-        return JobTrackerTable
-
-    def getTable(self):
-        class JobTrackerTable(self.Base):
-            __table__ = Table("JobTrackerTable", 
-                              self.mapper_registry.metadata, 
-                              autoload_with=self.engine)
-        return JobTrackerTable
+            
+        class FileTrackerTable(self.Base):
+            __tablename__ = "FileTrackerTable"
+            id = Column(Integer, ForeignKey("JobTrackerTable.id"), primary_key=True)
+            resumeFilename = Column(String(100), nullable=True)
+            resumeData = Column(LargeBinary, nullable=True)
+            coverLetterFilename = Column(String(100), nullable=True)
+            coverLetterData = Column(LargeBinary, nullable=True)
+            extraFilename = Column(String(100), nullable=True)
+            extraFileData = Column(LargeBinary, nullable=True)
+            jobTracker = relationship("JobTrackerTable", back_populates="fileTracker")
+            def __repr__(self):
+                return f"Table related to JobTrackerTable. Records the uploaded file data." 
+        return JobTrackerTable, FileTrackerTable    
 
     def addRow(self, jobInfo: dict):
         if jobInfo['applicationStatus'] not in self.possibleApplicationStatus:
