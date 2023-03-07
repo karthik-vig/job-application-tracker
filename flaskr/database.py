@@ -15,7 +15,9 @@ class DataFormatting:
     def convertJobInfoEmptyStrToNull(self, jobInfo: dict):
         jobInfoKeys = jobInfo.keys()
         for key in jobInfoKeys:
-            jobInfo[key] = None if jobInfo[key] == '' else jobInfo[key]
+            if str(type(jobInfo[key])) == "<class 'dict'>":
+                jobInfo[key] = self.convertJobInfoEmptyStrToNull(jobInfo=jobInfo[key])
+            jobInfo[key] = None if (jobInfo[key] == '' or jobInfo[key] == b'') else jobInfo[key]
         if 'job' in jobInfoKeys and jobInfo['job'] == None:
             jobInfo['job'] = ''
         if 'company' in jobInfoKeys and jobInfo['company'] == None:
@@ -97,9 +99,9 @@ class DatabaseHandler:
             __tablename__ = "FileTrackerTable"
             id = Column(Integer, ForeignKey("JobTrackerTable.id"), primary_key=True)
             resumeFilename = Column(String(100), nullable=True)
-            resumeData = Column(LargeBinary, nullable=True)
+            resumeFileData = Column(LargeBinary, nullable=True)
             coverLetterFilename = Column(String(100), nullable=True)
-            coverLetterData = Column(LargeBinary, nullable=True)
+            coverLetterFileData = Column(LargeBinary, nullable=True)
             extraFilename = Column(String(100), nullable=True)
             extraFileData = Column(LargeBinary, nullable=True)
             jobTracker = relationship("JobTrackerTable", back_populates="fileTracker")
@@ -114,17 +116,26 @@ class DatabaseHandler:
         with Session(self.engine) as session:
             jobInfo['jobStartDate'] = self.dataFormattingObj.strToDatetime(jobInfo['jobStartDate'])
             jobInfo['jobApplicationClosingDate'] = self.dataFormattingObj.strToDatetime(jobInfo['jobApplicationClosingDate'])
-            rowToInsert = self.JobTrackerTable(job = jobInfo['job'],
-                                               company = jobInfo['company'],
-                                               salary = jobInfo['salary'],
-                                               jobLocation = jobInfo['jobLocation'],
-                                               jobStartDate = jobInfo['jobStartDate'],
-                                               jobApplicationClosingDate = jobInfo['jobApplicationClosingDate'],
-                                               applicationStatus = jobInfo['applicationStatus'],
-                                               notes = jobInfo['notes'],
-                                               startJobTrackDate = func.current_date(),
-                                               modifiedJobTrackDate = func.current_date())
-            session.add(rowToInsert)
+            jobTrackerRowToInsert = self.JobTrackerTable(job = jobInfo['job'],
+                                                        company = jobInfo['company'],
+                                                        salary = jobInfo['salary'],
+                                                        jobLocation = jobInfo['jobLocation'],
+                                                        jobStartDate = jobInfo['jobStartDate'],
+                                                        jobApplicationClosingDate = jobInfo['jobApplicationClosingDate'],
+                                                        applicationStatus = jobInfo['applicationStatus'],
+                                                        notes = jobInfo['notes'],
+                                                        startJobTrackDate = func.current_date(),
+                                                        modifiedJobTrackDate = func.current_date())
+            fileTrackerRowToInsert = self.FileTrackerTable(resumeFilename = jobInfo['resumeFile']['name'],
+                                                           resumeFileData = jobInfo['resumeFile']['data'],
+                                                           coverLetterFilename = jobInfo['coverLetterFile']['name'],
+                                                           coverLetterFileData = jobInfo['coverLetterFile']['data'],
+                                                           extraFilename = jobInfo['extraFile']['name'],
+                                                           extraFileData = jobInfo['extraFile']['data'],
+                                                           jobTracker = jobTrackerRowToInsert)
+            session.add(jobTrackerRowToInsert)
+            session.commit()
+            session.add(fileTrackerRowToInsert)
             session.commit()
 
     def deleteRow(self, id: int):
