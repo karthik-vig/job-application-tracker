@@ -139,8 +139,10 @@ class DatabaseHandler:
             session.commit()
 
     def deleteRow(self, id: int):
+        id = int(id)
         with Session(self.engine) as session:
-            session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == int(id)).delete()
+            session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == id).delete()
+            session.query(self.FileTrackerTable).filter(self.FileTrackerTable.id == id).delete()
             session.commit()
 
     def updateRow(self, id: int, modificationValues: dict):
