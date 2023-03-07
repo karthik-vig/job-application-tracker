@@ -24,34 +24,63 @@ class DataFormatting:
             jobInfo['company'] = ''
         return jobInfo
 
-    def convertJobInfoNullToEmptyStr(self, jobInfo: dict):
+    def convertJobInfoNullToEmptyStr(self, jobInfo: dict) -> dict:
         exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
-        jobInfokeys = jobInfo.keys()
-        for key in jobInfokeys:
+        for key in jobInfo.keys():
             if key not in exemptFields:
                 jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
         return jobInfo
 
-    def convertRetrieveRowsToPrimitive(self, rows):
+    def convertFileInfoNullToEmptyVal(self, fileInfo: dict) -> dict:
+        for key in fileInfo.keys():
+            if str(type(fileInfo[key])) == "<class 'dict'>":
+                fileInfo[key] = self.convertFileInfoNullToEmptyVal(fileInfo=fileInfo[key])
+                continue
+            fileInfo[key] = '' if (key == 'name' and fileInfo[key] == None) else fileInfo[key]
+            fileInfo[key] = b'' if (key == 'data' and fileInfo[key] == None) else fileInfo[key]
+        return fileInfo
+
+
+    def convertRowsToPrimitive(self, rows, tableName):
         rowList = []
         for row in rows:
             row = row[0]
-            jobInfo = {
-                'id': row.id,
-                'job': row.job,
-                'company': row.company,
-                'salary': row.salary,
-                'jobLocation': row.jobLocation,
-                'jobStartDate': str(row.jobStartDate),
-                'jobApplicationClosingDate': str(row.jobApplicationClosingDate),
-                'applicationStatus': row.applicationStatus,
-                'notes': row.notes,
-                'startJobTrackDate': str(row.startJobTrackDate),
-                'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
-            }
-            jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
-            rowList.append(jobInfo)
+            if tableName == 'JobTrackerTable':
+                rowInfo = self.constructJobTrackerPrimitive(row=row)
+            elif tableName == 'FileTrackerTable':
+                rowInfo = self.constructFileTrackerPrimitive(row=row)
+            rowList.append(rowInfo)
         return rowList
+
+    def constructJobTrackerPrimitive(self, row):
+        jobInfo = { 'id': row.id,
+                    'job': row.job,
+                    'company': row.company,
+                    'salary': row.salary,
+                    'jobLocation': row.jobLocation,
+                    'jobStartDate': str(row.jobStartDate),
+                    'jobApplicationClosingDate': str(row.jobApplicationClosingDate),
+                    'applicationStatus': row.applicationStatus,
+                    'notes': row.notes,
+                    'startJobTrackDate': str(row.startJobTrackDate),
+                    'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
+                    }
+        jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
+        return jobInfo
+
+    def constructFileTrackerPrimitive(self, row):
+        fileInfo = {'resumeFile': {'name': row.resumeFilename,
+                                'data': row.resumeFileData
+                                },
+                    'coverLetterFile': {'name': row.coverLetterFilename,
+                                        'data': row.coverLetterFileData
+                                        },
+                    'extraFile': {'name': row.extraFilename,
+                                'data': row.extraFileData
+                                }
+                    }
+        self.convertFileInfoNullToEmptyVal(fileInfo=fileInfo)
+        return fileInfo
 
     def convertJobLocationToPrimitive(self, allJobLocations):
         jobLocationsList = []
@@ -70,12 +99,7 @@ class DatabaseHandler:
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
         self.JobTrackerTable, self.FileTrackerTable = self.createTables()
-        #self.FileTrackerTable = self.createFileTrackerTable()
         self.mapper_registry.metadata.create_all(self.engine)
-
-    #remove later
-    def gettest(self):
-        return self.JobTrackerTable, self.FileTrackerTable
 
     def createTables(self):
         class JobTrackerTable(self.Base):
@@ -164,18 +188,27 @@ class DatabaseHandler:
                             )
             session.commit()
 
-    def retrieveRows(self, searchFilters: dict) -> list:
+    def getRowsOnID(self, id: str, tableName: str) -> list:
+        id = int(id)
+        with Session(self.engine) as session:
+            if tableName == 'JobTrackerTable':
+                queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == id)
+            elif tableName == 'FileTrackerTable':
+                queryStatement = session.query(self.FileTrackerTable).filter(self.FileTrackerTable.id == id)
+            else:
+                return []
+            rows = session.execute(queryStatement)
+            rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName=tableName)
+        return rowList
+
+    def searchJobTrackerTableRows(self, searchFilters: dict) -> list:
         with Session(self.engine) as session:
             queryStatement = self.buildSearchQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(queryStatement)
-            rowList = self.dataFormattingObj.convertRetrieveRowsToPrimitive(rows)
+            rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName='JobTrackerTable')
         return rowList
 
     def buildSearchQueryStatement(self, searchFilters: dict, session):
-        if searchFilters['id'] != '':
-            searchFilters['id'] = int( searchFilters['id'] )
-            queryStatement = session.query(self.JobTrackerTable).filter(self.JobTrackerTable.id == searchFilters['id'])
-            return queryStatement
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
                                                    )                                           

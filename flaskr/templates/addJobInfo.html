@@ -56,16 +56,17 @@
             </fieldset>
             <fieldset class="coverLetterFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Cover Letter File:</label>
-                <!--<section class="fieldsetInputItem">-->
+                <section class="fieldsetInputItem">
                     <input type="file" name="coverLetterFile" id="coverLetterFile">
                     <button onclick="document.getElementById('coverLetterFile').value = ''; return false;">Reset</button> 
-                <!--</section>-->
+                </section>
             </fieldset>
             <fieldset class="extraFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Extra File:</label>
                 <section class="fieldsetInputItem">
                     <input type="file" name="extraFile" id="extraFile">
-                    <button onclick="document.getElementById('extraFile').value = ''; return false;">Reset</button> 
+                    <button onclick="document.getElementById('extraFile').value = ''; return false;">Reset</button>
+                </section>
             </fieldset>
             <input type="image"  src="{{url_for('static', filename='icons/add.svg')}}" name="newJobInfoSubmit" class="buttonDim newJobInfoSubmitInputItem">
             <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim cancelSubmitInputItem">

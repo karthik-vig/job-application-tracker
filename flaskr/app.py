@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from io import BytesIO
+from flask import Flask, render_template, request, send_file
 from flaskwebgui import FlaskUI
 import waitress
 from database import DatabaseHandler                                      
@@ -19,7 +20,7 @@ def index():
     global searchFilters
     jobInfoList = None
     if searchFilters:
-        jobInfoList = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
+        jobInfoList = databaseHandlerObj.searchJobTrackerTableRows(searchFilters=searchFilters)
     jobLocations = databaseHandlerObj.getSearchFilterLimits()['allJobLocations']
     return render_template('index.html', jobInfoList=jobInfoList,
                              jobLocations=jobLocations)
@@ -43,12 +44,50 @@ def modifyJobInfo():
 @app.route('/seeJobInfo', methods=['GET'])
 def seeJobInfo():
     id = request.args.get('id')
-    searchFilters = {'id': id}
-    jobInfo = databaseHandlerObj.retrieveRows(searchFilters=searchFilters)
-    if str(type(jobInfo)) == "<class 'list'>":
-        jobInfo = jobInfo[0]
+    jobTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='JobTrackerTable')
+    fileTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='FileTrackerTable')
+    if str(type(jobTrackerInfo)) == "<class 'list'>":
+        jobTrackerInfo = jobTrackerInfo[0]
+    if str(type(fileTrackerInfo)) == "<class 'list'>":
+        fileTrackerInfo = fileTrackerInfo[0]
+    jobInfo = {}
+    jobInfo.update(jobTrackerInfo)
+    jobInfo.update(fileTrackerInfo)
+    '''
+    # temp. remove latter
+    jobInfo['resumeFile'] = {}
+    jobInfo['resumeFile']['name'] = 'temp file name'
+    jobInfo['coverLetterFile'] = {}
+    jobInfo['coverLetterFile']['name'] = 'temp file name'
+    jobInfo['extraFile'] = {}
+    jobInfo['extraFile']['name'] = 'temp file name'
+    '''
     return render_template('seeJobInfo.html', jobInfo=jobInfo)
 
+
+@app.route('/resumeFile/<id>', methods=['GET'])
+@app.route('/coverLetterFile/<id>', methods=['GET'])
+@app.route('/extraFile/<id>', methods=['GET'])
+def getFiles(id):
+    requestUrl = str(request.url_rule)
+    fileTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='FileTrackerTable')
+    if str(type(fileTrackerInfo)) == "<class 'list'>":
+        fileTrackerInfo = fileTrackerInfo[0]
+    if requestUrl == '/resumeFile/<id>':
+        # code to get filename and filedata based on id for resumeFile
+        fileName = fileTrackerInfo['resumeFile']['name']
+        fileData = fileTrackerInfo['resumeFile']['data']
+        return send_file(BytesIO(fileData), download_name=fileName, as_attachment=True)
+    if requestUrl == '/coverLetterFile/<id>':
+        # code to get filename and filedata based on id for coverLetterFiel
+        fileName = fileTrackerInfo['coverLetterFile']['name']
+        fileData = fileTrackerInfo['coverLetterFile']['data']
+        return send_file(BytesIO(fileData), download_name=fileName, as_attachment=True)
+    if requestUrl == '/extraFile/<id>':
+        # code to get filename and filedata based on id for extraFile
+        fileName = fileTrackerInfo['extraFile']['name']
+        fileData = fileTrackerInfo['extraFile']['data']
+        return send_file(BytesIO(fileData), download_name=fileName, as_attachment=True)
 
 @app.route('/redirectIndex', methods=['POST'])
 @app.route('/redirectAddJobInfo', methods=['POST'])

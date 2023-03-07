@@ -56,24 +56,45 @@
     grid-row-end: row9;
 }
 
-.startJobTrackDateInputItem {
+.resumeFileInputItem {
     grid-column-start: col1;
     grid-column-end: endCol;
     grid-row-start: row9;
     grid-row-end: row10;
 }
 
-.modifiedJobTrackDateInputItem {
+.coverLetterFileInputItem {
     grid-column-start: col1;
     grid-column-end: endCol;
     grid-row-start: row10;
     grid-row-end: row11;
 }
 
-.cancelSubmitInputItem {
+.extraFileInputItem {
     grid-column-start: col1;
     grid-column-end: endCol;
     grid-row-start: row11;
+    grid-row-end: row12;
+}
+
+.startJobTrackDateInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row12;
+    grid-row-end: row13;
+}
+
+.modifiedJobTrackDateInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row13;
+    grid-row-end: row14;
+}
+
+.cancelSubmitInputItem {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row14;
     grid-row-end: endRow;
     justify-self: center;
     align-self: center;
@@ -82,9 +103,9 @@
 .formContainer{
     display: grid;
     grid-template-columns: [col1] 50vw [endCol];
-    grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [row10] 5vh [row11] 5vh [endRow];
+    grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [row10] 5vh [row11] 5vh [row12] 5vh [row13] 5vh [row14] 5vh [endRow];
     row-gap: 2vh;
-    height: 75vh;
+    height: 96vh;
     width: 51vw;
     padding: 1vh;
 }
