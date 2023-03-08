@@ -48,7 +48,7 @@
                         <p class="fileNameItem">{{ jobInfo['resumeFile']['name'] }}</p>
                         <a href="/resumeFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
-                        <p class="fileNameItem">No File.</p>
+                        <p class="noFileItem">No File.</p>
                     {% endif %}
                 </section>
             </fieldset>
@@ -59,7 +59,7 @@
                         <p class="fileNameItem">{{ jobInfo['coverLetterFile']['name'] }}</p>
                         <a href="/coverLetterFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
-                        <p class="fileNameItem">No File.</p>
+                        <p class="noFileItem">No File.</p>
                     {% endif %}
                 </section>
             </fieldset>
@@ -70,7 +70,7 @@
                         <p class="fileNameItem">{{ jobInfo['extraFile']['name'] }}</p>
                         <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
-                        <p class="fileNameItem">No File.</p>
+                        <p class="noFileItem">No File.</p>
                     {% endif %}
                 </section>
             </fieldset>

@@ -157,6 +157,18 @@
     grid-column-end: col2;
     grid-row-start: row1;
     grid-row-end: endRow;
+    color: #000000;
+}
+
+.noFileItem {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+    color: #cc5656;
+    font-weight: bolder;
+    font-size: large;
+    text-align: center;
 }
 
 .filesContainer {

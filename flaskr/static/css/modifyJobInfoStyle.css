@@ -198,6 +198,13 @@
     background-color: #272a2e;
 }
 
+.filesContainer > p {
+    color: #cc5656;
+    font-weight: bolder;
+    font-size: large;
+    text-align: center;
+}
+
 .filesContainer {
     display: grid;
     grid-template-columns: [col1] 29vw [col2] 5vw [col3] 5vw [endCol];
