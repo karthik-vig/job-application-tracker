@@ -70,12 +70,11 @@
             </fieldset>
             <fieldset class="resumeFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Resume File:</label>
-                <section class="fieldsetInputItem">
-                    <input type="file" name="resumeFile" id="resumeFile">
-                    <button onclick="document.getElementById('resumeFile').value = ''; return false;">Reset</button> 
+                <section class="fieldsetInputItem filesContainer">
+                    <input type="file" name="resumeFile" id="resumeFile" class="filesUploadItem fileSelectorButton">
+                    <button onclick="document.getElementById('resumeFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button> 
                     {% if jobInfo['resumeFile']['name'] != '' %}
-                        <p>{{ jobInfo['resumeFile']['name'] }}</p>
-                        <a href="/resumeFile/{{jobInfo['id']}}">Open File</a>
+                        <a href="/resumeFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
                         <p>No File.</p>
                     {% endif %}
@@ -83,12 +82,11 @@
             </fieldset>
             <fieldset class="coverLetterFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Cover Letter File:</label>
-                <section class="fieldsetInputItem">
-                    <input type="file" name="coverLetterFile" id="coverLetterFile">
-                    <button onclick="document.getElementById('coverLetterFile').value = ''; return false;">Reset</button> 
+                <section class="fieldsetInputItem filesContainer">
+                    <input type="file" name="coverLetterFile" id="coverLetterFile" class="filesUploadItem fileSelectorButton">
+                    <button onclick="document.getElementById('coverLetterFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button> 
                     {% if jobInfo['coverLetterFile']['name'] != '' %}
-                        <p>{{ jobInfo['coverLetterFile']['name'] }}</p>
-                        <a href="/coverLetterFile/{{jobInfo['id']}}">Open File</a>
+                        <a href="/coverLetterFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
                         <p>No File.</p>
                     {% endif %}
@@ -96,12 +94,11 @@
             </fieldset>
             <fieldset class="extraFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Extra File:</label>
-                <section class="fieldsetInputItem">
-                    <input type="file" name="extraFile" id="extraFile">
-                    <button onclick="document.getElementById('extraFile').value = ''; return false;">Reset</button>
+                <section class="fieldsetInputItem filesContainer">
+                    <input type="file" name="extraFile" id="extraFile" class="filesUploadItem fileSelectorButton">
+                    <button onclick="document.getElementById('extraFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button>
                     {% if jobInfo['extraFile']['name'] != '' %}
-                        <p>{{ jobInfo['extraFile']['name'] }}</p>
-                        <a href="/extraFile/{{jobInfo['id']}}">Open File</a>
+                        <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open File</a>
                     {% else %}
                         <p>No File.</p>
                     {% endif %}
