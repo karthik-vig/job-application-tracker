@@ -43,34 +43,34 @@
             </fieldset>
             <fieldset class="resumeFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Resume File:</label>
-                <section class="fieldsetInputItem">
+                <section class="fieldsetInputItem filesContainer">
                     {% if jobInfo['resumeFile']['name'] != '' %}
-                        <p>{{ jobInfo['resumeFile']['name'] }}</p>
-                        <a href="/resumeFile/{{jobInfo['id']}}">Open File</a>
+                        <p class="fileNameItem">{{ jobInfo['resumeFile']['name'] }}</p>
+                        <a href="/resumeFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
-                        <p>No File.</p>
+                        <p class="fileNameItem">No File.</p>
                     {% endif %}
                 </section>
             </fieldset>
             <fieldset class="coverLetterFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Cover Letter File:</label>
-                <section class="fieldsetInputItem">
+                <section class="fieldsetInputItem filesContainer">
                     {% if jobInfo['coverLetterFile']['name'] != '' %}
-                        <p>{{ jobInfo['coverLetterFile']['name'] }}</p>
-                        <a href="/coverLetterFile/{{jobInfo['id']}}">Open File</a>
+                        <p class="fileNameItem">{{ jobInfo['coverLetterFile']['name'] }}</p>
+                        <a href="/coverLetterFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
-                        <p>No File.</p>
+                        <p class="fileNameItem">No File.</p>
                     {% endif %}
                 </section>
             </fieldset>
             <fieldset class="extraFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Extra File:</label>
-                <section class="fieldsetInputItem">
+                <section class="fieldsetInputItem filesContainer">
                     {% if jobInfo['extraFile']['name'] != '' %}
-                        <p>{{ jobInfo['extraFile']['name'] }}</p>
-                        <a href="/extraFile/{{jobInfo['id']}}">Open File</a>
+                        <p class="fileNameItem">{{ jobInfo['extraFile']['name'] }}</p>
+                        <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
                     {% else %}
-                        <p>No File.</p>
+                        <p class="fileNameItem">No File.</p>
                     {% endif %}
                 </section>
             </fieldset>

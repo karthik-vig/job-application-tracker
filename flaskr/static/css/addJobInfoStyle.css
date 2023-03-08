@@ -131,14 +131,6 @@
 
 /* design for the files section */
 
-.filesResetButton {
-    background-color: #8d4a4a;
-}
-
-.filesResetButton:active {
-    background-color: #613232;
-}
-
 .filesResetButtonItem {
     grid-column-start: col2;
     grid-column-end: endCol;
@@ -146,6 +138,11 @@
     grid-row-end: endRow;
     height: 3vh;
     text-align: center;
+    background-color: #8d4a4a;
+}
+
+.filesResetButtonItem:active {
+    background-color: #613232;
 }
 
 .filesUploadItem {

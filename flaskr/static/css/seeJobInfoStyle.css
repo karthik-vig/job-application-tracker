@@ -132,3 +132,36 @@
     grid-template-columns: [col1] 10vw [col2] 40vw [endCol];
     grid-template-rows: [row1] 5vh [endRow];
 }
+
+
+/* design for the files section */
+
+.filesOpenButtonItem {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+    height: 3vh;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 1vh;
+    background-color: #5a914f;
+}
+
+.filesOpenButtonItem:active {
+    background-color: #34532d;
+}
+
+.fileNameItem {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+.filesContainer {
+    display: grid;
+    grid-template-columns: [col1] 35vw [col2] 5vw [endCol];
+    grid-template-rows: [row1] 5vh [endRow];
+    align-items: center;
+}
