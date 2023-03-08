@@ -49,23 +49,23 @@
             </fieldset>
             <fieldset class="resumeFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Resume File:</label>
-                <section class="fieldsetInputItem">
-                    <input type="file" name="resumeFile" id="resumeFile">
-                    <button onclick="document.getElementById('resumeFile').value = ''; return false;">Reset</button> 
+                <section class="fieldsetInputItem filesContainer">
+                    <input type="file" name="resumeFile" id="resumeFile" class="filesUploadItem fileSelectorButton">
+                    <button onclick="document.getElementById('resumeFile').value = ''; return false;" class="filesResetButtonItem commonBorder filesResetButton">Reset</button> 
                 </section>
             </fieldset>
             <fieldset class="coverLetterFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Cover Letter File:</label>
-                <section class="fieldsetInputItem">
-                    <input type="file" name="coverLetterFile" id="coverLetterFile">
-                    <button onclick="document.getElementById('coverLetterFile').value = ''; return false;">Reset</button> 
+                <section class="fieldsetInputItem filesContainer">
+                    <input type="file" name="coverLetterFile" id="coverLetterFile" class="filesUploadItem fileSelectorButton">
+                    <button onclick="document.getElementById('coverLetterFile').value = ''; return false;" class="filesResetButtonItem commonBorder filesResetButton">Reset</button> 
                 </section>
             </fieldset>
             <fieldset class="extraFileInputItem fieldsetContainer">
                 <label class="fieldsetLabelItem">Extra File:</label>
-                <section class="fieldsetInputItem">
-                    <input type="file" name="extraFile" id="extraFile">
-                    <button onclick="document.getElementById('extraFile').value = ''; return false;">Reset</button>
+                <section class="fieldsetInputItem filesContainer">
+                    <input type="file" name="extraFile" id="extraFile" class="filesUploadItem fileSelectorButton">
+                    <button onclick="document.getElementById('extraFile').value = ''; return false;" class="filesResetButtonItem commonBorder filesResetButton">Reset</button>
                 </section>
             </fieldset>
             <input type="image"  src="{{url_for('static', filename='icons/add.svg')}}" name="newJobInfoSubmit" class="buttonDim newJobInfoSubmitInputItem">
