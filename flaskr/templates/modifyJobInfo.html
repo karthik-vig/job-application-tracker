@@ -75,6 +75,10 @@
                     <button onclick="document.getElementById('resumeFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button> 
                     {% if jobInfo['resumeFile']['name'] != '' %}
                         <a href="/resumeFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
+                        <label>
+                            <input type="checkbox" name="resumeFileDelete" class="filesDeleteCheckboxItem">
+                            Delete
+                        </label>
                     {% else %}
                         <p>No File.</p>
                     {% endif %}
@@ -87,6 +91,10 @@
                     <button onclick="document.getElementById('coverLetterFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button> 
                     {% if jobInfo['coverLetterFile']['name'] != '' %}
                         <a href="/coverLetterFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
+                        <label>
+                            <input type="checkbox" name="coverLetterFileDelete" class="filesDeleteCheckboxItem">
+                            Delete
+                        </label>
                     {% else %}
                         <p>No File.</p>
                     {% endif %}
@@ -98,7 +106,11 @@
                     <input type="file" name="extraFile" id="extraFile" class="filesUploadItem fileSelectorButton">
                     <button onclick="document.getElementById('extraFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button>
                     {% if jobInfo['extraFile']['name'] != '' %}
-                        <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open File</a>
+                        <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
+                        <label>
+                            <input type="checkbox" name="extraFileDelete" class="filesDeleteCheckboxItem">
+                            Delete
+                        </label>
                     {% else %}
                         <p>No File.</p>
                     {% endif %}

@@ -187,7 +187,15 @@ class DatabaseHandler:
                                     notes = modificationValues['notes'],
                                     modifiedJobTrackDate = func.current_date())
                             )
-            if modificationValues['resumeFile']['name'] != None \
+
+            if modificationValues['resumeFileDelete'] == 'on':
+                session.execute( update(self.FileTrackerTable)
+                                .where(self.FileTrackerTable.id == id)
+                                .values(resumeFilename = None,
+                                        resumeFileData = None
+                                        )
+                                )
+            elif modificationValues['resumeFile']['name'] != None \
                                 and modificationValues['resumeFile']['data'] != None:
                 session.execute( update(self.FileTrackerTable)
                                 .where(self.FileTrackerTable.id == id)
@@ -195,7 +203,15 @@ class DatabaseHandler:
                                         resumeFileData = modificationValues['resumeFile']['data']
                                         )
                                 )
-            if modificationValues['coverLetterFile']['name'] != None \
+
+            if modificationValues['coverLetterFileDelete'] == 'on':
+                session.execute( update(self.FileTrackerTable)
+                                .where(self.FileTrackerTable.id == id)
+                                .values(coverLetterFilename = None,
+                                        coverLetterFileData = None
+                                        )
+                                )
+            elif modificationValues['coverLetterFile']['name'] != None \
                                 and modificationValues['coverLetterFile']['data'] != None:
                 session.execute( update(self.FileTrackerTable)
                                 .where(self.FileTrackerTable.id == id)
@@ -203,7 +219,15 @@ class DatabaseHandler:
                                         coverLetterFileData = modificationValues['coverLetterFile']['data']
                                         )
                                 )
-            if modificationValues['extraFile']['name'] != None \
+                
+            if modificationValues['extraFileDelete'] == 'on':
+                session.execute( update(self.FileTrackerTable)
+                                .where(self.FileTrackerTable.id == id)
+                                .values(extraFilename = None,
+                                        extraFileData = None
+                                        )
+                                ) 
+            elif modificationValues['extraFile']['name'] != None \
                                 and modificationValues['extraFile']['data'] != None:
                 session.execute( update(self.FileTrackerTable)
                                 .where(self.FileTrackerTable.id == id)

@@ -145,9 +145,23 @@
 
 /* design for the files section */
 
+.filesDeleteCheckboxItem {
+    grid-column-start: col4;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+    height: 1vh;
+    background-color: #d4d6da;
+    margin-right: 0.7vw;
+}
+
+.filesDeleteCheckboxItem:checked {
+    background-color: #aa3434;
+}
+
 .filesOpenButtonItem {
     grid-column-start: col3;
-    grid-column-end: endCol;
+    grid-column-end: col4;
     grid-row-start: row1;
     grid-row-end: endRow;
     height: 3vh;
@@ -205,9 +219,13 @@
     text-align: center;
 }
 
+.filesContainer > label {
+    font-size: 1.7vh;
+}
+
 .filesContainer {
     display: grid;
-    grid-template-columns: [col1] 29vw [col2] 5vw [col3] 5vw [endCol];
+    grid-template-columns: [col1] 27.5vw [col2] 3vw [col3] 3vw [col4] 5vw[endCol];
     grid-template-rows: [row1] 5vh [endRow];
     align-items: center;
     column-gap: 0.5vw;

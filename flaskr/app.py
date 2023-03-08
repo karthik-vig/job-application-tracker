@@ -172,7 +172,10 @@ def getModifiedJobInfo():
                                             },
                         'extraFile': {'name': request.files['extraFile'].filename,
                                       'data': request.files['extraFile'].read()
-                                      }
+                                      },
+                        'resumeFileDelete': request.form.get('resumeFileDelete'),
+                        'coverLetterFileDelete': request.form.get('coverLetterFileDelete'),
+                        'extraFileDelete': request.form.get('extraFileDelete')
                     }
     return modifiedJobInfo
 
