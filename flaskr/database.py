@@ -12,11 +12,11 @@ class DataFormatting:
         else:
             return None
     
-    def convertJobInfoEmptyStrToNull(self, jobInfo: dict):
+    def convertDictEmptyValueToNull(self, jobInfo: dict):
         jobInfoKeys = jobInfo.keys()
         for key in jobInfoKeys:
             if str(type(jobInfo[key])) == "<class 'dict'>":
-                jobInfo[key] = self.convertJobInfoEmptyStrToNull(jobInfo=jobInfo[key])
+                jobInfo[key] = self.convertDictEmptyValueToNull(jobInfo=jobInfo[key])
             jobInfo[key] = None if (jobInfo[key] == '' or jobInfo[key] == b'') else jobInfo[key]
         if 'job' in jobInfoKeys and jobInfo['job'] == None:
             jobInfo['job'] = ''
@@ -98,10 +98,10 @@ class DatabaseHandler:
         self.engine = create_engine("sqlite+pysqlite:///jobDatabase.db", echo=True, future=True)
         self.mapper_registry = registry()
         self.Base = self.mapper_registry.generate_base()
-        self.JobTrackerTable, self.FileTrackerTable = self.createTables()
+        self.JobTrackerTable, self.FileTrackerTable = self._createTables()
         self.mapper_registry.metadata.create_all(self.engine)
 
-    def createTables(self):
+    def _createTables(self):
         class JobTrackerTable(self.Base):
             __tablename__ = "JobTrackerTable"
             id = Column(Integer, primary_key=True, autoincrement=True)
@@ -136,7 +136,7 @@ class DatabaseHandler:
     def addRow(self, jobInfo: dict):
         if jobInfo['applicationStatus'] not in self.possibleApplicationStatus:
             jobInfo['applicationStatus'] = ''
-        jobInfo = self.dataFormattingObj.convertJobInfoEmptyStrToNull(jobInfo=jobInfo)
+        jobInfo = self.dataFormattingObj.convertDictEmptyValueToNull(jobInfo=jobInfo)
         with Session(self.engine) as session:
             jobInfo['jobStartDate'] = self.dataFormattingObj.strToDatetime(jobInfo['jobStartDate'])
             jobInfo['jobApplicationClosingDate'] = self.dataFormattingObj.strToDatetime(jobInfo['jobApplicationClosingDate'])
@@ -173,7 +173,7 @@ class DatabaseHandler:
         id = int(id)
         if modificationValues['applicationStatus'] not in self.possibleApplicationStatus:
             modificationValues['applicationStatus'] = ''
-        modificationValues = self.dataFormattingObj.convertJobInfoEmptyStrToNull(jobInfo=modificationValues)
+        modificationValues = self.dataFormattingObj.convertDictEmptyValueToNull(jobInfo=modificationValues)
         with Session(self.engine) as session:
             session.execute( update(self.JobTrackerTable)
                             .where(self.JobTrackerTable.id == id)
@@ -187,55 +187,70 @@ class DatabaseHandler:
                                     notes = modificationValues['notes'],
                                     modifiedJobTrackDate = func.current_date())
                             )
+            self._updateResumeFile(id=id,
+                                  resumeFileDelete=modificationValues['resumeFileDelete'],
+                                  resumeFileValue=modificationValues['resumeFile'],
+                                  session=session)
+            self._updateCoverLetterFile(id=id,
+                                       coverLetterFileDelete=modificationValues['coverLetterFileDelete'],
+                                       coverLetterFileValue=modificationValues['coverLetterFile'],
+                                       session=session)
+            self._updateExtraFile(id=id,
+                                 extraFileDelete=modificationValues['extraFileDelete'],
+                                 extraFileValue=modificationValues['extraFile'],
+                                 session=session)
+            session.commit()
 
-            if modificationValues['resumeFileDelete'] == 'on':
+    def _updateResumeFile(self, id, resumeFileDelete, resumeFileValue, session):
+        if resumeFileDelete == 'on':
                 session.execute( update(self.FileTrackerTable)
                                 .where(self.FileTrackerTable.id == id)
                                 .values(resumeFilename = None,
                                         resumeFileData = None
                                         )
                                 )
-            elif modificationValues['resumeFile']['name'] != None \
-                                and modificationValues['resumeFile']['data'] != None:
-                session.execute( update(self.FileTrackerTable)
-                                .where(self.FileTrackerTable.id == id)
-                                .values(resumeFilename = modificationValues['resumeFile']['name'],
-                                        resumeFileData = modificationValues['resumeFile']['data']
-                                        )
-                                )
+        elif resumeFileValue['name'] != None \
+                            and resumeFileValue['data'] != None:
+            session.execute( update(self.FileTrackerTable)
+                            .where(self.FileTrackerTable.id == id)
+                            .values(resumeFilename = resumeFileValue['name'],
+                                    resumeFileData = resumeFileValue['data']
+                                    )
+                            )
 
-            if modificationValues['coverLetterFileDelete'] == 'on':
-                session.execute( update(self.FileTrackerTable)
-                                .where(self.FileTrackerTable.id == id)
-                                .values(coverLetterFilename = None,
-                                        coverLetterFileData = None
-                                        )
-                                )
-            elif modificationValues['coverLetterFile']['name'] != None \
-                                and modificationValues['coverLetterFile']['data'] != None:
-                session.execute( update(self.FileTrackerTable)
-                                .where(self.FileTrackerTable.id == id)
-                                .values(coverLetterFilename = modificationValues['coverLetterFile']['name'],
-                                        coverLetterFileData = modificationValues['coverLetterFile']['data']
-                                        )
-                                )
-                
-            if modificationValues['extraFileDelete'] == 'on':
+    def _updateCoverLetterFile(self, id, coverLetterFileDelete, coverLetterFileValue, session):
+        if coverLetterFileDelete == 'on':
+            session.execute( update(self.FileTrackerTable)
+                            .where(self.FileTrackerTable.id == id)
+                            .values(coverLetterFilename = None,
+                                    coverLetterFileData = None
+                                    )
+                            )
+        elif coverLetterFileValue['name'] != None \
+                            and coverLetterFileValue['data'] != None:
+            session.execute( update(self.FileTrackerTable)
+                            .where(self.FileTrackerTable.id == id)
+                            .values(coverLetterFilename = coverLetterFileValue['name'],
+                                    coverLetterFileData = coverLetterFileValue['data']
+                                    )
+                            )
+
+    def _updateExtraFile(self, id, extraFileDelete, extraFileValue, session):
+        if extraFileDelete == 'on':
                 session.execute( update(self.FileTrackerTable)
                                 .where(self.FileTrackerTable.id == id)
                                 .values(extraFilename = None,
                                         extraFileData = None
                                         )
                                 ) 
-            elif modificationValues['extraFile']['name'] != None \
-                                and modificationValues['extraFile']['data'] != None:
-                session.execute( update(self.FileTrackerTable)
-                                .where(self.FileTrackerTable.id == id)
-                                .values(extraFilename = modificationValues['extraFile']['name'],
-                                        extraFileData = modificationValues['extraFile']['data']
-                                        )
-                                ) 
-            session.commit()
+        elif extraFileValue['name'] != None \
+                            and extraFileValue['data'] != None:
+            session.execute( update(self.FileTrackerTable)
+                            .where(self.FileTrackerTable.id == id)
+                            .values(extraFilename = extraFileValue['name'],
+                                    extraFileData = extraFileValue['data']
+                                    )
+                            )
 
     def getRowsOnID(self, id: str, tableName: str) -> list:
         id = int(id)
@@ -252,12 +267,12 @@ class DatabaseHandler:
 
     def searchJobTrackerTableRows(self, searchFilters: dict) -> list:
         with Session(self.engine) as session:
-            queryStatement = self.buildSearchQueryStatement(searchFilters=searchFilters, session=session)
+            queryStatement = self._buildSearchQueryStatement(searchFilters=searchFilters, session=session)
             rows = session.execute(queryStatement)
             rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName='JobTrackerTable')
         return rowList
 
-    def buildSearchQueryStatement(self, searchFilters: dict, session):
+    def _buildSearchQueryStatement(self, searchFilters: dict, session):
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
                                                    )                                           
