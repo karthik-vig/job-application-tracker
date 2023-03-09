@@ -200,9 +200,6 @@ def getModifiedJobInfo():
 
 # In production flaskwebgui will be used along with waitress.
 if __name__ == "__main__":
-    app.config['debug'] = True
-    app.run()
-    '''
     guiApp = FlaskUI(server=startFlask,
                     server_kwargs={
                     'app': app,
@@ -213,4 +210,3 @@ if __name__ == "__main__":
                     height=800
                     )
     guiApp.run() 
-    '''
