@@ -4,7 +4,11 @@ import datetime
 
 
 
+# This class is used for formatting the data from the flask to 
+# a data format that can be entered into the database using 
+# SQLAlchemy.
 class DataFormatting:
+    # converts international date to datetime object.
     def strToDatetime(self, strDate: str):
         if strDate:
             dateYYYYMMDD = list( map( int, strDate.split('-') ) )
@@ -12,6 +16,7 @@ class DataFormatting:
         else:
             return None
     
+    # Recursively converts all empty string and empty bytes to None in the given dict.
     def convertDictEmptyValueToNull(self, jobInfo: dict):
         jobInfoKeys = jobInfo.keys()
         for key in jobInfoKeys:
@@ -24,6 +29,8 @@ class DataFormatting:
             jobInfo['company'] = ''
         return jobInfo
 
+    # All values in the dict that is None is replaced with an empty string.
+    # Specifically Works on values from JobTrackerTable
     def convertJobInfoNullToEmptyStr(self, jobInfo: dict) -> dict:
         exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
         for key in jobInfo.keys():
@@ -31,6 +38,9 @@ class DataFormatting:
                 jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
         return jobInfo
 
+    # All values in the dict that is None is replaced with an empty string if the key is 'name'
+    # else if the key is 'data' it is replaced with empty bytes.
+    # Specifically Works on values from FileTrackerTable
     def convertFileInfoNullToEmptyVal(self, fileInfo: dict) -> dict:
         for key in fileInfo.keys():
             if str(type(fileInfo[key])) == "<class 'dict'>":
@@ -40,19 +50,23 @@ class DataFormatting:
             fileInfo[key] = b'' if (key == 'data' and fileInfo[key] == None) else fileInfo[key]
         return fileInfo
 
-
+    # Extracts the column value for each row from the SQLAlchemy database and puts them
+    # in python dict.
+    #Tabes tableName as argument to convert to appropriate dicts.
     def convertRowsToPrimitive(self, rows, tableName):
         rowList = []
         for row in rows:
             row = row[0]
             if tableName == 'JobTrackerTable':
-                rowInfo = self.constructJobTrackerPrimitive(row=row)
+                rowInfo = self._constructJobTrackerPrimitive(row=row)
             elif tableName == 'FileTrackerTable':
-                rowInfo = self.constructFileTrackerPrimitive(row=row)
+                rowInfo = self._constructFileTrackerPrimitive(row=row)
             rowList.append(rowInfo)
         return rowList
 
-    def constructJobTrackerPrimitive(self, row):
+    # Internal function used by convertRowsToPrimitive() to construct the dict
+    # for JobTrackerTable row values.
+    def _constructJobTrackerPrimitive(self, row):
         jobInfo = { 'id': row.id,
                     'job': row.job,
                     'company': row.company,
@@ -68,7 +82,9 @@ class DataFormatting:
         jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
         return jobInfo
 
-    def constructFileTrackerPrimitive(self, row):
+    # Internal function used by convertRowsToPrimitive() to construct the dict
+    # for FileTrackerTable row values.
+    def _constructFileTrackerPrimitive(self, row):
         fileInfo = {'resumeFile': {'name': row.resumeFilename,
                                 'data': row.resumeFileData
                                 },
@@ -82,6 +98,7 @@ class DataFormatting:
         self.convertFileInfoNullToEmptyVal(fileInfo=fileInfo)
         return fileInfo
 
+    # Converts job location data (from JobTrackerTable) from SQLAlchemy database to list format. 
     def convertJobLocationToPrimitive(self, allJobLocations):
         jobLocationsList = []
         for row in allJobLocations:
@@ -91,7 +108,12 @@ class DataFormatting:
 
 
 
+# This class interacts with the sqlite database to record and retrive information.
+# It uses DataFormatting class through composition.
 class DatabaseHandler:
+    # initializes the object for DataFormatting class.
+    # Setups up connection for SQLAlchemy to connect with sqlite database.
+    # Creates / gets the Two tables: JobTrackerTable, FileTrackerTable
     def __init__(self):
         self.dataFormattingObj = DataFormatting()
         self.possibleApplicationStatus = ['Applied', 'I Rejected', 'They Rejected', 'Successful']
@@ -101,6 +123,7 @@ class DatabaseHandler:
         self.JobTrackerTable, self.FileTrackerTable = self._createTables()
         self.mapper_registry.metadata.create_all(self.engine)
 
+    # Setup the two tables: JobTrackerTable, FileTrackerTable
     def _createTables(self):
         class JobTrackerTable(self.Base):
             __tablename__ = "JobTrackerTable"
@@ -133,6 +156,9 @@ class DatabaseHandler:
                 return f"Table related to JobTrackerTable. Records the uploaded file data." 
         return JobTrackerTable, FileTrackerTable    
 
+    # Add a new row into JobTrakcerTable and FileTrackerTable.
+    # jobInfo is a dict that contains the necessary value for all the columns of
+    # both the table.
     def addRow(self, jobInfo: dict):
         if jobInfo['applicationStatus'] not in self.possibleApplicationStatus:
             jobInfo['applicationStatus'] = ''
@@ -162,6 +188,7 @@ class DatabaseHandler:
             session.add(fileTrackerRowToInsert)
             session.commit()
 
+    # Delete a specific row from both JobTrackerTable and FileTrackerTable based on id.
     def deleteRow(self, id: str):
         id = int(id)
         with Session(self.engine) as session:
@@ -169,6 +196,8 @@ class DatabaseHandler:
             session.query(self.FileTrackerTable).filter(self.FileTrackerTable.id == id).delete()
             session.commit()
 
+    # Update a row value for both tables based on id.
+    # the update can be for both tables or JobTrackerTable alone.
     def updateRow(self, id: str, modificationValues: dict):
         id = int(id)
         if modificationValues['applicationStatus'] not in self.possibleApplicationStatus:
@@ -201,6 +230,8 @@ class DatabaseHandler:
                                  session=session)
             session.commit()
 
+    # internal function used by updateRow to update resume file name and data in 
+    # FileTrackerTable.
     def _updateResumeFile(self, id, resumeFileDelete, resumeFileValue, session):
         if resumeFileDelete == 'on':
                 session.execute( update(self.FileTrackerTable)
@@ -217,7 +248,8 @@ class DatabaseHandler:
                                     resumeFileData = resumeFileValue['data']
                                     )
                             )
-
+    # internal function used by updateRow to update cover letter file name and data in 
+    # FileTrackerTable.
     def _updateCoverLetterFile(self, id, coverLetterFileDelete, coverLetterFileValue, session):
         if coverLetterFileDelete == 'on':
             session.execute( update(self.FileTrackerTable)
@@ -235,6 +267,8 @@ class DatabaseHandler:
                                     )
                             )
 
+    # internal function used by updateRow to update extra file name and data in 
+    # FileTrackerTable.
     def _updateExtraFile(self, id, extraFileDelete, extraFileValue, session):
         if extraFileDelete == 'on':
                 session.execute( update(self.FileTrackerTable)
@@ -252,6 +286,7 @@ class DatabaseHandler:
                                     )
                             )
 
+    # Get a row based on id and table name.
     def getRowsOnID(self, id: str, tableName: str) -> list:
         id = int(id)
         with Session(self.engine) as session:
@@ -265,6 +300,7 @@ class DatabaseHandler:
             rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName=tableName)
         return rowList
 
+    # search for row(s) in JobTrackerTable using some search filter values in JobTrackerTable
     def searchJobTrackerTableRows(self, searchFilters: dict) -> list:
         with Session(self.engine) as session:
             queryStatement = self._buildSearchQueryStatement(searchFilters=searchFilters, session=session)
@@ -272,6 +308,8 @@ class DatabaseHandler:
             rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName='JobTrackerTable')
         return rowList
 
+    # Internal function used by searchJobTrackerTableRows to build the select statement
+    # based on search filter values entered by the user.
     def _buildSearchQueryStatement(self, searchFilters: dict, session):
         queryStatement = session.query(self.JobTrackerTable).filter( or_( self.JobTrackerTable.job.like(f"%{searchFilters['searchText']}%"),
                                                      self.JobTrackerTable.company.like(f"%{searchFilters['searchText']}%") )
@@ -290,6 +328,8 @@ class DatabaseHandler:
             queryStatement = queryStatement.filter(self.JobTrackerTable.jobLocation.like(f"%{searchFilters['jobLocation']}%"))
         return queryStatement
 
+    # Get the minimum and maximum salary along with unique job locations from the JobTrackerTable
+    # in dict form.
     def getSearchFilterLimits(self) -> dict:
         searchFilterLimits = {"salary": {'min': None,
                                           'max': None

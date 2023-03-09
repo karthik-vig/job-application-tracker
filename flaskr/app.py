@@ -3,17 +3,28 @@ from flask import Flask, render_template, request, send_file
 from flaskwebgui import FlaskUI
 import waitress
 from database import DatabaseHandler                                      
-                            
+
+
+# Initialize flask and object for database handling.
+# SearchFilters was made global, so that is can presist between
+# pages and users don't have to re-enter.
 app = Flask(__name__)
 databaseHandlerObj = DatabaseHandler()
-searchFilters = None
+searchFilters = None 
 
+
+# The waitress will act as the server to improve performance.
 def startFlask(**kwargs):
     app = kwargs['app']
     host = kwargs['host']
     port = kwargs['port']
     waitress.serve(app, host=host, port=port)
 
+
+# The entry / index page.
+# Contains the search filter inputs and panel to show the results
+# for the search.
+# Also this is the page from which all other pages can be accessed.
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
 def index():
@@ -26,11 +37,15 @@ def index():
                              jobLocations=jobLocations)
 
 
+# Get the page to add an new entry into the database.
 @app.route('/addJobInfo', methods=['GET'])
 def addJobInfo():
     return render_template('addJobInfo.html')
 
 
+# Get the page to modify an existing entry in the database.
+# Can modify all or spcific values (except: id, added date and modified date)
+# The files can be opened, modified or deleted.
 @app.route('/modifyJobInfo', methods=['GET'])
 def modifyJobInfo():
     id = request.args.get('id')
@@ -46,30 +61,25 @@ def modifyJobInfo():
     return render_template('modifyJobInfo.html', jobInfo=jobInfo)
 
 
+# Get the page to see information on a specific job entry.
+# Get the necessar frow from database using id.
 @app.route('/seeJobInfo', methods=['GET'])
 def seeJobInfo():
     id = request.args.get('id')
     jobTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='JobTrackerTable')
     fileTrackerInfo = databaseHandlerObj.getRowsOnID(id=id, tableName='FileTrackerTable')
-    if str(type(jobTrackerInfo)) == "<class 'list'>":
+    if str(type(jobTrackerInfo)) == "<class 'list'>": # the returned value is list of one item; to get the item this is done.
         jobTrackerInfo = jobTrackerInfo[0]
-    if str(type(fileTrackerInfo)) == "<class 'list'>":
+    if str(type(fileTrackerInfo)) == "<class 'list'>": # the returned value is list of one item; to get the item this is done.
         fileTrackerInfo = fileTrackerInfo[0]
     jobInfo = {}
     jobInfo.update(jobTrackerInfo)
     jobInfo.update(fileTrackerInfo)
-    '''
-    # temp. remove latter
-    jobInfo['resumeFile'] = {}
-    jobInfo['resumeFile']['name'] = 'temp file name'
-    jobInfo['coverLetterFile'] = {}
-    jobInfo['coverLetterFile']['name'] = 'temp file name'
-    jobInfo['extraFile'] = {}
-    jobInfo['extraFile']['name'] = 'temp file name'
-    '''
     return render_template('seeJobInfo.html', jobInfo=jobInfo)
 
 
+# Get file resume, coverletter and extra file for download from the database
+# using a id. Which file is needed at the moment is based on the url.
 @app.route('/resumeFile/<id>', methods=['GET'])
 @app.route('/coverLetterFile/<id>', methods=['GET'])
 @app.route('/extraFile/<id>', methods=['GET'])
@@ -79,21 +89,26 @@ def getFiles(id):
     if str(type(fileTrackerInfo)) == "<class 'list'>":
         fileTrackerInfo = fileTrackerInfo[0]
     if requestUrl == '/resumeFile/<id>':
-        # code to get filename and filedata based on id for resumeFile
+        # set file name and data for resume file
         fileName = fileTrackerInfo['resumeFile']['name']
         fileData = fileTrackerInfo['resumeFile']['data']
         return send_file(BytesIO(fileData), download_name=fileName, as_attachment=True)
     if requestUrl == '/coverLetterFile/<id>':
-        # code to get filename and filedata based on id for coverLetterFiel
+        # set file name and data for cover letter file
         fileName = fileTrackerInfo['coverLetterFile']['name']
         fileData = fileTrackerInfo['coverLetterFile']['data']
         return send_file(BytesIO(fileData), download_name=fileName, as_attachment=True)
     if requestUrl == '/extraFile/<id>':
-        # code to get filename and filedata based on id for extraFile
+        # set file name and data for extra file
         fileName = fileTrackerInfo['extraFile']['name']
         fileData = fileTrackerInfo['extraFile']['data']
         return send_file(BytesIO(fileData), download_name=fileName, as_attachment=True)
 
+
+# The redirect page is used for the POST -> redirect -> GET cycle
+# as well as to collect and the form values being submitted.
+# This function collect and process information from all form submit
+# and returns to the index page.
 @app.route('/redirectIndex', methods=['POST'])
 @app.route('/redirectAddJobInfo', methods=['POST'])
 @app.route('/redirectModifyJobInfo', methods=['POST'])
@@ -119,6 +134,7 @@ def redirect():
     return render_template('redirect.html', urlToGet=urlToGet)
 
 
+# Construct the searchFilter dict for the database Handler Object
 def getSearchFilters():
     searchFilters = { 'id': '',
                     'searchText': request.form['searchText'],
@@ -132,6 +148,7 @@ def getSearchFilters():
     return searchFilters
 
 
+# Construct the add job info. dict for the database Handler Object
 def getAddJobInfo():
     jobInfo = {'job': request.form['job'],
                 'company': request.form['company'],
@@ -154,6 +171,7 @@ def getAddJobInfo():
     return jobInfo
 
 
+# Construct the modified value dict for the database Handler Object
 def getModifiedJobInfo():
     modifiedJobInfo = { 'id': request.form['id'],
                         'job': request.form['job'], 
@@ -180,6 +198,7 @@ def getModifiedJobInfo():
     return modifiedJobInfo
 
 
+# In production flaskwebgui will be used along with waitress.
 if __name__ == "__main__":
     app.config['debug'] = True
     app.run()
