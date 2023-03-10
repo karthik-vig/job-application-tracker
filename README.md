@@ -5,11 +5,15 @@ An application for keep tracker of jobs applied and what files where used to app
 1. Requirements
     1. Python Packages
     2. Necessary Installations
-2. Usage Manual
-3. Data Structures
-4. Function Description
-5. Overall Program Structure
-6. References
+2. User Manual
+    1. Index Page
+    2. AddJobInfo Page
+    3. ModifyJobInfo page
+    4. SeeJobInfo page
+4. Data Structures
+5. Function Description
+6. Overall Program Structure
+7. References
 
 
 # Requirements:
@@ -58,13 +62,28 @@ The list of necessary packages are as follows:
 - zope.event==4.6
 - zope.interface==5.5.2
 
-The main packages to be installed are: Flask, waitress, SQLAlchemy, Flaskwebgui. Other packages such as pyinstaller and auto-py-to-exe were used to package the application as a exe file. The application was made using python 3.9.13.
+The main packages to be installed are: Flask, waitress, SQLAlchemy, Flaskwebgui. Other packages such as pyinstaller and auto-py-to-exe were used to package the application as an exe file. The application was made using python 3.9.13.
 
 ## Necessary Installations:
 
 For the application to work lastest edge runtime has to be installed in the windows machine. This should be an issue for windows 10 and 11. However, for old version of windows it maybe required to perform a manual installation of the edge runtime.
 
 
-# Usage Manual
+# User manual:
+
+This section deals with the usage of the job application tracker software for the end user. It explains the assumptions and usage for each of its interactive elements.
+
+## Index Page:
 
 The landing page is the index page. This page is the entry point of the program, as well as the page that exclusively leads to other pages for the purpose of adding an entry, modifying an existing entry or getting the information in an existing entry. The index page also provides the search functionality, along with the search results pane.
+
+![indexPage](https://user-images.githubusercontent.com/113319059/224440927-5ef57239-ae91-43f2-8754-0a6a3ab81b6c.png)
+Figure 1. The Main / Index page
+
+### Search Filter Pane:
+
+The search filter pane contains all the options to find a specific entry in the application. The "search box" does a case insensitive comparisson for job and company values only and not other values. The "Job Start After" filter finds the entry with a job start date that is equivalent or after the entred value in this field. The "Salary" filter can be used with either min or max or both. It finds the entries with values equivalent or greater than the min and less or equal to the max. The "Status" field is a list with options. We can select a application status here to search based on it. They possible values are: "Applied", "They Rejected", "I Rejected" and "Successful". The "Job Loation" field is a text box where we can either enter the entire location or a parat of it. Then it is compared in a case insensitive manner with the database. We can mix and match any combination of the search filter inputs to search. When searching with empty values in all the search filter fields, the application shows the entries in the order they were entered.
+
+### Search Result Pane:
+
+This pane contains the result of the search as cards.
