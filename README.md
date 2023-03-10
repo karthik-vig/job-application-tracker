@@ -7,9 +7,9 @@ An application for keep tracker of jobs applied and what files where used to app
     2. Necessary Installations
 2. User Manual
     1. Index Page
-    2. AddJobInfo Page
-    3. ModifyJobInfo page
-    4. SeeJobInfo page
+    2. Add Job Information Page
+    3. Modify Job Information page
+    4. See Job Infromation page
 4. Data Structures
 5. Function Description
 6. Overall Program Structure
@@ -26,8 +26,6 @@ The list of necessary packages are as follows:
 
 - altgraph==0.17.3
 - auto-py-to-exe==2.32.0
-- bottle==0.12.25
-- bottle-websocket==0.2.9
 - cffi==1.15.1
 - click==8.1.3
 - clr-loader==0.2.5
@@ -50,8 +48,6 @@ The list of necessary packages are as follows:
 - pyinstaller==5.8.0
 - pyinstaller-hooks-contrib==2023.0
 - pyparsing==3.0.9
-- pythonnet==3.0.1
-- pywebview==4.0.2
 - pywin32-ctypes==0.2.0
 - SQLAlchemy==2.0.4
 - typing_extensions==4.5.0
@@ -86,4 +82,27 @@ The search filter pane contains all the options to find a specific entry in the 
 
 ### Search Result Pane:
 
-This pane contains the result of the search as cards.
+This pane contains the result of the search as cards. Each card is an added Entry. The card contains information to see at a glance like the job, company, salary and status. It also contains buttons to modify the information in the card, see all the information about the entry or delete the entry.
+
+## Add Job Information Page:
+
+This page contains the fields: job, company, salary, location, job start date, job application closing date, status, notes, resume file, cover letter file, extra file. These fields are type locked as appropriate. The salary fields only takes in integer value. The fields relating to date only take date as an input. The file fields allow us to choose and add files to be locally stored in the database. The reset button for each file entry can be used to clear the current file selection. All the fields can be empty and entry can still be added into the database.
+
+![addJobInfoPage](https://user-images.githubusercontent.com/113319059/224444910-e76fd000-fb6e-4954-8000-50458db1de53.png)
+Figure 2. The Add Job Information Page
+
+## See Job Information Page:
+
+This page allows the information in a job entry to be safely seen without the risk of altering the information by mistake. Everything in this page is readonly. Missing values are displayed as empty fields and in the case of the files, it is shown as "No File.". If the files exist then they can be retrieved from the database and opened by clicking the "Open" button in the respective file fields. This page also contains additional information about the entry, namely the "added date" and the "last modified date" fields. 
+
+![seeJobInfoPage](https://user-images.githubusercontent.com/113319059/224445278-442d8c7e-b52e-47fa-b9a7-12d9bf3de233.png)
+Figure 3. The See Job Information Page
+
+## Modify Job Information Page:
+
+This page allows for the modification of existing job entries. This page is very similar to "See Job Information Page", but the fields are modifiable. Once, again the fields contain type check (same as "Add Job Information Page"). However, the fields "added date" and "last modified date" are not modifiable. The three file fields: "Resume File", "Cover Letter File" and "Extra File" there are three buttons and one checkbox. The choose button is used to select a new file to be upload as a replacement to the existing or missing file. The reset button clears any chosen file. The open button does not open the currently chosen file, but the file in the database (if it exist, else "No File." is shown in the place of "Open" button). The Delete checkbox when marked will delete the file in the database.
+
+![modifyJobInfoPage](https://user-images.githubusercontent.com/113319059/224447570-a0e65eae-ccff-4853-864b-843008798d91.png)
+Figure 4. Modify Job Information Page
+
+NOTE: only one operation can be done with regards to a given file field (where, one file field is either "Resume File" or "Cover Letter File" or "Extra File"). That is, either a new file can be inserted or the old file (if exist) can be deleted, not both at the same time.
