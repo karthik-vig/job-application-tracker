@@ -14,7 +14,7 @@ searchFilters = None
 
 
 # The waitress will act as the server to improve performance.
-def startFlask(**kwargs):
+def _startFlask(**kwargs):
     app = kwargs['app']
     host = kwargs['host']
     port = kwargs['port']
@@ -119,12 +119,12 @@ def redirect():
     urlToGet = '/index'
     global searchFilters
     if requestUrl == '/redirectIndex':
-        searchFilters = getSearchFilters()
+        searchFilters = _getSearchFilters()
     elif requestUrl == '/redirectAddJobInfo':
-        jobInfo = getAddJobInfo()
+        jobInfo = _getAddJobInfo()
         databaseHandlerObj.addRow(jobInfo=jobInfo)
     elif requestUrl == '/redirectModifyJobInfo':
-        modifiedJobInfo = getModifiedJobInfo()
+        modifiedJobInfo = _getModifiedJobInfo()
         id = modifiedJobInfo['id']
         databaseHandlerObj.updateRow(id=id, modificationValues=modifiedJobInfo)
     elif requestUrl == '/redirectDeleteEntry':
@@ -135,7 +135,7 @@ def redirect():
 
 
 # Construct the searchFilter dict for the database Handler Object
-def getSearchFilters():
+def _getSearchFilters():
     searchFilters = { 
                     'searchText': request.form['searchText'],
                     'salary': { 'min': request.form['salaryMin'],
@@ -149,7 +149,7 @@ def getSearchFilters():
 
 
 # Construct the add job info. dict for the database Handler Object
-def getAddJobInfo():
+def _getAddJobInfo():
     jobInfo = {'job': request.form['job'],
                 'company': request.form['company'],
                 'salary': request.form['salary'],
@@ -172,7 +172,7 @@ def getAddJobInfo():
 
 
 # Construct the modified value dict for the database Handler Object
-def getModifiedJobInfo():
+def _getModifiedJobInfo():
     modifiedJobInfo = { 'id': request.form['id'],
                         'job': request.form['job'], 
                         'company': request.form['company'], 
@@ -203,7 +203,7 @@ if __name__ == "__main__":
     app.config['debug'] = True
     app.run()
     '''
-    guiApp = FlaskUI(server=startFlask,
+    guiApp = FlaskUI(server=_startFlask,
                     server_kwargs={
                     'app': app,
                     'port': 5000,

@@ -29,30 +29,9 @@ class DataFormatting:
             jobInfo['company'] = ''
         return jobInfo
 
-    # All values in the dict that is None is replaced with an empty string.
-    # Specifically Works on values from JobTrackerTable
-    def convertJobInfoNullToEmptyStr(self, jobInfo: dict) -> dict:
-        exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
-        for key in jobInfo.keys():
-            if key not in exemptFields:
-                jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
-        return jobInfo
-
-    # All values in the dict that is None is replaced with an empty string if the key is 'name'
-    # else if the key is 'data' it is replaced with empty bytes.
-    # Specifically Works on values from FileTrackerTable
-    def convertFileInfoNullToEmptyVal(self, fileInfo: dict) -> dict:
-        for key in fileInfo.keys():
-            if str(type(fileInfo[key])) == "<class 'dict'>":
-                fileInfo[key] = self.convertFileInfoNullToEmptyVal(fileInfo=fileInfo[key])
-                continue
-            fileInfo[key] = '' if (key == 'name' and fileInfo[key] == None) else fileInfo[key]
-            fileInfo[key] = b'' if (key == 'data' and fileInfo[key] == None) else fileInfo[key]
-        return fileInfo
-
     # Extracts the column value for each row from the SQLAlchemy database and puts them
     # in python dict.
-    #Tabes tableName as argument to convert to appropriate dicts.
+    # TableName argument is used to convert to appropriate dicts.
     def convertRowsToPrimitive(self, rows, tableName):
         rowList = []
         for row in rows:
@@ -79,7 +58,16 @@ class DataFormatting:
                     'startJobTrackDate': str(row.startJobTrackDate),
                     'modifiedJobTrackDate': str(row.modifiedJobTrackDate)
                     }
-        jobInfo = self.convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
+        jobInfo = self._convertJobInfoNullToEmptyStr(jobInfo=jobInfo)
+        return jobInfo
+    
+    # All values in the dict that is None is replaced with an empty string.
+    # Specifically Works on values from JobTrackerTable
+    def _convertJobInfoNullToEmptyStr(self, jobInfo: dict) -> dict:
+        exemptFields = ['id', 'job', 'company', 'startJobTrackDate', 'modifiedJobTrackDate']
+        for key in jobInfo.keys():
+            if key not in exemptFields:
+                jobInfo[key] = '' if jobInfo[key] == None else jobInfo[key]
         return jobInfo
 
     # Internal function used by convertRowsToPrimitive() to construct the dict
@@ -95,7 +83,19 @@ class DataFormatting:
                                 'data': row.extraFileData
                                 }
                     }
-        self.convertFileInfoNullToEmptyVal(fileInfo=fileInfo)
+        self._convertFileInfoNullToEmptyVal(fileInfo=fileInfo)
+        return fileInfo
+
+    # All values in the dict that is None is replaced with an empty string if the key is 'name'
+    # else if the key is 'data' it is replaced with empty bytes.
+    # Specifically Works on values from FileTrackerTable
+    def _convertFileInfoNullToEmptyVal(self, fileInfo: dict) -> dict:
+        for key in fileInfo.keys():
+            if str(type(fileInfo[key])) == "<class 'dict'>":
+                fileInfo[key] = self._convertFileInfoNullToEmptyVal(fileInfo=fileInfo[key])
+                continue
+            fileInfo[key] = '' if (key == 'name' and fileInfo[key] == None) else fileInfo[key]
+            fileInfo[key] = b'' if (key == 'data' and fileInfo[key] == None) else fileInfo[key]
         return fileInfo
 
     # Converts job location data (from JobTrackerTable) from SQLAlchemy database to list format. 
