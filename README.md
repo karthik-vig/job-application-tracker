@@ -111,7 +111,42 @@ NOTE: only one operation can be done with regards to a given file field (where, 
 
 This section covers the data structures concerned with moving information between functions and classes. The data structures to be discussed the one used to send search filter parameters, add job infomation to the database, modify the job information, and get information from the database for a query.
 
-### Add New Information Into the Database:
+## SearchFilter:
+
+- Name: searchFilters
+- Input Parameter For: searchJobTrackerTableRows() in DatabaseHandler class.
+- Returned By: None
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|searchText                 |str                     |The str value is used for check a case insensitive substring match. It cab be a emtpy str.            |
+|salary                     |dict                    |Contains the min and max values.                                                                      |
+|jobStartDate               |str                     |It can only be a str of international date format eg: "2023-09-01"                                    |
+|applicationStatus          |str                     |It can be any string but only 'Applied', 'They Rejected', 'I Rejected' or 'Successful' are considered |
+|jobLocation                |str                     |The str value is used for check a case insensitive substring match. It cab be a emtpy str.            |
+
+- Name: salary field
+- Input Parameter For: used as a part of searchFilters
+- Returned By: part of value returned by getSearchFilterLimits() in DatabaseHandler class.
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|min                        |str                     |It should only contain a string of a integer.It can be empty str.                                     |
+|max                        |str                     |It should only contain a string of a integer.It can be empty str.                                     | 
+
+- Example:
+```
+{ 'searchText': 'job',
+'salary': { 'min': '20000',
+            'max': '50000'
+            },
+'jobStartDate': '2023-08-01',
+'applicationStatus': 'Successful',
+'jobLocation': 'london'
+}
+```
+
+## Add New Information Into the Database:
 
 - Name: jobInfo
 - Input Parameter For: addRow() in DatabaseHandler class.
@@ -162,7 +197,7 @@ This section covers the data structures concerned with moving information betwee
 }
 ```
 
-### Add Modified information into the database:
+## Add Modified information into the database:
 
 - Name: modificationValues
 - Input Parameter For: updateRow() in DatabaseHandler class.
