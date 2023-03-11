@@ -136,7 +136,7 @@ def redirect():
 
 # Construct the searchFilter dict for the database Handler Object
 def getSearchFilters():
-    searchFilters = { 'id': '',
+    searchFilters = { 
                     'searchText': request.form['searchText'],
                     'salary': { 'min': request.form['salaryMin'],
                                 'max': request.form['salaryMax']
