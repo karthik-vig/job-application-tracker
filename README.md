@@ -117,18 +117,19 @@ This section covers the data structures concerned with moving information betwee
 - Input Parameter For: addRow() in DatabaseHandler class.
 - Returned By: None
 
-|Field Name                 |Field Data Type         | Description                                                       |
-|---------------------------|------------------------|-------------------------------------------------------------------|
-|job                        |str                     |It can be a empty str or some other string value                   |
-|company                    |str                     |It can be a empty str or some other string value                   |
-|salary                     |str                     |It should only contain a string of a integer                       |
-|jobLocation                |str                     |It can be a empty str or some other string value                   |
-|jobStartDate               |str                     |It can only be a str of international date format eg: "2023-09-01" |
-|jobApplicationClosingDate  |str                     |It can only be a str of international date format eg: "2023-09-01" |
-|notes                      |str                     |It can be a empty str or some other string value                   |
-|resumeFile                 |dict                    |It contains the resume file name and file data as fields           |
-|coverLetterFile            |dict                    |It contains the cover letter file name and file data as fields     |
-|extraFile                  |dict                    |It contains the extra file name and file data as fields            |
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|job                        |str                     |It can be a empty str or some other string value                                                      |
+|company                    |str                     |It can be a empty str or some other string value                                                      |
+|salary                     |str                     |It should only contain a string of a integer                                                          |
+|jobLocation                |str                     |It can be a empty str or some other string value                                                      |
+|jobStartDate               |str                     |It can only be a str of international date format eg: "2023-09-01"                                    |
+|jobApplicationClosingDate  |str                     |It can only be a str of international date format eg: "2023-09-01"                                    |
+|applicationStatus          |str                     |It can be any string but only 'Applied', 'They Rejected', 'I Rejected' or 'Successful' are considered |
+|notes                      |str                     |It can be a empty str or some other string value                                                      |
+|resumeFile                 |dict                    |It contains the resume file name and file data as fields                                              |
+|coverLetterFile            |dict                    |It contains the cover letter file name and file data as fields                                        |
+|extraFile                  |dict                    |It contains the extra file name and file data as fields                                               |
 
 - Name: resumeFile / coverLetterFile / extraFile
 - Input Parameter for: Used as a part of various data structures to move file name and data.
@@ -138,3 +139,83 @@ This section covers the data structures concerned with moving information betwee
 |---------------------------|------------------------|-------------------------------------------------------------------|
 |name                       |str                     |It can only be a str, can be a empty str                           |
 |data                       |bytes                   |It can only be bytes with some value or a empty bytes value        |
+
+- Example:
+```
+{'job': 'test job',
+'company': 'test company',
+'salary': '30000',
+'jobLocation': 'london',
+'jobStartDate': '2023-09-01',
+'jobApplicationClosingDate': '2023-08-01',
+'applicationStatus': 'Applied',
+'notes': 'nice job',
+'resumeFile': {'name': 'resume file name.pdf',
+               'data': b'adfsfdadfsf'
+               },
+'coverLetterFile': {'name': 'cover letter file.pdf',
+                    'data': b'sdafasdfsadf'
+                    },
+'extraFile': {'name': 'extra file name.pdf',
+              'data': b'sdfsdfsfasdfas'
+              }
+}
+```
+
+### Add Modified information into the database:
+
+- Name: modificationValues
+- Input Parameter For: updateRow() in DatabaseHandler class.
+- Returned By: None
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|job                        |str                     |It can be a empty str or some other string value                                                      |
+|company                    |str                     |It can be a empty str or some other string value                                                      |
+|salary                     |str                     |It should only contain a string of a integer                                                          |
+|jobLocation                |str                     |It can be a empty str or some other string value                                                      |
+|jobStartDate               |str                     |It can only be a str of international date format eg: "2023-09-01"                                    |
+|jobApplicationClosingDate  |str                     |It can only be a str of international date format eg: "2023-09-01"                                    |
+|applicationStatus          |str                     |It can be any string but only 'Applied', 'They Rejected', 'I Rejected' or 'Successful' are considered |
+|notes                      |str                     |It can be a empty str or some other string value                                                      |
+|resumeFile                 |dict                    |It contains the resume file name and file data as fields                                              |
+|coverLetterFile            |dict                    |It contains the cover letter file name and file data as fields                                        |
+|extraFile                  |dict                    |It contains the extra file name and file data as fields                                               |
+|resumeFileDelete           |str / None              |Only when the str value is 'on', it is actually used or else it is taken as false                     |
+|coverLetterFileDelete      |str / None              |Only when the str value is 'on', it is actually used or else it is taken as false                     |
+|extraFileDelete            |str / None              |Only when the str value is 'on', it is actually used or else it is taken as false                     |
+
+
+- Name: resumeFile / coverLetterFile / extraFile
+- Input Parameter for: Used as a part of various data structures to move file name and data.
+- Returned By: None
+
+|Field Name                 |Field Data Type         | Description                                                       |
+|---------------------------|------------------------|-------------------------------------------------------------------|
+|name                       |str                     |It can only be a str, can be a empty str                           |
+|data                       |bytes                   |It can only be bytes with some value or a empty bytes value        |
+
+- Example:
+```
+{'job': 'test job',
+'company': 'test company',
+'salary': '30000',
+'jobLocation': 'london',
+'jobStartDate': '2023-09-01',
+'jobApplicationClosingDate': '2023-08-01',
+'applicationStatus': 'Applied',
+'notes': 'nice job',
+'resumeFile': {'name': 'resume file name.pdf',
+               'data': b'adfsfdadfsf'
+               },
+'coverLetterFile': {'name': 'cover letter file.pdf',
+                    'data': b'sdafasdfsadf'
+                    },
+'extraFile': {'name': 'extra file name.pdf',
+              'data': b'sdfsdfsfasdfas'
+              },
+'resumeFileDelete': 'on',
+'coverLetterFileDelete': 'on',
+'extraFileDelete': 'on'
+}
+```
