@@ -338,7 +338,7 @@ This section covers the data structures concerned with moving information betwee
 
 ## Get Search Filter Limits:
 
-- Name: No specific name
+- Name: searchFilterLimits
 - Input Parameter For: part of it (jobLocations) used as input for redering index page in index() function used by flask routes.
 - Returned By: getSearchFilterLimits() function in DatabaseHandler class.
 
@@ -359,3 +359,100 @@ This section covers the data structures concerned with moving information betwee
 
 # Function Description:
 
+This section expains the different functions used in software.
+
+## DatabaseHandler class:
+
+This class has all the necessary functions to create and interact with the sqlite database.
+
+### _createTables() Function:
+
+- Input Parameter: None
+- Return parameter: JobTrackerTable and FileTrackerTable
+- Description: internal function used to set up the object model of the two tables: JobTrackerTable, FileTrackerTable
+
+### addRow() Function:
+
+- Input Parameter: jobInfo Dict
+- Return: None
+- Description: Add a new row into JobTrakcerTable and FileTrackerTable
+
+### deleteRow() Function:
+
+- Input Parameter: id as string of a number
+- Return: None
+- Description: Delete a specific row from both JobTrackerTable and FileTrackerTable based on id
+
+### updateRow() Function:
+
+- Input Parameter: id as a string of a number
+- Input Parameter: modificationValues dict
+- Return: None
+- Descripttion: Update a row value for both tables based on id
+
+### _updateResumeFile() Function:
+
+- Input Parameter: id as an interger value
+- Input parameter: resumeFileDelete where it takes the value of modificationValues's "resumeFileDelete" field
+- Input Parameter: resumeFileValue where it takes the value of modificationValues's "resumeFile" field
+- Input Parameter: session, where it is a session connection to the sqlite database
+- Return: None
+- Description: internal function used by updateRow to update resume file name and data in FileTrackerTable.
+
+### _updateCoverLetterFile() Function:
+
+- Input Parameter: id as an interger value
+- Input parameter: coverLetterFileDelete where it takes the value of modificationValues's "coverLetterFileDelete" field
+- Input Parameter: coverLetterFileValue where it takes the value of modificationValues's "coverLetterFile" field
+- Input Parameter: session, where it is a session connection to the sqlite database
+- Return: None
+- Description: internal function used by updateRow to update cover letter file name and data in FileTrackerTable.
+
+### _updateExtraFile() Function:
+
+- Input Parameter: id as an interger value
+- Input parameter: extraFileDelete where it takes the value of modificationValues's "extraFileDelete" field
+- Input Parameter: coverLetterFileValue where it takes the value of modificationValues's "extraFile" field
+- Input Parameter: session, where it is a session connection to the sqlite database
+- Return: None
+- Description: internal function used by updateRow to update extra file name and data in FileTrackerTable.
+
+### getRowsOnID() Function:
+
+- Input Parameter: id as a string value of a integer
+- Input Parameter: tableName, where it is a string and it can be either "JobTrackerTable" or "FileTrackerTable"
+- Return: depending on the tableName input parameter, it can be either a jobTrackerTableRow or fileTrackerTableRow dict
+- Description: Get a row based on id and table name
+
+### searchJobTrackerTableRows() Function:
+
+- Input Parameter: searchFilters dict
+- Return: jobTrackerTableRow
+- Description: search suitable row in JobTrackerTable based on provided search filters
+
+### _buildSearchQueryStatement() Function:
+
+- Input Parameter: searchFilters dict
+- Input Parameter: session, where it is a session connection to the sqlite database
+- Return: a SQLAlchemy ORM query statement
+- Description: An internal function used by searchJobTrackerTableRows() to build the query statement based on search filter fields
+
+### getSearchFilterLimits() Function:
+
+- Input Parameter: None
+- Return: searchFilterLimits dict
+- Description: Get the minimum and maximum salary along with unique job locations from the JobTrackerTable in dict form.
+
+## DataFormatting class:
+
+This class formats the data so that it can be used by DatabaseHandler class.
+
+### strToDatetime() Function:
+
+- Input Parameter: strDate of string type, where the string contains date in international format
+- Return: None if strDate is None or false, else a datetime.date() object is returned
+- Description: converts international date to datetime object
+
+### convertDictEmptyValueToNull() Function:
+
+- Input Parameter: 
