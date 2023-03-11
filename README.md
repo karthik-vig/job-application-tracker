@@ -211,6 +211,7 @@ This section covers the data structures concerned with moving information betwee
 
 |Field Name                 |Field Data Type         | Description                                                                                          |
 |---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|id                         |str                     |It should only contain a string of a integer. It is the unique id of the entry in the table.          |
 |job                        |str                     |It can be a empty str or some other string value                                                      |
 |company                    |str                     |It can be a empty str or some other string value                                                      |
 |salary                     |str                     |It should only contain a string of a integer                                                          |
