@@ -10,16 +10,19 @@ An application for keep tracker of jobs applied and what files where used to app
     2. Add Job Information Page
     3. Modify Job Information page
     4. See Job Infromation page
-4. Data Structures
+3. Data Structures
     1. SearchFilter
     2. Add New Information Into the Database
     3. Add Modified information into the database
     4. JobTrackerTable Row
     5. FileTrackerTable Row
     6. Get Search Filter Limit
-5. Function Description
-6. Overall Program Structure
-7. References
+4. Function Description
+    1. DatabaseHandler class
+    2. DataFormatting class
+    3. Flask functions
+5. Overall Program Structure
+6. References
 
 
 # Requirements:
@@ -455,4 +458,53 @@ This class formats the data so that it can be used by DatabaseHandler class.
 
 ### convertDictEmptyValueToNull() Function:
 
-- Input Parameter: 
+- Input Parameter: any dict structure
+- Return: process input dict structure
+- Description: Recursively converts all empty string and empty bytes to None in the given dict, except for 'job' and 'company' keys in the dict, as they remain as empty strings.
+
+### convertJobInfoNullToEmptyStr() Function:
+
+- Input Parameter: jobInfo, but jobTrackerTableRow dict is used as input
+- Return: jobInfo dict
+- Descriptin: All values in the dict that is None is replaced with an empty string specifically Works on values from JobTrackerTable
+
+### convertFileInfoNullToEmptyVal() Function:
+
+- Input Parameter: fileInfo, but fileTrackerTableRow dict is used as input
+- Return: fileInfo dict
+- Description: All values in the dict that is None is replaced with an empty string if the key is 'name' else if the key is 'data' it is replaced with empty bytes. Specifically Works on values from FileTrackerTable
+
+### convertRowsToPrimitive() Function:
+
+- Input Parameter: rows, where it is a SQLAlchemy rows object
+- Input Parameter: tableName, where it is a string with value as either "JobTrackerTable" or "FileTrackerTable"
+- Return: jobTrackerTableRow dict or fileTrackerTableRow dict, based on the tableName parameter
+- Description: Extracts the column value for each row from the SQLAlchemy database and puts them in python dict. tableName argument is used to convert to appropriate dicts.
+
+### _constructJobTrackerPrimitive() Function:
+
+- Input Parameter: row, where it is a object of JobTrackerTable
+- Return: jobTrackerTableRow dict
+- Description: Internal function used by convertRowsToPrimitive() to construct the dict for JobTrackerTable row values
+
+### _constructFileTrackerPrimitive() Function:
+
+- Input Parameter: row, where it is a object of FileTrackerTable
+- Return: fileTrackerTableRow dict
+- Description: Internal function used by convertRowsToPrimitive() to construct the dict for FileTrackerTable row values
+
+### convertJobLocationToPrimitive() Function:
+
+- Input Parameter: allJobLocations, where it is a SQLAlchemy row
+- Return: jobLocationsList, where it is a list of strings.
+- Description: Converts job location data (from JobTrackerTable) from SQLAlchemy database to list format
+
+## Flask functions:
+
+This section covers the functions used by flask route to respond to the user inputs.
+
+## index() Function:
+
+- Input Parameter: None
+- Return: rendered template of index.html
+- Description: 
