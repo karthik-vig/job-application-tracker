@@ -106,3 +106,35 @@ This page allows for the modification of existing job entries. This page is very
 Figure 4. Modify Job Information Page
 
 NOTE: only one operation can be done with regards to a given file field (where, one file field is either "Resume File" or "Cover Letter File" or "Extra File"). That is, either a new file can be inserted or the old file (if exist) can be deleted, not both at the same time.
+
+# Data Structures:
+
+This section covers the data structures concerned with moving information between functions and classes. The data structures to be discussed the one used to send search filter parameters, add job infomation to the database, modify the job information, and get information from the database for a query.
+
+### Add New Information Into the Database:
+
+- Name: jobInfo
+- Input Parameter For: addRow() in DatabaseHandler class.
+- Returned By: None
+
+|Field Name                 |Field Data Type         | Description                                                       |
+|---------------------------|------------------------|-------------------------------------------------------------------|
+|job                        |str                     |It can be a empty str or some other string value                   |
+|company                    |str                     |It can be a empty str or some other string value                   |
+|salary                     |str                     |It should only contain a string of a integer                       |
+|jobLocation                |str                     |It can be a empty str or some other string value                   |
+|jobStartDate               |str                     |It can only be a str of international date format eg: "2023-09-01" |
+|jobApplicationClosingDate  |str                     |It can only be a str of international date format eg: "2023-09-01" |
+|notes                      |str                     |It can be a empty str or some other string value                   |
+|resumeFile                 |dict                    |It contains the resume file name and file data as fields           |
+|coverLetterFile            |dict                    |It contains the cover letter file name and file data as fields     |
+|extraFile                  |dict                    |It contains the extra file name and file data as fields            |
+
+- Name: resumeFile / coverLetterFile / extraFile
+- Input Parameter for: Used as a part of various data structures to move file name and data.
+- Returned By: None
+
+|Field Name                 |Field Data Type         | Description                                                       |
+|---------------------------|------------------------|-------------------------------------------------------------------|
+|name                       |str                     |It can only be a str, can be a empty str                           |
+|data                       |bytes                   |It can only be bytes with some value or a empty bytes value        |
