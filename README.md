@@ -11,6 +11,12 @@ An application for keep tracker of jobs applied and what files where used to app
     3. Modify Job Information page
     4. See Job Infromation page
 4. Data Structures
+    1. SearchFilter
+    2. Add New Information Into the Database
+    3. Add Modified information into the database
+    4. JobTrackerTable Row
+    5. FileTrackerTable Row
+    6. Get Search Filter Limit
 5. Function Description
 6. Overall Program Structure
 7. References
@@ -254,3 +260,101 @@ This section covers the data structures concerned with moving information betwee
 'extraFileDelete': 'on'
 }
 ```
+
+## JobTrackerTable Row:
+
+- Name: jobTrackerTableRow
+- Input Parameter For: used by functions in flask to render information in html pages.
+- Returned By: getRowOnID() and searchJobTrackerTableRows() in DatabaseHandler class.
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|id                         |int                     |unique integer value of the retreived entry                                                           |
+|job                        |str                     |if null then empty string is returned else the string value is returned                               |
+|company                    |str                     |if null then empty string is returned else the string value is returned                               |
+|salary                     |int                     |if null then empty string is returned else the integer value is returned                              |
+|jobLocation                |str                     |if null then empty string is returned else the string value is returned                               |
+|jobStartDate               |str                     |if null then empty string is returned else the string value of datetime object is returned            |
+|jobApplicationClosingDate  |str                     |if null then empty string is returned else the string value of datetime object is returned            |
+|applicationStatus          |str                     |if null then empty string is returned else the string value is returned                               |
+|notes                      |str                     |if null then empty string is returned else the string value is returned                               |
+|startJobTrackDate          |str                     |if null then empty string is returned else the string value of datetime object is returned            |
+|modifiedJobTrackDate       |str                     |if null then empty string is returned else the string value of datetime object is returned            |
+
+- Example:
+
+```
+{'id': 1,
+'job': 'test job',
+'company': 'test company',
+'salary': 30000,
+'jobLocation': 'london',
+'jobStartDate': '2023-09-01',
+'jobApplicationClosingDate': '2023-08-01',
+'applicationStatus': 'Applied',
+'notes': 'nice job',
+'startJobTrackDate': '2023-03-02',
+'modifiedJobTrackDate': '2023-03-10';
+}
+```
+
+## FileTrackerTable tow:
+
+- Name: fileTrackerTableRow
+- Input Parameter For: used by functions in flask to render information in html pages.
+- Returned By: getRowOnID() in DatabaseHandler class.
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|resumeFile                 |dict                    |It contains the resume file name and file data as fields                                              |
+|coverLetterFile            |dict                    |It contains the cover letter file name and file data as fields                                        |
+|extraFile                  |dict                    |It contains the extra file name and file data as fields                                               |
+
+- Name: resumeFile / coverLetterFile / extraFile
+- Input Parameter for: Used as a part of various data structures to move file name and data.
+- Returned By: None
+
+|Field Name                 |Field Data Type         | Description                                                       |
+|---------------------------|------------------------|-------------------------------------------------------------------|
+|name                       |str                     |It can only be a str, can be a empty str                           |
+|data                       |bytes                   |It can only be bytes with some value or a empty bytes value        |
+
+- Example:
+
+```
+{
+'resumeFile': {'name': 'resume file name.pdf',
+               'data': b'adfsfdadfsf'
+               },
+'coverLetterFile': {'name': 'cover letter file.pdf',
+                    'data': b'sdafasdfsadf'
+                    },
+'extraFile': {'name': 'extra file name.pdf',
+              'data': b'sdfsdfsfasdfas'
+              }
+}
+```
+
+## Get Search Filter Limits:
+
+- Name: No specific name
+- Input Parameter For: part of it (jobLocations) used as input for redering index page in index() function used by flask routes.
+- Returned By: getSearchFilterLimits() function in DatabaseHandler class.
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|salary                     |dict                    |contains min and max values of salary in the JobTrackerTable                                          |
+|allJobLocations            |list                    |list of all unique locations in JobTrackerTable. The list consist of strings.                         |
+
+- Name: salary field
+- Input Parameter For: None
+- Returned By: part of value returned by getSearchFilterLimits() in DatabaseHandler class.
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|min                        |int                     |int or none                                                                                           |
+|max                        |int                     |int or none                                                                                           |
+
+
+# Function Description:
+
