@@ -21,6 +21,7 @@ An application for keep tracker of jobs applied and what files where used to app
     1. DatabaseHandler class
     2. DataFormatting class
     3. Flask functions
+    4. Other Fucntions
 5. Overall Program Structure
 6. References
 
@@ -556,4 +557,16 @@ This section covers the functions used by flask route to respond to the user inp
 - Input Parameter: None
 - Return: modificationValues dict
 - Description: Internal function used by redirect() function. Construct the modified value dict for the database Handler Object
+
+## Other Fucntions:
+
+This section contains other miscellaneous functions used by the software.
+
+### _startFlask() Function:
+
+- Input parameter: **kwargs, needs to contain: app, host and port
+- Return: None
+- Description: nitialize flask and object for database handling. SearchFilters was made global, so that is can presist between pages and users don't have to re-enter.
+
+# Overall Program Structure:
 
