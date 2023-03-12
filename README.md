@@ -20,8 +20,7 @@ An application for keep tracker of jobs applied and what files where used to app
 4. Function Description
     1. DatabaseHandler class
     2. DataFormatting class
-    3. Flask functions
-    4. Other Fucntions
+    3. UserInterface class
 5. Overall Program Structure
 6. References
 
@@ -500,7 +499,7 @@ This class formats the data so that it can be used by DatabaseHandler class.
 - Return: jobLocationsList, where it is a list of strings.
 - Description: Converts job location data (from JobTrackerTable) from SQLAlchemy database to list format
 
-## Flask functions:
+## UserInterface class:
 
 This section covers the functions used by flask route to respond to the user inputs.
 
@@ -557,10 +556,6 @@ This section covers the functions used by flask route to respond to the user inp
 - Input Parameter: None
 - Return: modificationValues dict
 - Description: Internal function used by redirect() function. Construct the modified value dict for the database Handler Object
-
-## Other Fucntions:
-
-This section contains other miscellaneous functions used by the software.
 
 ### _startFlask() Function:
 
