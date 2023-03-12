@@ -503,8 +503,57 @@ This class formats the data so that it can be used by DatabaseHandler class.
 
 This section covers the functions used by flask route to respond to the user inputs.
 
-## index() Function:
+### index() Function:
 
 - Input Parameter: None
 - Return: rendered template of index.html
-- Description: 
+- Description: uses DatabaseHandler to get rows from JobTrackerTable based on searchFilter inputs and get jobLocations.
+
+### addJobInfo() Function:
+
+- Input Parameter: None
+- Return: The rendered template of addJobInfo.html
+- Description: Renders the page for adding job information
+
+### modifyJobInfo() Function:
+
+- Input Parameter: None
+- Return: The rendered template of modifyJobInfo.html
+- Description: Get the page to modify an existing entry in the database. Can modify all or spcific values (except: id, added date and modified date). The files can be opened, modified or deleted.
+
+### seeJobInfo() Function:
+
+- Input Parameter: None
+- Return: rendered page of seeJobInfo.html
+- Description: Get the page to see information on a specific job entry. Get the necessar frow from database using id.
+
+### getFiles() Function:
+
+- Input Parameter: id, from the url
+- Return: sends files based on inputs
+- Description: Get file resume, coverletter and extra file for download from the database using a id. Which file is needed at the moment is based on the url.
+
+### redirect() Function:
+
+- Input Parameter: None
+- Return: renders the redirect.html page
+- Description: The redirect page is used for the POST -> redirect -> GET cycle as well as to collect and the form values being submitted. This function collect and process information from all form submit and returns to the index page.
+
+### _getSearchFilters() Function:
+
+- Input Parameter: None
+- Return: searchFilters dict
+- Description: Internal function used by redirect() function. Construct the searchFilter dict for the database Handler Object
+
+### _getAddJobInfo() Function:
+
+- Input Parameter: None
+- Return: jobInfo dict
+- Description: Internal function used by redirect() function. Construct the add job info dict for the database Handler Object
+
+### _getModifiedJobInfo() Function:
+
+- Input Parameter: None
+- Return: modificationValues dict
+- Description: Internal function used by redirect() function. Construct the modified value dict for the database Handler Object
+
