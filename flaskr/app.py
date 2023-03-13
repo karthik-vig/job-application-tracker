@@ -14,9 +14,6 @@ class UserInterface:
     searchFilters = None
 
     def __init__(self):
-        UserInterface.app.config['debug'] = True
-        UserInterface.app.run()
-        '''
         guiApp = FlaskUI(server=self._startWaitress,
                         server_kwargs={
                         'app': UserInterface.app,
@@ -26,9 +23,7 @@ class UserInterface:
                         width=1200,
                         height=800
                         )
-        guiApp.run() 
-        ''' 
-
+        guiApp.run()
 
     # The waitress will act as the server to improve performance.
     def _startWaitress(self, **kwargs):
