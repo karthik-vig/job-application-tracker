@@ -579,3 +579,5 @@ This section explains the overall program structure, as well as, the database mo
 
 # References:
 
+<a href="https://www.svgrepo.com/">[1] For SVG Icons.</a> <br/>
+<a href="https://app.heazy.studio/">[2] For SVG Backgroud.</a>
