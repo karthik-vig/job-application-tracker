@@ -37,6 +37,8 @@ The list of necessary packages are as follows:
 
 - altgraph==0.17.3
 - auto-py-to-exe==2.32.0
+- bottle==0.12.25
+- bottle-websocket==0.2.9
 - cffi==1.15.1
 - click==8.1.3
 - clr-loader==0.2.5
