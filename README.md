@@ -22,6 +22,8 @@ An application for keep tracker of jobs applied and what files where used to app
     2. DataFormatting class
     3. UserInterface class
 5. Overall Program Structure
+    1. Class structure
+    2. Database structure
 6. References
 
 
@@ -564,4 +566,16 @@ This section covers the functions used by flask route to respond to the user inp
 - Description: nitialize flask and object for database handling. SearchFilters was made global, so that is can presist between pages and users don't have to re-enter.
 
 # Overall Program Structure:
+
+This section explains the overall program structure, as well as, the database model that has been put into use.
+
+## Class structure:
+
+![class model](https://user-images.githubusercontent.com/113319059/224593089-b760996c-aff2-4435-9040-d6c3562135db.png)
+
+## Database structure:
+
+![database model](https://user-images.githubusercontent.com/113319059/224593118-ed666d7e-d82b-46cb-ba4e-1f2dddcc36fb.png)
+
+# References:
 
