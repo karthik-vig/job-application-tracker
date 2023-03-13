@@ -53,11 +53,11 @@ def getFiledata(path):
 
 def insertRowIntoDatabase():
     jobTrackerTableRowsValue =[('test job', 'test company', 50000, 'london', datetime.date(2023,9,1), datetime.date(2023,8,1), 'Successful', 'nice notes',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
-                                ('test job 2', 'test company 2', 60000, 'glasgow', datetime.date(2023,10,1), datetime.date(2023,9,1), 'Applied', 'nice notes 2',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
+                                ('test job 2', 'test company 2', 60000, 'Glasgow', datetime.date(2023,10,1), datetime.date(2023,9,1), 'Applied', 'nice notes 2',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
                                 ('test job 3', 'test company 3', 70000, 'london', datetime.date(2023,11,1), datetime.date(2023,10,1), 'Successful', 'nice notes 3',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
                                 ('test job 4', 'test company 4', 80000, 'edinburgh', datetime.date(2023,12,1), datetime.date(2023,11,1), 'I Rejected', 'nice notes 4',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
                                 ('test job 5', 'test company 5', 90000, 'glasgow', datetime.date(2023,7,1), datetime.date(2023,6,1), 'They Rejected', 'nice notes 5',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
-                                ('test job 6', 'test company 6', 100000, 'norwich', datetime.date(2023,4,25), datetime.date(2023,4,10), 'I Rejected', 'nice notes 6',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
+                                ('test job 6', 'test company 6', 100000, 'Norwich', datetime.date(2023,4,25), datetime.date(2023,4,10), 'I Rejected', 'nice notes 6',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
                                 ('test job 7', 'test company 7', 85000, 'manchester', datetime.date(2023,9,25), datetime.date(2023,8,10), 'Applied', 'nice notes 7',  datetime.date(2023,3,9),  datetime.date(2023,3,9)),
                                 ('test job 8', 'test company 8', 40000, 'norwich', datetime.date(2023,5,10), datetime.date(2023,5,1), 'They Rejected', 'nice notes 8',  datetime.date(2023,3,9),  datetime.date(2023,3,9))
                                 ]
@@ -387,7 +387,7 @@ class TestDatabaseHandler(unittest.TestCase):
                                                 'job': 'test job 2',
                                                 'company': 'test company 2',
                                                 'salary': 60000,
-                                                'jobLocation': 'glasgow',
+                                                'jobLocation': 'Glasgow',
                                                 'jobStartDate': str(datetime.date(2023,10,1)),
                                                 'jobApplicationClosingDate': str(datetime.date(2023,9,1)),
                                                 'applicationStatus': 'Applied',
@@ -409,10 +409,12 @@ class TestDatabaseHandler(unittest.TestCase):
         # get the filter limits from database handler class
         obj  = DatabaseHandler()
         searchFilterLimits = obj.getSearchFilterLimits()
+        searchFilterLimits['allJobLocations'].sort()
         expectedSearchFilterLimits = {"salary": {'min': 40000,
                                                 'max': 100000},
                                        "allJobLocations": ['london', 'glasgow', 'edinburgh', 'norwich', 'manchester']
                                        }
+        expectedSearchFilterLimits['allJobLocations'].sort()
         self.assertEqual(searchFilterLimits, expectedSearchFilterLimits)
 
 

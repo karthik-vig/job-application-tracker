@@ -103,7 +103,9 @@ class DataFormatting:
         jobLocationsList = []
         for row in allJobLocations:
             if row.jobLocation != None:
-                jobLocationsList.append(row.jobLocation)
+                jobLocation = str(row.jobLocation).lower()
+                jobLocationsList.append(jobLocation)
+            jobLocationsList = list(set(jobLocationsList))
         return jobLocationsList
 
 
