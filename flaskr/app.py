@@ -46,11 +46,14 @@ class UserInterface:
     @app.route('/index', methods=['GET'])
     def index():
         jobInfoList = None
+        resultStats = None
         if UserInterface.searchFilters:
             jobInfoList = UserInterface.databaseHandlerObj.searchJobTrackerTableRows(searchFilters=UserInterface.searchFilters)
         jobLocations = UserInterface.databaseHandlerObj.getSearchFilterLimits()['allJobLocations']
         return render_template('index.html', jobInfoList=jobInfoList,
-                                jobLocations=jobLocations)
+                                             jobLocations=jobLocations,
+                                             searchFilters=UserInterface.searchFilters,
+                                             resultStats=resultStats)
 
 
     # Get the page to add an new entry into the database.

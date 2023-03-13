@@ -8,6 +8,44 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/indexStyle.css')}}">
     </head>
     <body class="bodyContainer bodyBGImage">
+        <div class="statsContainer">
+            <section class="commonBorder frostGlass">
+                {% if searchFilters %}
+                    <label>Search Filters:</label>
+                    <p>Search Text: {{searchFilters['searchText']}}</p>
+                    <p>Job Start Date After: {{searchFilters['jobStartDate']}}</p>
+                    <p>Minimum Salary: {{searchFilters['salary']['min']}}</p>
+                    <p>Maximum Salary: {{searchFilters['salary']['max']}}</p>
+                    <p>Application Status: {{searchFilters['applicationStatus']}}</p>
+                    <p>Job Location: {{searchFilters['jobLocation']}}</p>
+                {% else %}
+                    <label>Search Filters:</label>
+                    <p>Search Text: </p>
+                    <p>Job Start Date: </p>
+                    <p>Minimum Salary: </p>
+                    <p>Maximum Salary: </p>
+                    <p>Application Status: </p>
+                    <p>Job Location: </p>
+                {% endif %}
+            </section>
+            <section class="commonBorder frostGlass">
+                {% if resultStats %}
+                    <label>Result Stats:</label>
+                    <p>Number of Results: </p>
+                    <p>Mininum Salary: </p>
+                    <p>Maximum Salary: </p>
+                    <p>Latest Job Start Date: </p>
+                    <p>Last Job Start Date: </p>
+                {% else %}
+                    <label>Result Stats:</label>
+                    <p>Number of Results: </p>
+                    <p>Mininum Salary: </p>
+                    <p>Maximum Salary: </p>
+                    <p>Latest Job Start Date: </p>
+                    <p>Last Job Start Date: </p>
+                {% endif %}
+            </section>
+        </div>
         <div class="commonBorder searchFilterInputContainer searchFilterInputItem frostGlass">
             <section class="addButton">
                 <form method="get">
@@ -70,6 +108,6 @@
                     <br/>
                 {% endfor%}
             {% endif %}
-            </ul>
+        </ul>
     </body>
 </html>

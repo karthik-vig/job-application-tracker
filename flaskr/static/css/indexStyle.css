@@ -1,11 +1,12 @@
 .jobEntryPanelItemContainer{
-    grid-column-start: col1;
+    grid-column-start: col2;
     grid-column-end: endCol;
     grid-row-start: row2;
     grid-row-end: endRow;
     overflow-y: scroll;
     height: 70vh;
-    width: 85vw;
+    width: 58.5vw;
+    place-self: start;
 }
 
 .searchFilterInputItem{
@@ -17,9 +18,10 @@
 
 .bodyContainer{
     display: grid;
-    grid-template-columns: [col1] 100vw [endCol];
+    grid-template-columns: [col1] 30vw [col2] 66vw [endCol];
     grid-template-rows: [row1] 20vh [row2] 76vh [endRow];
     row-gap: 4vh;
+    column-gap: 4vw;
     justify-items: center;
 }
 
@@ -101,13 +103,12 @@
 
 .jobEntryPanel {
     display: grid;
-    grid-template-columns: [col1] 20vw [col2] 20vw [col3] 8vw [col4] 4vw [endCol];
+    grid-template-columns: [col1] 15vw [col2] 15vw [col3] 8vw [col4] 4vw [endCol];
     grid-template-rows: [row1] 5vh [row2] 5vh [endRow];
     height: 10vh;
-    width: 52vw;
+    width: 42vw;
     margin-top: 1vh;
-    margin-left: 15vw;
-    margin-right: 15vw;
+    margin-left: 8vw;
     align-items: center;
     justify-items: center;
 }
@@ -233,4 +234,40 @@
     display: grid;
     grid-template-columns: [col1] 10vw [col2] 10vw [endCol];
     grid-template-rows: [row1] 3vh [row2] 7vh [endRow];
+}
+
+/* design for search filters and result stats: */
+
+.statsContainer > section:nth-child(1) {
+    display: grid;
+    grid-template-columns: [col1] 22.5vw [endCol];
+    grid-template-rows: [row1] 4.7vh [row2] 4.7vh [row3] 4.7vh [row4] 4.7vh [row5] 4.7vh [row6] 4.7vh [row7] 4.7vh [endRow];
+}
+
+.statsContainer > section:nth-child(2) {
+    display: grid;
+    grid-template-columns: [col1] 22.5vw [endCol];
+    grid-template-rows: [row1] 5.5vh [row2] 5.5vh [row3] 5.5vh [row4] 5.5vh [row5] 5.5vh [row6] 5.5vh [endRow];
+}
+
+.statsContainer > section > label {
+    text-align: center;
+}
+
+.statsContainer > section > p {
+    margin-left: 1vw;
+}
+
+.statsContainer {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+    justify-self: end;
+    display: grid;
+    grid-template-columns: [col1] 22.5vw [endCol];
+    grid-template-rows: [row1] 33vh [row2] 33vh [endRow];
+    row-gap: 4vh;
+    height: 70vh;
+    width: 22.5vw;
 }
