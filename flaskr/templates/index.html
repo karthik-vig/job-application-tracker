@@ -31,11 +31,11 @@
             <section class="commonBorder frostGlass">
                 {% if resultStats %}
                     <label>Result Stats:</label>
-                    <p>Number of Results: </p>
-                    <p>Mininum Salary: </p>
-                    <p>Maximum Salary: </p>
-                    <p>Latest Job Start Date: </p>
-                    <p>Last Job Start Date: </p>
+                    <p>Number of Results: {{jobInfoList|length}}</p>
+                    <p>Mininum Salary: {{resultStats['salary']['min']}}</p>
+                    <p>Maximum Salary: {{resultStats['salary']['max']}}</p>
+                    <p>Latest Job Start Date: {{resultStats['jobStartDate']['latest']}}</p>
+                    <p>Last Job Start Date: {{resultStats['jobStartDate']['last']}}</p>
                 {% else %}
                     <label>Result Stats:</label>
                     <p>Number of Results: </p>

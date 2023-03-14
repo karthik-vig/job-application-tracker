@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, Table, func, update, select, or_, and_, ForeignKey, LargeBinary
-from sqlalchemy.orm import Session, registry, relationship
+from sqlalchemy.orm import Session, registry, relationship, aliased
 import datetime
 
 
@@ -108,6 +108,18 @@ class DataFormatting:
             jobLocationsList = list(set(jobLocationsList))
         return jobLocationsList
 
+
+    #
+    def convertResultStatToList(self, resultStat):
+        for val in resultStat:
+            resultStatDict = {'salary': {'min': val[0],
+                                         'max': val[1]
+                                         },
+                              'jobStartDate': {'latest': str(val[2]),
+                                               'last': str(val[3])
+                                               }
+                            }
+        return resultStatDict
 
 
 # This class interacts with the sqlite database to record and retrive information.
@@ -306,9 +318,25 @@ class DatabaseHandler:
     def searchJobTrackerTableRows(self, searchFilters: dict) -> list:
         with Session(self.engine) as session:
             queryStatement = self._buildSearchQueryStatement(searchFilters=searchFilters, session=session)
+            resultStatQueryStatement = self._getResultStats(queryStatement=queryStatement, session=session)
+            resultStat = session.execute(resultStatQueryStatement)
             rows = session.execute(queryStatement)
             rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName='JobTrackerTable')
-        return rowList
+            resultStatDict = self.dataFormattingObj.convertResultStatToList(resultStat=resultStat)
+        return rowList, resultStatDict
+
+
+    # gets the result stats using the queryStatement for JobTrackerTable
+    def _getResultStats(self, queryStatement, session):
+        subquery = queryStatement.subquery()
+        aliasedSubquery = aliased(self.JobTrackerTable, subquery)
+        resultStatQueryStatement = session.query(func.min(aliasedSubquery.salary),
+                                                 func.max(aliasedSubquery.salary),
+                                                 func.min(aliasedSubquery.jobStartDate),
+                                                 func.max(aliasedSubquery.jobStartDate)
+                                                 )
+        return resultStatQueryStatement
+
 
     # Internal function used by searchJobTrackerTableRows to build the select statement
     # based on search filter values entered by the user.
