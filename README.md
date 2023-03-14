@@ -17,6 +17,7 @@ An application for keep tracker of jobs applied and what files where used to app
     4. JobTrackerTable Row
     5. FileTrackerTable Row
     6. Get Search Filter Limit
+    7. Result Statistics
 4. Function Description
     1. DatabaseHandler class
     2. DataFormatting class
@@ -364,6 +365,36 @@ This section covers the data structures concerned with moving information betwee
 |max                        |int                     |int or none                                                                                           |
 
 
+## Result Statistics:
+
+- Name: resultStatDict
+- Input Parameter for: index html page renderer
+- Returned by: searchJobTrackerTableRows() function in DatabaseHandler class
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|salary                     |dict                    |A dict that contains min and max of salary for a result based on search filter                        |
+|jobStartDate               |dict                    |A dict that contains the first and last job start date for the results based on search filter         |
+
+- Name: salary field
+- Input Parameter for: salary field in resultStatDict
+- Return by: None
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|min                        |int                     |int minimum value of the salary in the search result based on search filter                           |
+|max                        |int                     |int maximum value of the salary in the search result based on search filter                           |
+
+- Name: jobStartDate field
+- Input Parameter for: jobStartDate field in resultStatDict
+- Return by: None
+
+|Field Name                 |Field Data Type         | Description                                                                                          |
+|---------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+|latest                     |str                     |str of datatime.date()                                                                                |
+|last                       |str                     |str of datetime.date()                                                                                |
+
+
 # Function Description:
 
 This section expains the different functions used in software.
@@ -503,6 +534,12 @@ This class formats the data so that it can be used by DatabaseHandler class.
 - Return: jobLocationsList, where it is a list of strings.
 - Description: Converts job location data (from JobTrackerTable) from SQLAlchemy database to list format
 
+### convertResultStatToDict() Function:
+
+- Input Paramter: resultStat, where it is a SQLAlchemy row
+- Return: resultStatDict dict
+- Description: Converts the values from SQLAlchemy row to python dict for result stats
+
 ## UserInterface class:
 
 This section covers the functions used by flask route to respond to the user inputs.
@@ -573,7 +610,7 @@ This section explains the overall program structure, as well as, the database mo
 
 ## Class structure:
 
-![class model](https://user-images.githubusercontent.com/113319059/224593089-b760996c-aff2-4435-9040-d6c3562135db.png)
+![class model](https://user-images.githubusercontent.com/113319059/224881357-e0feccc0-0a62-4afa-8af4-f321b8f01acd.png)
 
 ## Database structure:
 
