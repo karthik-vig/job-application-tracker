@@ -29,13 +29,13 @@
                 {% endif %}
             </section>
             <section class="commonBorder frostGlass">
-                {% if resultStats %}
+                {% if resultStatDict %}
                     <label>Result Stats:</label>
                     <p>Number of Results: {{jobInfoList|length}}</p>
-                    <p>Mininum Salary: {{resultStats['salary']['min']}}</p>
-                    <p>Maximum Salary: {{resultStats['salary']['max']}}</p>
-                    <p>Latest Job Start Date: {{resultStats['jobStartDate']['latest']}}</p>
-                    <p>Last Job Start Date: {{resultStats['jobStartDate']['last']}}</p>
+                    <p>Mininum Salary: {{resultStatDict['salary']['min']}}</p>
+                    <p>Maximum Salary: {{resultStatDict['salary']['max']}}</p>
+                    <p>Latest Job Start Date: {{resultStatDict['jobStartDate']['latest']}}</p>
+                    <p>Last Job Start Date: {{resultStatDict['jobStartDate']['last']}}</p>
                 {% else %}
                     <label>Result Stats:</label>
                     <p>Number of Results: </p>
