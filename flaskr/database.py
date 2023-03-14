@@ -109,8 +109,8 @@ class DataFormatting:
         return jobLocationsList
 
 
-    #
-    def convertResultStatToList(self, resultStat):
+    # Converts the values from SQLAlchemy row to python dict for result stats 
+    def convertResultStatToDict(self, resultStat):
         for val in resultStat:
             resultStatDict = {'salary': {'min': val[0],
                                          'max': val[1]
@@ -322,7 +322,7 @@ class DatabaseHandler:
             resultStat = session.execute(resultStatQueryStatement)
             rows = session.execute(queryStatement)
             rowList = self.dataFormattingObj.convertRowsToPrimitive(rows=rows, tableName='JobTrackerTable')
-            resultStatDict = self.dataFormattingObj.convertResultStatToList(resultStat=resultStat)
+            resultStatDict = self.dataFormattingObj.convertResultStatToDict(resultStat=resultStat)
         return rowList, resultStatDict
 
 

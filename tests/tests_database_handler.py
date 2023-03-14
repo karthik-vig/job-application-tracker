@@ -381,7 +381,7 @@ class TestDatabaseHandler(unittest.TestCase):
                             'applicationStatus': 'Applied',
                             'jobLocation': 'glas'
                             }
-        jobTrackerTableSearchRows = obj.searchJobTrackerTableRows(searchFilters=searchFilters)
+        jobTrackerTableSearchRows, resultStatsDict = obj.searchJobTrackerTableRows(searchFilters=searchFilters)
         #('test job 2', 'test company 2', 60000, 'glasgow', datetime.date(2023,10,1), datetime.date(2023,9,1), 'Applied', 'nice notes 2',  datetime.date(2023,3,9),  datetime.date(2023,3,9))
         expectedJobTrackerTableSearchRows = [ { 'id': 2,
                                                 'job': 'test job 2',
@@ -398,6 +398,34 @@ class TestDatabaseHandler(unittest.TestCase):
                                             ]
         self.assertEqual(jobTrackerTableSearchRows, expectedJobTrackerTableSearchRows)
 
+    def testSearchJobTrackerTableRowsResultStat(self):
+        # drop all table
+        mapper_resgistry.metadata.drop_all(engine)
+        # create table
+        mapper_resgistry.metadata.create_all(engine)
+        # insert the row into table
+        insertRowIntoDatabase()
+        # search JobTrackerTable based on search filters
+        obj = DatabaseHandler()
+        searchFilters = { 'id': '',
+                            'searchText': 'test',
+                            'salary': { 'min': 55000,
+                                        'max': 96000
+                                        },
+                            'jobStartDate': '2023-07-01',
+                            'applicationStatus': 'Applied',
+                            'jobLocation': 'glas'
+                            }
+        jobTrackerTableSearchRows, resultStatsDict = obj.searchJobTrackerTableRows(searchFilters=searchFilters)
+        #('test job 2', 'test company 2', 60000, 'glasgow', datetime.date(2023,10,1), datetime.date(2023,9,1), 'Applied', 'nice notes 2',  datetime.date(2023,3,9),  datetime.date(2023,3,9))
+        expectedresultStatsDict = {'salary': {'min': 60000,
+                                         'max': 60000
+                                         },
+                                    'jobStartDate': {'latest': str(datetime.date(2023,10,1)),
+                                                    'last': str(datetime.date(2023,10,1))
+                                                     }
+                                    }
+        self.assertEqual(resultStatsDict, expectedresultStatsDict)
 
     def testGetSearchFiltersLimits(self):
         # drop all table
