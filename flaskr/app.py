@@ -18,7 +18,7 @@ class UserInterface:
                         server_kwargs={
                         'app': UserInterface.app,
                         'port': 5000,
-                        'host': '0.0.0.0'
+                        'host': 'localhost'
                         },
                         width=1200,
                         height=800
