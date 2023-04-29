@@ -189,6 +189,7 @@
     grid-template-rows: [row1] 10vh [row2] 10vh [endRow];
     justify-items: center;
     align-items: center;
+    margin-top: 1vh;
 }
 
 /* for each filter item in form for search filter */
@@ -240,22 +241,35 @@
 
 .statsContainer > section:nth-child(1) {
     display: grid;
-    grid-template-columns: [col1] 22.5vw [endCol];
+    grid-template-columns: [col1] 22.5 [endCol];
     grid-template-rows: [row1] 4.7vh [row2] 4.7vh [row3] 4.7vh [row4] 4.7vh [row5] 4.7vh [row6] 4.7vh [row7] 4.7vh [endRow];
 }
 
 .statsContainer > section:nth-child(2) {
     display: grid;
     grid-template-columns: [col1] 22.5vw [endCol];
-    grid-template-rows: [row1] 5.5vh [row2] 5.5vh [row3] 5.5vh [row4] 5.5vh [row5] 5.5vh [row6] 5.5vh [endRow];
+    grid-template-rows: repeat(6, [rowLine]5.5vh);/*[row1] 5.5vh [row2] 5.5vh [row3] 5.5vh [row4] 5.5vh [row5] 5.5vh [row6] 5.5vh [endRow]; */
 }
 
-.statsContainer > section > label {
+.statsContainer > section > h4{
     text-align: center;
+    font-weight: bold;
+    font-size: 2vh;
+    margin-top: 1vh;
 }
 
-.statsContainer > section > p {
+.statsContainer > section > span > label {
     margin-left: 1vw;
+    font-weight: bold;
+    font-size: 1.6vh;
+    font-family: 'Times New Roman', Times, serif;
+    display: inline;
+}
+
+.statsContainer > section > span > p {
+    margin-left: 1vw;
+    display: inline;
+    color: #a7c949;
 }
 
 .statsContainer {

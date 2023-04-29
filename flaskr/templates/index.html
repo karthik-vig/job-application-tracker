@@ -10,39 +10,96 @@
     <body class="bodyContainer bodyBGImage">
         <div class="statsContainer">
             <section class="commonBorder frostGlass">
+                <h4>Search Filters:</h4>
                 {% if searchFilters %}
-                    <label>Search Filters:</label>
-                    <p>Search Text: {{searchFilters['searchText']}}</p>
-                    <p>Job Start Date After: {{searchFilters['jobStartDate']}}</p>
-                    <p>Minimum Salary: {{searchFilters['salary']['min']}}</p>
-                    <p>Maximum Salary: {{searchFilters['salary']['max']}}</p>
-                    <p>Application Status: {{searchFilters['applicationStatus']}}</p>
-                    <p>Job Location: {{searchFilters['jobLocation']}}</p>
+                    <span>
+                        <label> Search Text: </label>
+                        <p>{{searchFilters['searchText']}}</p>
+                    </span>
+                    <span>
+                        <label> Job Start Date After: </label>
+                        <p>{{searchFilters['jobStartDate']}}</p>
+                    </span>
+                    <span>
+                        <label> Minimum Salary: </label>
+                        <p>{{searchFilters['salary']['min']}}</p>
+                    </span>
+                    <span>
+                        <label>Maximum Salary: </label>
+                        <p>{{searchFilters['salary']['max']}}</p>
+                    </span>
+                    <span>
+                        <label>Application Status: </label>
+                        <p>
+                        {% if searchFilters['applicationStatus'] != 'None' %}
+                            {{searchFilters['applicationStatus']}}
+                        {% endif %}
+                        </p>
+                    </span>
+                    <span>
+                        <label>Job Location: </label>
+                        <p>{{searchFilters['jobLocation']}}</p>
+                    </span>
                 {% else %}
-                    <label>Search Filters:</label>
-                    <p>Search Text: </p>
-                    <p>Job Start Date: </p>
-                    <p>Minimum Salary: </p>
-                    <p>Maximum Salary: </p>
-                    <p>Application Status: </p>
-                    <p>Job Location: </p>
+                    <span>
+                        <label> Search Text: </label>
+                    </span>
+                    <span>
+                        <label> Job Start Date After: </label>
+                    </span>
+                    <span>
+                        <label> Minimum Salary: </label>
+                    </span>
+                    <span>
+                        <label>Maximum Salary: </label>
+                    </span>
+                    <span>
+                        <label>Application Status: </label>
+                    </span>
+                    <span>
+                        <label>Job Location: </label>
+                    </span>
                 {% endif %}
             </section>
             <section class="commonBorder frostGlass">
+                <h4>Result Stats:</h4>
                 {% if resultStatDict %}
-                    <label>Result Stats:</label>
-                    <p>Number of Results: {{jobInfoList|length}}</p>
-                    <p>Mininum Salary: {{resultStatDict['salary']['min']}}</p>
-                    <p>Maximum Salary: {{resultStatDict['salary']['max']}}</p>
-                    <p>Latest Job Start Date: {{resultStatDict['jobStartDate']['latest']}}</p>
-                    <p>Last Job Start Date: {{resultStatDict['jobStartDate']['last']}}</p>
+                    <span>
+                        <label>Number of Results: </label>
+                        <p>{{jobInfoList|length}}</p>
+                    </span>
+                    <span>
+                        <label>Mininum Salary: </label>
+                        <p>{{resultStatDict['salary']['min']}}</p>
+                    </span>
+                    <span>
+                        <label>Maximum Salary: </label>
+                        <p>{{resultStatDict['salary']['max']}}</p>
+                    </span>
+                    <span>
+                        <label>Latest Job Start Date: </label>
+                        <p>{{resultStatDict['jobStartDate']['latest']}}</p>
+                    </span>
+                    <span>
+                        <label>Last Job Start Date: </label>
+                        <p>{{resultStatDict['jobStartDate']['last']}}</p>
+                    </span>
                 {% else %}
-                    <label>Result Stats:</label>
-                    <p>Number of Results: </p>
-                    <p>Mininum Salary: </p>
-                    <p>Maximum Salary: </p>
-                    <p>Latest Job Start Date: </p>
-                    <p>Last Job Start Date: </p>
+                    <span>
+                        <label>Number of Results: </label>
+                    </span>
+                    <span>
+                        <label>Mininum Salary: </label>
+                    </span>
+                    <span>
+                        <label>Maximum Salary: </label>
+                    </span>
+                    <span>
+                        <label>Latest Job Start Date: </label>
+                    </span>
+                    <span>
+                        <label>Last Job Start Date: </label>
+                    </span>
                 {% endif %}
             </section>
         </div>
