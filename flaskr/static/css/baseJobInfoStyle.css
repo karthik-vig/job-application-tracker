@@ -1,0 +1,304 @@
+/*Common text and heading formatting*/
+h1 {
+    display: block;
+    text-align: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 4vh;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h3 {
+    display: grid;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 3vh;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#leftSideFormContainer > h3 {
+    margin-left: 2%;
+}
+
+#rightSideFormContainer > h3 {
+    margin-left: 5%;
+}
+
+label {
+    display: grid;
+    margin-left: 5%;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 1.8vh;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+p {
+    display: grid;
+    align-items: center;
+}
+
+a {
+    display: grid;
+    align-items: center;
+}
+
+/*The container for the whole page*/
+#pageContainer {
+    display: grid;
+    grid-template-columns: [col1] 100% [endCol];
+    grid-template-rows: [row1] 7.5% [row2] 75% [row3] 7.5% [endRow];
+    row-gap: 2%;
+}
+
+
+
+
+
+/*The container for the heading*/
+#pageContainer > div:first-child {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: row2;
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
+    display:grid;
+    align-items: center;
+    justify-items: center;
+}
+
+
+
+
+/*The container for the form*/
+#formContainer {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+
+    display: grid;
+    grid-template-columns: [col1] 49% [col2] 49% [endCol];
+    grid-template-rows: [row1] 90% [row2]  10% [endRow];
+    column-gap: 1%;
+    row-gap: 2%;
+}
+
+
+
+
+/*The container for the parts of the form on the right side*/
+
+#leftSideFormContainer {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: row2;
+    margin-left: 2%;
+
+    display: grid;
+    grid-template-columns: [col1] 49% [col2] 50% [endCol];
+    grid-template-rows: repeat(11, [rowLine] 7%);
+    row-gap: 2%;
+    column-gap: 1%;
+}
+
+#leftSideFormContainer > h3:nth-of-type(1) {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: rowLine 1;
+    grid-row-end: rowLine 2;
+}
+
+#leftSideFormContainer > h3:nth-of-type(2) {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: rowLine 7;
+    grid-row-end: rowLine 8;
+}
+
+#leftSideFormContainer > fieldset {
+    display: grid;
+    grid-template-columns: [col1] 20% [col2] 75% [endCol];
+    grid-template-rows: [row1] 100% [endRow];
+}
+
+#leftSideFormContainer > fieldset > label {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+#leftSideFormContainer > fieldset > input {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(1) {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 2;
+    grid-row-end: rowLine 3;
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(2) {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 3;
+    grid-row-end: rowLine 4;
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(3) {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 4;
+    grid-row-end: rowLine 5;
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(4) {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 5;
+    grid-row-end: rowLine 6;
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(5) {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 6;
+    grid-row-end: rowLine 7;
+
+    display: grid;
+    grid-template-columns: [col1] 20% [col2] 75% [endCol];
+    grid-template-rows: [row1] 100% [endRow];
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(6) {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: rowLine 8;
+    grid-row-end: rowLine 9;
+}
+
+#leftSideFormContainer > fieldset:nth-of-type(7) {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 8;
+    grid-row-end: rowLine 9;
+}
+
+
+
+
+
+
+/*The container for the parts of the form on the left side*/
+
+#rightSideFormContainer {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: row2;
+    row-gap: 2%;
+    column-gap: 1%;
+
+    display: grid;
+    grid-template-columns: [col1] 16% [col2] 83% [endCol];
+    grid-template-rows: repeat(11, [rowLine] 7%);
+}
+
+#rightSideFormContainer > h3:nth-of-type(1) {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: rowLine 1;
+    grid-row-end: rowLine 2;
+}
+
+#rightSideFormContainer > h3:nth-of-type(2) {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: rowLine 8;
+    grid-row-end: rowLine 9;
+}
+
+#rightSideFormContainer > textarea {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: rowLine 2;
+    grid-row-end: rowLine 7;
+
+    overflow-y: scroll;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 2%;
+}
+
+#rightSideFormContainer > fieldset {
+    grid-column-start: col1;
+    grid-column-end: endCol;
+
+    display: grid;
+    grid-template-columns: [col1] 16% [col2] 83% [endCol];
+    grid-template-rows: [row1] 100% [endRow];
+}
+
+#rightSideFormContainer > fieldset > label {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+#rightSideFormContainer > fieldset > label {
+    grid-column-start: col1;
+    grid-column-end: col2;
+}
+
+#rightSideFormContainer > fieldset > label {
+    grid-column-start: col1;
+    grid-column-end: col2;
+}
+
+
+#rightSideFormContainer > fieldset:nth-of-type(1) {
+    grid-row-start: rowLine 9;
+    grid-row-end: rowLine 10;
+}
+
+#rightSideFormContainer > fieldset:nth-of-type(2) {
+    grid-row-start: rowLine 10;
+    grid-row-end: rowLine 11;
+}
+
+#rightSideFormContainer > fieldset:nth-of-type(3) {
+    grid-row-start: rowLine 11;
+    grid-row-end: rowLine 12;
+}
+
+
+
+
+/*The container for the form submission or cacelling action buttons*/
+
+#actionButtonContainer{
+    grid-column-start: col1;
+    grid-column-end: endCol;
+    grid-row-start: row2;
+    grid-row-end: endRow;
+    margin-left: 1%;
+
+    display: grid;
+    grid-template-columns: [col1] 33% [col2] 33% [col3] 33% [endCol];
+    grid-template-rows: [row1] 100% [endRow];
+
+    justify-items: center;
+    align-items: center;
+}

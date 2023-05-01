@@ -1,88 +1,108 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Job Tracker</title>
-        <link rel="icon" href="{{url_for('static', filename='icons/job application tracker icon.ico')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/seeJobInfoStyle.css')}}">
-    </head>
-    <body class="pageContainer bodyBGImage">
-        <form action="/redirect" method="post" class="commonBorder formContainer pageItem frostGlass">
-            <fieldset class="jobInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Job:</label>
-                <input type="text" name="job" value="{{jobInfo['job']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="companyInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Company: </label>
-                <input type="text" name="company" value="{{jobInfo['company']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="salaryInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Salary:</label>
-                <input type="number" name="salary" value="{{jobInfo['salary']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="jobLocationInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Location:</label>
-                <input type="text" name="jobLocation" value="{{jobInfo['jobLocation']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="jobStartDateInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Job Start Date:</label>
-                <input type="date" name="jobStartDate" value="{{jobInfo['jobStartDate']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="jobApplicationClosingDateInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Job Application Closing Date:</label>
-                <input type="date" name="jobApplicationClosingDate" value="{{jobInfo['jobApplicationClosingDate']}}" readonly  class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="applicationStatusInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Status:</label>
-                <input type="text" value="{{jobInfo['applicationStatus']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="notesInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Notes:</label>
-                <input type="text" name="notes" maxlength="10000"  value="{{jobInfo['notes']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="resumeFileInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Resume File:</label>
-                <section class="fieldsetInputItem filesContainer">
-                    {% if jobInfo['resumeFile']['name'] != '' %}
-                        <p class="fileNameItem">{{ jobInfo['resumeFile']['name'] }}</p>
-                        <a href="/resumeFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
-                    {% else %}
-                        <p class="noFileItem">No File.</p>
-                    {% endif %}
-                </section>
-            </fieldset>
-            <fieldset class="coverLetterFileInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Cover Letter File:</label>
-                <section class="fieldsetInputItem filesContainer">
-                    {% if jobInfo['coverLetterFile']['name'] != '' %}
-                        <p class="fileNameItem">{{ jobInfo['coverLetterFile']['name'] }}</p>
-                        <a href="/coverLetterFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
-                    {% else %}
-                        <p class="noFileItem">No File.</p>
-                    {% endif %}
-                </section>
-            </fieldset>
-            <fieldset class="extraFileInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Extra File:</label>
-                <section class="fieldsetInputItem filesContainer">
-                    {% if jobInfo['extraFile']['name'] != '' %}
-                        <p class="fileNameItem">{{ jobInfo['extraFile']['name'] }}</p>
-                        <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButtonItem commonBorder">Open</a>
-                    {% else %}
-                        <p class="noFileItem">No File.</p>
-                    {% endif %}
-                </section>
-            </fieldset>
-            <fieldset class="startJobTrackDateInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Added Date:</label>
-                <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="modifiedJobTrackDateInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Last Modified Date:</label>
-                <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim cancelSubmitInputItem">
-        </form>
-    </body>
-</html>
+{% extends "baseJobInfo.html" %}
+
+{% block cssStyleSheet %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/seeJobInfoStyle.css')}}">
+{% endblock %}
+
+{% block title %}
+See Job Information
+{% endblock %}
+
+{% block jobInputField %}
+value="{{jobInfo['job']}}" readonly
+{% endblock %}
+
+{% block companyInputField %}
+value="{{jobInfo['company']}}" readonly
+{% endblock %}
+
+{% block salaryInputField %}
+value="{{jobInfo['salary']}}" readonly
+{% endblock %}
+
+{% block locationInputField %}
+value="{{jobInfo['jobLocation']}}" readonly
+{% endblock %}
+
+{% block applicationStatus %}
+disabled
+{% endblock %}
+
+{% if jobInfo['applicationStatus'] == '' %}
+    {% block applicationStatusNone %}selected{% endblock %}
+{% endif %}
+{% if jobInfo['applicationStatus'] == 'Applied' %}
+    {% block applicationStatusApplied %}selected{% endblock %}
+{% endif %}
+{% if jobInfo['applicationStatus'] == 'I Rejected' %}
+    {% block applicationStatusIReject %}selected{% endblock %}
+{% endif %}
+{% if jobInfo['applicationStatus'] == 'They Rejected' %}
+    {% block applicationStatusTheyReject %}selected{% endblock %}
+{% endif %}
+{% if jobInfo['applicationStatus'] == 'Successful' %}
+    {% block applicationStatusSuccess %}selected{% endblock %}
+{% endif %}
+
+{% block jobStartDateInputField %}
+value="{{jobInfo['jobStartDate']}}" readonly
+{% endblock %}
+
+{% block jobApplicationClosingDateInputField %}
+value="{{jobInfo['jobApplicationClosingDate']}}" readonly
+{% endblock %}
+
+{% block extraEntryInfo %}
+    <h3>Meta Data:</h3>
+    <fieldset>
+        <label>Created on: </label>
+        <input type="text" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder inputBGColor">
+    </fieldset>
+    <fieldset>
+        <label>Last Modified on: </label>
+        <input type="text" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder inputBGColor">
+    </fieldset>
+{% endblock %}
+
+{% block notesInputField %}
+    <textarea readonly maxlength="10000" class="commonBorder inputBGColor">
+        {{jobInfo['notes']}}
+    </textarea>
+{% endblock %}
+
+{% block resumeFile %}
+    <section class="fileContainer">
+        {% if jobInfo['resumeFile']['name'] != '' %}
+            <p class="fileNameItem">{{ jobInfo['resumeFile']['name'] }}</p>
+            <a href="/resumeFile/{{jobInfo['id']}}" class="filesOpenButton commonBorder">Open</a>
+        {% else %}
+            <p class="noFileItem">No File.</p>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block coverLetterFile %}
+    <section class="fileContainer">
+        {% if jobInfo['coverLetterFile']['name'] != '' %}
+            <p class="fileNameItem">{{ jobInfo['coverLetterFile']['name'] }}</p>
+            <a href="/coverLetterFile/{{jobInfo['id']}}" class="filesOpenButton commonBorder">Open</a>
+        {% else %}
+            <p class="noFileItem">No File.</p>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block extraFile %}
+    <section class="fileContainer">
+        {% if jobInfo['extraFile']['name'] != '' %}
+            <p class="fileNameItem">{{ jobInfo['extraFile']['name'] }}</p>
+            <a href="/extraFile/{{jobInfo['id']}}" class="filesOpenButton commonBorder">Open</a>
+        {% else %}
+            <p class="noFileItem">No File.</p>
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block actionButtons %}
+<input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim" id="cancelButton">
+{% endblock %}

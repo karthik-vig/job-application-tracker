@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Job Tracker</title>
+        <link rel="icon" href="{{url_for('static', filename='icons/job application tracker icon.ico')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/baseJobInfoStyle.css')}}">
+        {% block cssStyleSheet %}{% endblock %}
+    </head>
+    <body class="bodyBGImage" id="pageContainer">
+        <!--div for the top label-->
+        <div class="commonBorder frostGlass">
+            <h1>{% block title %}{% endblock %}</h1>
+        </div>
+        <form action="/redirect" method="post" enctype="multipart/form-data" id="formContainer">
+            <!--div for the job info-->
+            <div class="commonBorder frostGlass" id="leftSideFormContainer">
+                <h3>Basic Info:</h3>
+                <fieldset>
+                    <label>Job Name: </label>
+                    <input type="text" name="job" {% block jobInputField %}{% endblock %} class="commonBorder inputBGColor">
+                </fieldset>
+                <fieldset>
+                    <label>Company: </label>
+                    <input type="text" name="company" {% block companyInputField %}{% endblock %} class="commonBorder inputBGColor">
+                </fieldset>
+                <fieldset>
+                    <label>Salary: </label>
+                    <input type="number" name="salary" {% block salaryInputField %}{% endblock %} class="commonBorder inputBGColor">
+                </fieldset>
+                <fieldset>
+                    <label>Location: </label>
+                    <input type="text" name="jobLocation" {% block locationInputField %}{% endblock %} class="commonBorder inputBGColor">
+                </fieldset>
+                <fieldset>
+                    <label>Application Status: </label>
+                    <select name="applicationStatus" {% block applicationStatus %}{% endblock %} class="commonBorder inputBGColor">
+                        <option value="None" {% block applicationStatusNone %}{% endblock %}>Choose...</option>
+                        <option value="Applied" {% block applicationStatusApplied %}{% endblock %}>Applied</option>
+                        <option value="I Rejected" {% block applicationStatusIReject %}{% endblock %}>I Rejected</option>
+                        <option value="They Rejected" {% block applicationStatusTheyReject %}{% endblock %}>They Rejected</option>
+                        <option value="Successful" {% block applicationStatusSuccess %}{% endblock %}>Successful</option>
+                    </select>
+                </fieldset>
+                <h3>Important Dates: </h3>
+                <fieldset>
+                    <label>Job Start Date: </label>
+                    <input type="text" name="jobStartDate" {% block jobStartDateInputField %}{% endblock %} class="commonBorder inputBGColor">
+                </fieldset>
+                <fieldset>
+                    <label>Job Application Closing Date: </label>
+                    <input type="text" name="jobApplicationClosingDate" {% block jobApplicationClosingDateInputField %}{% endblock %} class="commonBorder inputBGColor">
+                </fieldset>
+                {% block extraEntryInfo %}{% endblock %}
+            </div>
+            <!--div with more job info like notes and files-->
+            <div class="commonBorder frostGlass" id="rightSideFormContainer">
+                <h3>Notes: </h3>
+                {% block notesInputField %}{% endblock %}
+                <h3>Files: </h3>
+                <fieldset>
+                    <label>Resume: </label>
+                    {% block resumeFile %}{% endblock %}
+                </fieldset>
+                <fieldset>
+                    <label>Cover Letter: </label>
+                    {% block coverLetterFile %}{% endblock %}
+                </fieldset>
+                <fieldset>
+                    <label>Extra: </label>
+                    {% block extraFile %}{% endblock %}
+                </fieldset>
+            </div>
+            <!--div with action buttons to perform action with data in the page-->
+            <div class="commonBorder frostGlass" id="actionButtonContainer">
+                {% block actionButtons %} {% endblock %}
+            </div>
+        </form>
+    </body>
+</html>
