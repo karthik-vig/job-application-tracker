@@ -14,8 +14,6 @@ class UserInterface:
     searchFilters = None
 
     def __init__(self):
-        self.app = UserInterface.app
-        '''
         guiApp = FlaskUI(server=self._startWaitress,
                         server_kwargs={
                         'app': UserInterface.app,
@@ -25,8 +23,7 @@ class UserInterface:
                         width=1200,
                         height=800
                         )
-        guiApp.run() 
-        ''' 
+        guiApp.run()
 
 
     # The waitress will act as the server to improve performance.
@@ -215,12 +212,8 @@ class UserInterface:
         return modifiedJobInfo
 
 
-# remove these lines in production
-userInterfaceObj = UserInterface()
-userInterfaceObj.app.config['debug'] = True
-app = userInterfaceObj.app
+
 
 # In production flaskwebgui will be used along with waitress.
 if __name__ == "__main__":
-    app.run()
-    #userInterfaceObj = UserInterface()
+    userInterfaceObj = UserInterface()
