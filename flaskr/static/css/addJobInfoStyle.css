@@ -1,158 +1,23 @@
-/* For the entire form */
-
-.jobInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row1;
-    grid-row-end: row2;
-}
-
-.companyInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row2;
-    grid-row-end: row3;
-}
-
-.salaryInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row3;
-    grid-row-end: row4;
-}
-
-.jobLocationInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row4;
-    grid-row-end: row5;
-}
-
-.jobStartDateInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row5;
-    grid-row-end: row6;
-}
-
-.jobApplicationClosingDateInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row6;
-    grid-row-end: row7;
-}
-
-.applicationStatusInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row7;
-    grid-row-end: row8;
-}
-
-.notesInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row8;
-    grid-row-end: row9;
-}
-
-.resumeFileInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row9;
-    grid-row-end: row10;
-}
-
-.coverLetterFileInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row10;
-    grid-row-end: row11;
-}
-
-.extraFileInputItem {
-    grid-column-start: col1;
-    grid-column-end: endCol;
-    grid-row-start: row11;
-    grid-row-end: row12;
-}
-
-.newJobInfoSubmitInputItem {
-    grid-column-start: col1;
-    grid-column-end: col2;
-    grid-row-start: row12;
-    grid-row-end: endRow;
-    justify-self: center;
-    align-self: center;
-}
-
-.cancelSubmitInputItem {
+/*The section below deals with files section*/
+.fileContainer {
     grid-column-start: col2;
     grid-column-end: endCol;
-    grid-row-start: row12;
+    grid-row-start: row1;
     grid-row-end: endRow;
-    justify-self: center;
-    align-self: center;
-}
 
-.formContainer{
     display: grid;
-    grid-template-columns: [col1] 25vw [col2] 25vw [endCol];
-    grid-template-rows: [row1] 5vh [row2] 5vh [row3] 5vh [row4] 5vh [row5] 5vh [row6] 5vh [row7] 5vh [row8] 5vh [row9] 5vh [row10] 5vh [row11] 5vh [row12] 5vh [endRow];
-    row-gap: 2vh;
-    height: 82vh;
-    width: 51vw;
-    padding: 1vh;
+    grid-template-columns: [col1] 80% [col2] 20% [endCol];
+    grid-template-rows: [row1] 100% [endRow];
+
+    align-items: center;
 }
 
-/* For the fieldset container */
-
-.fieldsetInputItem {
-    grid-column-start: col2;
-    grid-column-end: endCol;
-    grid-row-start: row1;
-    grid-row-end: endRow;
-}
-
-.fieldsetLabelItem {
+.fileContainer > input[type="file"]::file-selector-button {
     grid-column-start: col1;
     grid-column-end: col2;
     grid-row-start: row1;
     grid-row-end: endRow;
-    align-self: center;
-}
 
-.fieldsetContainer {
-    display: grid;
-    grid-template-columns: [col1] 10vw [col2] 40vw [endCol];
-    grid-template-rows: [row1] 5vh [endRow];
-}
-
-
-/* design for the files section */
-
-.filesResetButtonItem {
-    grid-column-start: col2;
-    grid-column-end: endCol;
-    grid-row-start: row1;
-    grid-row-end: endRow;
-    height: 3vh;
-    text-align: center;
-    background-color: #8d4a4a;
-}
-
-.filesResetButtonItem:active {
-    background-color: #613232;
-}
-
-.filesUploadItem {
-    grid-column-start: col1;
-    grid-column-end: col2;
-    grid-row-start: row1;
-    grid-row-end: endRow;
-}
-
-.fileSelectorButton::file-selector-button {
     background-color: #40444b;
     border-style: solid;
     border-width: 0.1vh;
@@ -162,13 +27,47 @@
     height: 3vh;
 }
 
-.fileSelectorButton::file-selector-button:active {
+.fileContainer > input[type="file"]::file-selector-button:active {
     background-color: #272a2e;
 }
 
-.filesContainer {
-    display: grid;
-    grid-template-columns: [col1] 35vw [col2] 5vw [endCol];
-    grid-template-rows: [row1] 5vh [endRow];
-    align-items: center;
+.fileContainer > button {
+    grid-column-start: col2;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+
+    height: 3vh;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #8d4a4a;
+}
+
+.fileContainer > button:active {
+    background-color: #613232;
+}
+
+.fileContainer > button:hover {
+    border-color: #e0b745;
+}
+
+
+
+
+
+
+/*cancel action button*/
+
+#addActionButton {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: endRow;
+}
+
+#cancelButton {
+    grid-column-start: col3;
+    grid-column-end: endCol;
+    grid-row-start: row1;
+    grid-row-end: endRow;
 }

@@ -1,75 +1,47 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Job Tracker</title>
-        <link rel="icon" href="{{url_for('static', filename='icons/job application tracker icon.ico')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/reset.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/commonStyle.css')}}">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/addJobInfoStyle.css')}}">
-    </head>
-    <body class="pageContainer bodyBGImage">
-        <form action="redirectAddJobInfo" method="post" enctype="multipart/form-data" class="commonBorder formContainer pageItem frostGlass">
-            <fieldset class="jobInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Job:</label>
-                <input type="text" name="job" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="companyInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Company: </label>
-                <input type="text" name="company" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="salaryInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Salary:</label>
-                <input type="number" name="salary" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="jobLocationInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Location:</label>
-                <input type="text" name="jobLocation" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="jobStartDateInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Job Start Date:</label>
-                <input type="date" name="jobStartDate" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="jobApplicationClosingDateInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Job Application Closing Date:</label>
-                <input type="date" name="jobApplicationClosingDate" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="applicationStatusInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Status:</label>
-                <select name="applicationStatus" class="commonBorder fieldsetInputItem inputBGColor">
-                    <option value="None">Choose...</option>
-                    <option value="Applied">Applied</option>
-                    <option value="I Rejected">I Rejected</option>
-                    <option value="They Rejected">They Rejected</option>
-                    <option value="Successful">Successful</option>
-                </select>
-            </fieldset>
-            <fieldset class="notesInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Notes:</label>
-                <input type="text" name="notes" maxlength="10000" class="commonBorder fieldsetInputItem inputBGColor">
-            </fieldset>
-            <fieldset class="resumeFileInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Resume File:</label>
-                <section class="fieldsetInputItem filesContainer">
-                    <input type="file" name="resumeFile" id="resumeFile" class="filesUploadItem fileSelectorButton">
-                    <button onclick="document.getElementById('resumeFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button> 
-                </section>
-            </fieldset>
-            <fieldset class="coverLetterFileInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Cover Letter File:</label>
-                <section class="fieldsetInputItem filesContainer">
-                    <input type="file" name="coverLetterFile" id="coverLetterFile" class="filesUploadItem fileSelectorButton">
-                    <button onclick="document.getElementById('coverLetterFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button> 
-                </section>
-            </fieldset>
-            <fieldset class="extraFileInputItem fieldsetContainer">
-                <label class="fieldsetLabelItem">Extra File:</label>
-                <section class="fieldsetInputItem filesContainer">
-                    <input type="file" name="extraFile" id="extraFile" class="filesUploadItem fileSelectorButton">
-                    <button onclick="document.getElementById('extraFile').value = ''; return false;" class="filesResetButtonItem commonBorder">Reset</button>
-                </section>
-            </fieldset>
-            <input type="image"  src="{{url_for('static', filename='icons/add.svg')}}" name="newJobInfoSubmit" class="buttonDim newJobInfoSubmitInputItem">
-            <input type="image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="cancelSubmit" formaction="/redirect" class="buttonDim cancelSubmitInputItem">
-        </form>
-    </body>
-</html>
+{% extends "baseJobInfo.html" %}
+
+{% block cssStyleSheet %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/addJobInfoStyle.css')}}">
+{% endblock %}
+
+{% block title %}
+Create New Entry
+{% endblock %}
+
+{% block applicationStatus %}
+enabled
+{% endblock %}
+
+{% block applicationStatusNone %}
+selected
+{% endblock %}
+
+{% block notesInputField %}
+    <textarea maxlength="10000" name="notes" class="commonBorder inputBGColor"></textarea>
+{% endblock %}
+
+{% block resumeFile %}
+    <section class="fileContainer">
+        <input type="file" name="resumeFile" id="resumeFile">
+        <button onclick="document.getElementById('resumeFile').value = ''; return false;" class="commonBorder">Reset</button>
+    </section>
+{% endblock %}
+
+{% block coverLetterFile %}
+    <section class="fileContainer">
+        <input type="file" name="coverLetterFile" id="coverLetterFile">
+        <button onclick="document.getElementById('coverLetterFile').value = ''; return false;" class="commonBorder">Reset</button>
+    </section>
+{% endblock %}
+
+{% block extraFile %}
+    <section class="fileContainer">
+        <input type="file" name="extraFile" id="extraFile">
+        <button onclick="document.getElementById('extraFile').value = ''; return false;" class="commonBorder">Reset</button>
+    </section>
+{% endblock %}
+
+{% block actionButtons %}
+<input type="image"  src="{{url_for('static', filename='icons/add.svg')}}" name="newJobInfoSubmit" class="buttonDim" id="addActionButton" formaction="/redirectAddJobInfo">
+<input type="Image" src="{{url_for('static', filename='icons/goBack.svg')}}" name="goBack" class="buttonDim" id="cancelButton">
+{% endblock %}
