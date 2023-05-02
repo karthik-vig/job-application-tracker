@@ -45,6 +45,7 @@
     grid-row-end: endRow;
 
     justify-self: center;
+    color: #a7c949;
 }
 
 .fileContainer > a {
@@ -52,13 +53,19 @@
     grid-column-end: endCol;
     grid-row-start: row1;
     grid-row-end: endRow;
-}
 
-.filesOpenButton {
     height: 3vh;
     text-align: center;
     vertical-align: middle;
     background-color: #5a914f;
+}
+
+.fileContainer > a:active {
+    background-color: #34532d;
+}
+
+.fileContainer > a:hover {
+    border-color: #e0b745;
 }
 
 

@@ -45,12 +45,12 @@
                 </fieldset>
                 <h3>Important Dates: </h3>
                 <fieldset>
-                    <label>Job Start Date: </label>
-                    <input type="text" name="jobStartDate" {% block jobStartDateInputField %}{% endblock %} class="commonBorder inputBGColor">
+                    <label>Start Date: </label>
+                    <input type="date" name="jobStartDate" {% block jobStartDateInputField %}{% endblock %} class="commonBorder inputBGColor">
                 </fieldset>
                 <fieldset>
-                    <label>Job Application Closing Date: </label>
-                    <input type="text" name="jobApplicationClosingDate" {% block jobApplicationClosingDateInputField %}{% endblock %} class="commonBorder inputBGColor">
+                    <label>Deadline: </label>
+                    <input type="date" name="jobApplicationClosingDate" {% block jobApplicationClosingDateInputField %}{% endblock %} class="commonBorder inputBGColor">
                 </fieldset>
                 {% block extraEntryInfo %}{% endblock %}
             </div>

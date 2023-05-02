@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-See Job Information
+Entry Details
 {% endblock %}
 
 {% block jobInputField %}
@@ -56,11 +56,11 @@ value="{{jobInfo['jobApplicationClosingDate']}}" readonly
     <h3>Meta Data:</h3>
     <fieldset>
         <label>Created on: </label>
-        <input type="text" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder inputBGColor">
+        <input type="date" value="{{jobInfo['startJobTrackDate']}}" readonly class="commonBorder inputBGColor">
     </fieldset>
     <fieldset>
-        <label>Last Modified on: </label>
-        <input type="text" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder inputBGColor">
+        <label>Modified on: </label>
+        <input type="date" value="{{jobInfo['modifiedJobTrackDate']}}" readonly class="commonBorder inputBGColor">
     </fieldset>
 {% endblock %}
 
