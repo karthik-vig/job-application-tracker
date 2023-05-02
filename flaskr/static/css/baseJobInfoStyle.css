@@ -142,6 +142,21 @@ a {
     grid-row-end: endRow;
 }
 
+#leftSideFormContainer > fieldset > input[type="date"] {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#leftSideFormContainer > fieldset > select {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
 #leftSideFormContainer > fieldset:nth-of-type(1) {
     grid-column-start: col1;
     grid-column-end: endCol;

@@ -28,21 +28,31 @@ value="{{jobInfo['jobLocation']}}" readonly
 disabled
 {% endblock %}
 
-{% if jobInfo['applicationStatus'] == '' %}
-    {% block applicationStatusNone %}selected{% endblock %}
-{% endif %}
-{% if jobInfo['applicationStatus'] == 'Applied' %}
-    {% block applicationStatusApplied %}selected{% endblock %}
-{% endif %}
-{% if jobInfo['applicationStatus'] == 'I Rejected' %}
-    {% block applicationStatusIReject %}selected{% endblock %}
-{% endif %}
-{% if jobInfo['applicationStatus'] == 'They Rejected' %}
-    {% block applicationStatusTheyReject %}selected{% endblock %}
-{% endif %}
-{% if jobInfo['applicationStatus'] == 'Successful' %}
-    {% block applicationStatusSuccess %}selected{% endblock %}
-{% endif %}
+{% block applicationStatusNone %}
+    {% if jobInfo['applicationStatus'] == '' %}
+        selected
+    {% endif %}
+{% endblock %}
+{% block applicationStatusApplied %}
+    {% if jobInfo['applicationStatus'] == 'Applied' %}
+        selected
+    {% endif %}
+{% endblock %}
+{% block applicationStatusIReject %}
+    {% if jobInfo['applicationStatus'] == 'I Rejected' %}
+        selected
+    {% endif %}
+{% endblock %}
+{% block applicationStatusTheyReject %}
+    {% if jobInfo['applicationStatus'] == 'They Rejected' %}
+        selected
+    {% endif %}
+{% endblock %}
+{% block applicationStatusSuccess %}
+    {% if jobInfo['applicationStatus'] == 'Successful' %}
+        selected
+    {% endif %}
+{% endblock %}
 
 {% block jobStartDateInputField %}
 value="{{jobInfo['jobStartDate']}}" readonly

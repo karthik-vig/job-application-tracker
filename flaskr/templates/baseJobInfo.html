@@ -19,11 +19,11 @@
                 <h3>Basic Info:</h3>
                 <fieldset>
                     <label>Job Name: </label>
-                    <input type="text" name="job" {% block jobInputField %}{% endblock %} class="commonBorder inputBGColor">
+                    <input type="text" name="job" maxlength="50" {% block jobInputField %}{% endblock %} class="commonBorder inputBGColor">
                 </fieldset>
                 <fieldset>
                     <label>Company: </label>
-                    <input type="text" name="company" {% block companyInputField %}{% endblock %} class="commonBorder inputBGColor">
+                    <input type="text" name="company" maxlength="100" {% block companyInputField %}{% endblock %} class="commonBorder inputBGColor">
                 </fieldset>
                 <fieldset>
                     <label>Salary: </label>
@@ -31,7 +31,7 @@
                 </fieldset>
                 <fieldset>
                     <label>Location: </label>
-                    <input type="text" name="jobLocation" {% block locationInputField %}{% endblock %} class="commonBorder inputBGColor">
+                    <input type="text" name="jobLocation" maxlength="100" {% block locationInputField %}{% endblock %} class="commonBorder inputBGColor">
                 </fieldset>
                 <fieldset>
                     <label>Application Status: </label>
